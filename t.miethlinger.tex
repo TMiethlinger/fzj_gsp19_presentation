@@ -97,6 +97,7 @@ ParalleX focusses on latency hiding instead of latency avoidance.
   \item High Performance ParalleX (HPX) is the first runtime system implementation of the ParalleX execution model.
   \item Development: STE||AR group \\ Louisiana State University \\ LSU Center for Computation and Technology
   \item Released as open source under the Boost Software License
+  \item Current version: HPX V1.3.0, released on 23.05.2019
   \item Aims to be a \textbf{C++ standards conforming implementation} of the Parallelism and Concurrency proposals for C++ 17/20/23/...
   \item This means: HPX is a C++ library that supports \textbf{dynamic adaptive resource management} and \textbf{lightweight task programming and scheduling} within the context of a \textbf{global address space}. 
 \end{itemize}
@@ -265,6 +266,29 @@ slavenode/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size
 \draw[->] (4+0.27,  -1) -- (5-0.31, -1);
 \end{tikzpicture}
 \end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{On learning HPX}
+\framesubtitle{An opinion of a non-CS/HPC student}
+Learning curve on of HPX is quite steep - in the first days quite some dedication, effort and endurance is needed\footnote{\color{fzjblue} \href{https://github.com/STEllAR-GROUP/tutorials/blob/master/hlrs2017/session1/README.md}{Why is the HPX code repo so big and complicated?}}.
+\begin{itemize}
+  \item Probably the easiest way in the beginning: watch
+    \color{fzjblue}\href{https://www.youtube.com/playlist?list=PL1tk5lGm7zvSXfS-sqOOmIJ0lFNjKze18}{this nice playlist}
+    \color{black} in 1.25x speed on the youtube channel of
+    \color{fzjblue}\href{https://www.youtube.com/user/cscsch}{cscsch}
+    \color{black}(Swiss National Supercomputing Centre)
+  \item Be aware that the
+    \color{fzjblue}\href{https://stellar-group.github.io/hpx/docs/sphinx/latest/html/api.html}{API reference}
+    \color{black}is not complete
+  \item Be aware that there exist 4 different ``Hello, World!'' examples\footnote{Paths are with respect to \color{fzjblue}\url{https://github.com/STEllAR-GROUP/hpx/examples/}\color{black}}:
+  \begin{itemize}
+    \item hello\_world\_component/*: 3 files; 28, 30 \& 55 lines
+    \item quickstart/hello\_world\_1.cpp; 22 lines
+    \item quickstart/hello\_world\_2.cpp; 24 lines
+    \item quickstart/hello\_world\_distributed.cpp; 156 lines
+  \end{itemize}
+\end{itemize}
 \end{frame}
 
 \part{Overview of numerical linear algebra and its applications}
