@@ -337,9 +337,9 @@ tasknode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum
 \begin{lstlisting}[language=C++]
 double calc_area(hpx::future<double> future_r, hpx::future<double> future_pi)
 {
-    double r = future_r.get();
-    double pi = future_pi.get();
-    return r * rmake * pi;
+    double r = future_r.get(); // r is returned immediately (make_ready_future)
+    double pi = future_pi.get(); // pi is returned once the async computation finishes
+    return r * r * pi;
 }
 
 int hpx_main(variables_map& vm) // In hpx_main the HPX environment is loaded
@@ -358,7 +358,27 @@ int main(int argc, char * argv[]) // Start program by: ./area --r=...
 \end{lstlisting}
 \end{frame}
 
-
+\begin{frame}
+\frametitle{The HPX API}
+\framesubtitle{Classes}
+\begin{center}
+\begin{tabular}{ |l|l| } 
+ \hline
+ Class & Description \\
+ \hline
+ \texttt{hpx::thread} & Low level thread of control \\
+ \texttt{hpx::mutex} & Low level synchronization facility \\
+ \texttt{hpx::lcos::local::condition\_variable} & Signal a condition \\
+ \texttt{hpx::future} & Asynchronous result transport (receiving end) \\
+ \texttt{hpx::promise, hpx::lcos::local::promise} & Asynchronous result transport (producing end) \\
+ \texttt{hpx::lcos::packaged\_task} & Asynchronous result transport (producing end) \\
+ \texttt{hpx::function} & Type erased function object \\
+ \texttt{hpx::tuple} & Tuple \\
+ \texttt{...} &  \\
+ \hline
+\end{tabular}
+\end{center}
+\end{frame}
 
 \part{Overview of numerical linear algebra and its applications}
 \makepart
