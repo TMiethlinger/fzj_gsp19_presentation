@@ -1,0 +1,100 @@
+-----------------------------------------------
+GSP 2019 Presentation
+-----------------------------------------------
+
+The presentation template uses the externalize feature of tikz. Hence,
+the Makefile tries to compile only the minimal changeset of your
+document. All figures within a "tikzpicture" are cached in the
+"cache" directory. The generated pdfs only change when you change
+something in these pictures. This process should happen automatically.
+
+A simple "make" should capture this. There is basically no need to
+call "make clean" or even "make distclean".
+
+-----------------------------------------------
+GSP 2019 Presentation Repository
+-----------------------------------------------
+
+The presentation can be cloned via
+
+git clone git@gsp.fz-juelich.de:2019/presentation-f.lastname
+
+(Adjust <f.lastname> accordingly, you have read permissions on all student's
+repositories, and write permissions on your own.)
+
+First, we need to update the texmf repo
+
+ make update-texmf
+
+To compile the presentation please type
+
+ make
+
+
+To clean up before committing or adding to the git repo please call
+
+ make clean
+
+
+To really clean up (also remove generated tikz externalize files in the cache folder)
+
+ make distclean
+
+
+The document structure is closely related to the report. The file that gets compiled is named
+
+ f.lastname.tex
+
+
+Lualatex will compile this file into a pdf named
+
+ f.lastname.pdf
+
+
+If you want to add more files or change files, please honor the following rules
+
+1.) Do not change/modify/alter the packages.d/ and config.d/ directories and files
+2.) Do not change/modify/alter the packages.tex and config.tex files
+
+3.) If you need to add configuration for certain packages, please use the config.local.tex file
+4.) If you need to add packages (please don't), use packages.local.tex
+
+
+-----------------------------------------------
+General Rule
+-----------------------------------------------
+
+1.) You can change/modify all files in directories starting with a capital letter, like Figures/Images/Data
+2.) Please do not modify any files in folders in lower case like packages.d/config.d/
+
+The title and abstract should go into title.tex
+The introduction should go into the introduction.tex
+The outlook should go ... well you know ...
+
+-----------------------------------------------
+Prebuilt Frames
+-----------------------------------------------
+Please put all separately built frames inside the ./Slides directory.
+They will only be rebuilt if their content changes, not every time the main document is built.
+Use this feature and \includeframeset and \includeframeoverlay to speed up compile time.
+
+-----------------------------------------------
+TikZ/PGF Figures
+-----------------------------------------------
+Please put all vector figures created with tikz/pgf/ or other svg tools inside the ./Figures directory.
+
+-----------------------------------------------
+Bitmap/Raster Images
+-----------------------------------------------
+Please put all raster/bitmap images created with povray or other sources inside the ./Images directory.
+
+-----------------------------------------------
+Code Snippets
+-----------------------------------------------
+Please put all code snippets/algorithms inside the ./Code directory.
+
+-----------------------------------------------
+Plots/Tables
+-----------------------------------------------
+Please put all data files and generation scripts for pgfplots/pgfplotstable/gnuplot/etc. inside the ./Data directory.
+

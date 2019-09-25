@@ -1,0 +1,47 @@
+\usefonttheme{professionalfonts} % needed to use math symbols from fontenc
+
+\usepackage{amsmath}
+\usepackage{latexsym} % replaces amssymb
+
+\usepackage{unicode-math} % enables \setmathfont commands
+\usepackage{fontawesome} % loads fancy web symbols
+
+\setmainfont[
+  Scale=0.9,
+  Extension=.ttf,
+  UprightFont=*-Regular,
+  BoldFont=*-Bold,
+  ItalicFont=*-Italic,
+  BoldItalicFont=*-BoldItalic,
+  SlantedFont=*-Italic,
+]{LiberationSans}
+
+\setsansfont[
+  Scale=0.9,
+  Extension=.ttf,
+  UprightFont=*-Regular,
+  BoldFont=*-Bold,
+  ItalicFont=*-Italic,
+  BoldItalicFont=*-BoldItalic,
+  SlantedFont=*-Italic,
+]{LiberationSans}
+
+\setmonofont[
+  Scale=0.9,
+  Extension=.ttf,
+  UprightFont=*-Regular,
+  BoldFont=*-Bold,
+  ItalicFont=*-Italic,
+  BoldItalicFont=*-BoldItalic,
+  SlantedFont=*-Italic,
+]{LiberationMono}
+
+\unimathsetup{math-style=ISO} % french, ISO, TeX, upright
+
+\setmathfont[Scale=1]{TeX Gyre Bonum Math}
+\setmathfont[Scale=0.9,range=\mathup/{latin,Latin,num}]{LiberationSans}
+\setmathfont[Scale=0.9,range=\mathit/{latin,Latin,num}]{LiberationSans-Italic}
+\setmathfont[Scale=0.9,range=\mathbfup/{latin,Latin,num}]{LiberationSans-Bold}
+\setmathfont[Scale=0.9,range=\mathbfit/{latin,Latin,num}]{LiberationSans-BoldItalic}
+\setmathfont[Scale=1,range=\mathcal/{latin,Latin}]{jsMath-cmsy10} % loads  nice calligraph symbols
+\setmathfont[Scale=1,range=\mathbb/{greek,Greek,latin,Latin,num}]{TeX Gyre Bonum Math} % loads  nice calligraph symbols

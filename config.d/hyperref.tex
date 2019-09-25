@@ -1,0 +1,12 @@
+\iftoggle{prebuiltslides}{
+  \newcommand{\gitpdfinfo}{}
+}{
+  \newcommand{\gitpdfinfo}{Git info: \gitDirty\, Branch: \gitBranch\,@\,\gitAbbrevHash{}}
+}
+
+\hypersetup{%
+        unicode, % enable Umlaute in pdf hyperlinks and the pdf toc
+        pdfkeywords     = {\gitpdfinfo},
+        pdfcreator      = {Guest student program 2019}, %
+        pdfproducer     = {Guest student program 2019}, %
+}

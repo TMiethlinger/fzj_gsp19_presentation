@@ -1,0 +1,59 @@
+\begin{frame}
+\frametitle{Prebuilt Slides A1}
+\begin{block}{Why?}
+  \begin{itemize}
+    \item Speed up compilation time
+    \item Rebuild expensive slides with TikZ pictures or pgfplots plots only after they changed
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Prebuilt Slides II}
+\begin{block}{How?}
+  \begin{itemize}
+    \item Split presentation into multiple \texttt{Slides/*.tex} files
+    \item Each contains just \texttt{\textbackslash begin\{frame\}...\textbackslash end\{frame\}} blocks
+    \item A separate \texttt{.pdf} file is created for each \texttt{.tex} file automatically
+    \item Three new commands to include these slides from the main document
+      \begin{itemize}
+        \item \texttt{\textbackslash includetitle\{\}}
+	\item \texttt{\textbackslash includeframeset\{\}}
+	\item \texttt{\textbackslash includeframeoverlay\{\}}
+      \end{itemize}
+    \item Footer will be added while including them in the main document
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Prebuilt Slides III}
+\begin{block}{Caveats}
+  Not all \LaTeX{} features can be used with prebuilt slides:
+  \begin{itemize}
+    \item \texttt{\textbackslash ref\{\}} references to parts/sections/frames
+    \item \texttt{\textbackslash cite\{\}} citations --
+      But is a reference like \emph{[4]} really helpful in a presentation?\\
+      Maybe just a manual reference like \emph{(Müller-Lüdenscheidt, 1978)} is better.
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{This is a frameset example}
+\framesubtitle{First slide}
+\begin{itemize}
+  \item By using a frameset, each pdf page gets its own slide number
+  \item You may put arbitrary many consecutive frames in a single .tex-file
+  \item Framesets are included via \texttt{\textbackslash includeframeset\{\}}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{This is a frameset example}
+\framesubtitle{Second slide}
+\begin{enumerate}
+  \item First bullet
+  \item Second bullet
+\end{enumerate}
+\end{frame}

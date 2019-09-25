@@ -1,0 +1,75 @@
+\section{Plots}
+
+\begin{frame}
+\frametitle{Use Pgfplots for Plotting}
+\framesubtitle{Large, simple plot}
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth, height=\textheight,cycle list name=fzjblue,]
+\addplot+[smooth]{(x)};
+\addplot+[smooth]{(x-1)};
+\addplot+[smooth]{(x-2)};
+\addplot+[smooth]{(x-3)};
+\addplot+[smooth]{(x-4)};
+\addplot+[smooth]{(x-5)};
+\addplot+[smooth]{(x-6)};
+\addplot+[smooth]{(x-7)};
+\addplot+[smooth]{(x-8)};
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{Use Pgfplots for Plotting}
+\framesubtitle{Different Cycle List}
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth, height=\textheight,cycle list name=fzjdiagram,]
+\addplot+[smooth]{(x)};
+\addplot+[smooth]{(x-1)};
+\addplot+[smooth]{(x-2)};
+\addplot+[smooth]{(x-3)};
+\addplot+[smooth]{(x-4)};
+\addplot+[smooth]{(x-5)};
+\addplot+[smooth]{(x-6)};
+\addplot+[smooth]{(x-7)};
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{Use Pgfplots for Plotting}
+\framesubtitle{Highlighting a curve}
+\begin{tikzpicture}
+\begin{axis}[width=\textwidth, height=\textheight]
+\addplot[color=fzjblue,smooth]{sin(100*x)};
+\addlegendentry{data}
+\addplot[color=fzjblue!50!white,smooth]{cos(100*x+10)+1};
+\addlegendentry{more data}
+\addplot[color=fzjgreen!80!white,smooth,onslide=<2>{color=fzjred,smooth}]{sin(80*x+420)+0.5};
+\addlegendentry{yet more data}
+\addplot[color=fzjviolet!80!white,smooth]{sin(120*x)+2};
+\addlegendentry{even more data}
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{More Plots}
+\begin{block}{More Information}
+Take a look at the
+\href{http://pgfplots.sourceforge.net/gallery.html}{\globe pgfplots gallery}.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Present Data In Tables}
+\pgfplotstabletypeset[
+every even row/.style={
+before row={\rowcolor{fzjblue!05!white}}},
+every head row/.style={
+before row=\toprule,after row=\midrule},
+every last row/.style={
+after row=\bottomrule},
+]
+{Plots/pgfplotstable.example1.dat}
+
+\end{frame}

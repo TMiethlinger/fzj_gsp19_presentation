@@ -1,0 +1,32 @@
+% pgf and tikz configuration and sub-package loading
+\usetikzlibrary{positioning,calc}
+\usetikzlibrary{mindmap,trees,shadows,arrows}
+\usetikzlibrary{fpu}
+\usetikzlibrary{3d}
+\usetikzlibrary{shapes}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{automata}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{patterns}
+\usetikzlibrary{fit}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{matrix}
+\usetikzlibrary{scopes}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{intersections}
+\usetikzlibrary{graphs, graphs.standard}
+\usetikzlibrary{chains}
+
+\newcommand{\includetikz}[1]{%
+%    \tikzsetnextfilename{#1}%
+    \input{Figures/#1.tikz}%
+}
+
+\tikzset{
+    invisible/.style={opacity=0},
+    visible on/.style={alt={#1{}{invisible}}},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },
+  }

@@ -1,0 +1,45 @@
+\part{Localization}
+\makepart
+\section{Change Language}
+\begin{frame}[fragile,label=localization]
+        \frametitle{Localization}
+        \framesubtitle{How to change the date display to another language}
+        The date will be adjusted automatically. You just have to use the {\tt babel}
+        package with the desired language.
+        \begin{block}{Date style -- Mixed}
+                load package with DE and EN (default): \hfill \verb+\usepackage[ngerman,english]{babel}+\\
+                choose German: \hfill \verb+\selectlanguage{ngerman}+\\
+                choose English: \hfill \verb+\selectlanguage{english}+
+        \end{block}
+        \begin{block}{Date style -- German}
+                01. Januar 2018 \hfill
+                \verb+\selectlanguage{ngerman}+
+        \end{block}
+        \begin{block}{Date style -- English}
+                January 01, 2018 \hfill
+                \verb+\selectlanguage{english}+
+        \end{block}
+
+\end{frame}
+
+\selectlanguage{ngerman}
+\begin{frame}[fragile,,label=translation]
+        \frametitle{Localization/Language}
+        \framesubtitle{Change Helmholtz Banner Text}
+        Using the \texttt{babel} package with the language option automatically sets
+        the correct labels for the slide counter and Helmholtz banner.
+
+        \begin{block}{Helmholtz Banner and Date in German}
+        \begin{itemize}
+          \item Take a look at the date and Helmholtz banner in the lower left
+          corner and the slide name and frame number in the middle
+          \item This slide should show the german version
+          \item Enable options via \verb+\documentclass[english,ngerman]{beamer}+
+          \item Enabled locally via \verb+\selectlanguage{ngerman}+ before
+          \verb+\begin{frame}+
+        \end{itemize}
+        \end{block}
+\end{frame}
+
+\selectlanguage{english}
+\author{Your Name}

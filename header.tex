@@ -1,0 +1,41 @@
+% Do not edit. These are fallback values, the actual values may have been
+% set by the build system elsewhere.
+\providecommand\topdir{.}%
+\providecommand\handoutoption{}% option, normal beamer presentation mode by default
+
+
+% Optional parameters for the documentclass should be the only
+% things to be changed in this file.
+\documentclass[
+%%%%%%%%%% Start of customizable section %%%%%%%%%%
+english,
+ngerman,
+10pt,%             supported values: 10pt, 11pt, 12pt
+aspectratio=169,%  common values: 169, 1610, 43
+%%%%%%%%%% End of customizable section %%%%%%%%%%
+\handoutoption
+]{beamer}
+
+
+\usepackage{etoolbox}
+\newtoggle{prebuiltslides}
+\ifdefined\prebuiltslides
+  \toggletrue{prebuiltslides}
+\else
+  \togglefalse{prebuiltslides}
+\fi
+
+% do not change the default packages
+\input{\topdir/packages}
+
+% add required packages inside the packages.local.tex
+\input{\topdir/packages.local}
+
+% do not change the default config
+\input{\topdir/config}
+
+% add required configuration inside the config.local.tex
+\input{\topdir/config.local}
+
+% ensure that separately built slides don't have any footer, yet
+\iftoggle{prebuiltslides}{\input{\topdir/config.removefooter}}{}

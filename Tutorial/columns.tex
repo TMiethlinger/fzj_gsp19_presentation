@@ -1,0 +1,138 @@
+\section{Columns}
+
+\begin{comment}
+\begin{frame}[fragile]
+\frametitle{Columns}
+\framesubtitle{To structure information use columns}
+without columns
+\rule{\textwidth}{2mm}
+\begin{block}{}
+\rule{\textwidth}{2mm}
+\end{block}
+
+2 columns, t, defaults, .5
+\begin{columns}[t]
+  \begin{column}{.5\textwidth}
+\rule{\textwidth}{2mm}
+  \end{column}
+  \begin{column}{.5\textwidth}
+\rule{\textwidth}{2mm}
+  \end{column}
+\end{columns}
+
+2 columns, t, onlytextwidth, .5
+\begin{columns}[t,totalwidth=\textwidth]
+  \begin{column}{.5\textwidth}
+\rule{\textwidth}{2mm}
+  \end{column}
+  \begin{column}{.5\textwidth}
+\rule{\textwidth}{2mm}
+  \end{column}
+\end{columns}
+
+2 columns, t, onlytextwidth, .485
+\begin{columns}[t,onlytextwidth]
+  \begin{column}{.485\textwidth}
+\rule{\textwidth}{2mm}
+  \end{column}
+  \begin{column}{.485\textwidth}
+\rule{\textwidth}{2mm}
+  \end{column}
+\end{columns}
+
+\begin{columns}[t,onlytextwidth]
+  \begin{column}{.485\textwidth}
+\rule{\textwidth}{2mm}
+    \begin{block}{I am a column}
+\rule{\textwidth}{2mm}
+    \end{block}
+  \end{column}
+  \begin{column}{.485\textwidth}
+\rule{\textwidth}{2mm}
+    \begin{block}{I am a column}
+\rule{\textwidth}{2mm}
+    \end{block}
+  \end{column}
+\end{columns}
+\end{frame}
+\end{comment}
+
+\begin{frame}[fragile]
+\frametitle{Columns}
+\framesubtitle{To structure information use columns}
+\begin{columns}[onlytextwidth]%[t] missing
+  \begin{column}{.485\textwidth}
+    \begin{block}{I am column one}
+      \begin{itemize}
+        \item items as usual
+        \item another item
+      \end{itemize}
+    \end{block}
+  \end{column}
+  \begin{column}{.485\textwidth}
+    \begin{block}{I am column two}
+      \dots
+    \end{block}
+  \end{column}
+\end{columns}
+\vspace{1ex}
+
+Use \verb!\begin{columns}[t]! to align at the top
+
+\begin{columns}[t,onlytextwidth]
+  \begin{column}{.485\textwidth}
+    \begin{block}{I am column one}
+      \begin{itemize}
+        \item items as usual
+        \item another item
+      \end{itemize}
+    \end{block}
+  \end{column}
+  \begin{column}{.485\textwidth}
+    \begin{block}{I am column two}
+      \dots
+    \end{block}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Columns}
+\framesubtitle{You can also use uneven distributions}
+\begin{columns}[t, onlytextwidth]
+  \begin{column}{.285\textwidth}
+    \begin{block}{I am column one}
+      \begin{itemize}
+        \item items as usual
+      \end{itemize}
+    \end{block}
+  \end{column}
+  \begin{column}{.685\textwidth}
+    \begin{block}{I am column two}
+      \dots
+    \end{block}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Columns}
+\framesubtitle{Do not use more than 3 columns}
+\begin{columns}[t, onlytextwidth]
+  \begin{column}{.31\textwidth}
+    \begin{block}{I am column one}
+      \dots
+    \end{block}
+  \end{column}
+  \begin{column}{.31\textwidth}
+    \begin{block}{I am column two}
+      \dots
+    \end{block}
+  \end{column}
+  \begin{column}{.31\textwidth}
+    \begin{block}{I am column three}
+      \dots
+    \end{block}
+  \end{column}
+\end{columns}
+\end{frame}

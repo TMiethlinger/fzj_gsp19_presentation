@@ -1,0 +1,28 @@
+\part{Jülich Colors}
+\makepart
+
+\begin{frame}[label=colors]
+  \frametitle{Corporate Colors}
+  \framesubtitle{You can use predefined colornames to spice up your slides}
+  \centering
+  \begin{tikzpicture}
+    \foreach \color [count=\i] in {fzjorange, fzjviolet, fzjyellow, fzjgreen, fzjred, fzjlightblue, fzjblue} {
+        \node[fill=\color,circle,minimum size=2.3cm] at (-\i*360/7+90: 2.3cm) {\color};
+    }
+  \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Using Corporate Colors}
+    In text:
+    \begin{itemize}
+        \item \verb+\textcolor{colorname-text}{text}+\\
+            There is a \textcolor{fzjgreen}{green} word in this sentence.
+        \item \verb+\colorbox{colorname-background}{content}+\\
+            \colorbox{fzjorange}{This text is on an \textcolor{fzjred}{orange} background.}
+        \item \verb+\fcolorbox{colorname-frame}{colorname-background}{content}+\\
+            \fcolorbox{fzjblue}{fzjlightblue}{\textcolor{fzjviolet}{This colored text is in a colorful framed box.}}
+    \end{itemize}
+
+    In TikZ, pgfplots: use the named colors in any color specification.
+\end{frame}

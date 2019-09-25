@@ -1,0 +1,190 @@
+\input{header}
+
+\setmathfont{Latin Modern Math}
+
+\begin{document}
+
+% \verb listings \tt ttfamily
+
+% Measure size
+% \begin{tikzpicture}
+% \foreach \x in {-7,...,7}
+% {
+%   \foreach \y in {-2...,2}
+%   {
+%     \node (0) at (\x,\y) {\x,\y};
+%   }
+% }
+% \end{tikzpicture}
+
+% Hello world!
+% \begin{frame}
+% \frametitle{Hello world! t.miethlinger}
+% \end{frame}
+
+\includetitle{Slides/title}
+
+\part{Introduction}
+\makepart
+
+\begin{frame}
+\frametitle{About me}
+\framesubtitle{(Thomas Miethlinger)}
+\begin{itemize}
+  \item Study: Master Physics
+  \item Johannes Kepler University of Linz
+  \item Institute for Theoretical Physics \\ Department Many Particle Systems
+  \item Research:
+    \begin{itemize}
+    \item Quantum fluids
+    \item Complex fluids
+    \item Non-equilibrium statistical mechanics
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{About the GSP}
+
+\begin{itemize}
+  \item Supervisor: Dr. Edoardo Di Napoli
+  \item Co-Supervisor: Dr. Xinzhe Wu
+  \item SimLab Quantum Materials
+  \item Research:
+    \begin{itemize}
+    \item Development and maintenance of numerical libraries
+    \item Design and implementation of high-performance algorithms
+    \item Development of new mathematical and computational models within a methodological framework
+    \end{itemize}
+    in the scope of computational materials science and quantum materials.
+\end{itemize}
+\end{frame}
+
+\part{Introduction to HPX}
+\makepart
+
+\begin{frame}
+\frametitle{Current sitution in high performance computing (HPC)}
+Currently, speed-up in computing does not stem from higher CPU frequency, but increased parallelism.
+However, we already face the following challenges in HPC:
+\begin{itemize}
+  \item Ease of programming
+  \item Inability to handle dynamically changing workloads
+  \item Scalability
+  \item Efficient utilization of system resources
+\end{itemize}
+\(\implies\) a need for a new execution model: ParalleX, which is implemented by HPX
+\end{frame}
+
+\begin{frame}
+\frametitle{ParalleX}
+ParalleX is a new parallel execution model that offers an alternative to the conventional computation models(e.g. message passing):
+\begin{itemize}
+  \item Split-phase transaction model
+  \item Message-driven
+  \item Distributed shared memory
+  \item Multi-threaded
+  \item Futures synchronization
+  \item Local Control Objects (LCOs)
+  \item ...
+\end{itemize}
+ParalleX focusses on latency hiding instead of latency avoidance.
+\end{frame}
+
+\begin{frame}
+\frametitle{About HPX}
+\begin{itemize}
+  \item High Performance ParalleX (HPX) is the first runtime system implementation of the ParalleX execution model.
+  \item Development: STE||AR group \\ Louisiana State University \\ LSU Center for Computation and Technology
+  \item Released as open source under the Boost Software License
+  \item Aims to be a \textbf{C++ standards conforming implementation} of the Parallelism and Concurrency proposals for C++ 17/20/23/...
+  \item This means: HPX is a C++ library that supports \textbf{dynamic adaptive resource management} and \textbf{lightweight task programming and scheduling} within the context of a \textbf{global address space}. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparison of HPX with OpenMP}
+\begin{center}
+\begin{tabular}{ |c|c| } 
+ \hline
+ HPX & OpenMP \\
+ \hline
+ C++ library & Compiler extension to C and Fortran \\
+ Core language: \texttt{hpx::C++} & \texttt{\#pragma omp} directives \\
+ Task-based parallelism & Parallel regions (fork-join model) \\
+ AGAS (active global address space) & shared memory \\
+ \hline
+\end{tabular}
+\end{center}
+\vspace{0.3cm}
+\begin{center}
+\begin{tikzpicture}[
+initnode/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=5mm},
+masternode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+slavenode/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=5mm},
+]
+\node[initnode]      at (-5, -1) {S};
+\node[slavenode]     at (-4,  1) {2};
+\node[slavenode]     at (-4,  0) {1};
+\node[slavenode]     at (-4, -1) {0};
+\node[slavenode]     at (-3,  1) {2};
+\node[slavenode]     at (-3,  0) {1};
+\node[slavenode]     at (-3, -1) {0};
+\node[slavenode]     at (-2,  1) {2};
+\node[slavenode]     at (-2,  0) {1};
+\node[slavenode]     at (-2, -1) {0};
+\node[initnode]      at (-1, -1) {E};
+\draw[->] (-5+0.31,  -1) -- (-4-0.27, -1);
+\draw[->] (-4.5,  1) -- (-4-0.27,  1);
+\draw[->] (-4.5,  0) -- (-4-0.27,  0);
+\draw[->] (-4.5, -1) -- (-4-0.27, -1);
+\draw[-]  (-4.5, -1) -- (-4.5, 1);
+\draw[->] (-4+0.27,  1) -- (-3-0.27,  1);
+\draw[->] (-4+0.27,  0) -- (-3-0.27,  0);
+\draw[->] (-4+0.27, -1) -- (-3-0.27, -1);
+\draw[->] (-3+0.27,  1) -- (-2-0.27,  1);
+\draw[->] (-3+0.27,  0) -- (-2-0.27,  0);
+\draw[->] (-3+0.27, -1) -- (-2-0.27, -1);
+\draw[->] (-2+0.27,  1) -- (-1.5,  1);
+\draw[->] (-2+0.27,  0) -- (-1.5,  0);
+\draw[-]  (-1.5, -1) -- (-1.5, 1);
+\draw[->] (-2+0.27,  -1) -- (-1-0.31, -1);
+
+\node[initnode]      at (1, -1) {S};
+\node[masternode]    at (2, -1) {0};
+\node[masternode]    at (3, -1) {0};
+\node[slavenode]     at (3, -0) {1};
+\node[slavenode]     at (3,  1) {2};
+\node[masternode]    at (4, -1) {0};
+\node[initnode]      at (5, -1) {E};
+\draw[->] (1+0.31, -1) -- (2-0.27, -1);
+\draw[->] (2+0.27, -1) -- (3-0.27, -1);
+\draw[->] (2.5,  0) -- (3-0.27,  0);
+\draw[->] (2.5,  1) -- (3-0.27,  1);
+\draw[-]  (2.5, -1) -- (2.5, 1);
+\draw[->] (3+0.27, -1) -- (4-0.27, -1);
+\draw[->] (3+0.27,  0) -- (3.5,  0);
+\draw[->] (3+0.27,  1) -- (3.5,  1);
+\draw[-]  (3.5, -1) -- (3.5, 1);
+\draw[->] (4+0.27, -1) -- (5-0.31, -1);
+
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\part{Overview of numerical linear algebra and its applications}
+\makepart
+
+\part{GEMM}
+\makepart
+
+
+\part{QR}
+\makepart
+
+% your talk should never end with an empty page.
+% to make sure we don't see a black page, we just take the title page again
+% in an ideal world, you will never "see" this frame
+\includetitle{Slides/title}
+
+\end{document}

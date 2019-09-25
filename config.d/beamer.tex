@@ -1,0 +1,78 @@
+\newcommand{\modesuffix}{.beamer}
+
+%beamer handout definitions
+\mode<handout>{
+  \usetheme{Juelich}
+  \iftoggle{prebuiltslides}{
+    \pgfpageslogicalpageoptions{1}{border code=}
+    \pgfpagesuselayout{resize to}[
+      physical paper height=\paperheight,
+      physical paper width=\paperwidth]
+  }{
+  \pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+  }
+  \renewcommand{\modesuffix}{.handout}
+}
+
+% use the Juelich theme for all slides in presentation mode
+\mode<presentation>{
+  \usetheme{Juelich}
+}
+
+%\fzjset{title=allcaps}         % to set the title in allcaps
+ \fzjset{title=regular}         % to set the title regular
+%\fzjset{subtitle=allcaps}      % to set the title in allcaps for short text
+%\fzjset{subtitle=regular}      % to set the title regular and in a smaller font for long text
+%\fzjset{part=allcaps}          % to set the part in allcaps for short text
+%\fzjset{part=regular}          % to set the part regular and in a smaller font for long text
+%\fzjset{frametitle=allcaps}    % to set the frametitle in allcaps for short text
+ \fzjset{frametitle=regular}    % to set the frametitle regular font for long text
+
+% define \emph as color version, no bold, slanted, italic, please
+\renewcommand{\emph}[1]{\structure{#1}}
+
+% simply incremental slides inside tikz
+\tikzset{
+  onslide/.code args={<#1>#2}{%
+    \only<#1>{\pgfkeysalso{#2}} % \pgfkeysalso doesn't change the path
+  }
+}
+
+\DeclareRobustCommand{\includetitle}[1]{
+  \pdfximage{#1\modesuffix.pdf}
+  \pgfmathparse{\the\pdflastximagepages}
+  \foreach \x in {1,...,\pgfmathresult} {
+  \setbeamertemplate{frame number}[invisible]%
+  \setbeamertemplate{date}[invisible]%
+  \setbeamertemplate{background canvas}{
+    \includegraphics[page=\x,width=\paperwidth,height=\paperheight,keepaspectratio]{#1\modesuffix}}
+  \begin{frame}\end{frame} \setbeamertemplate{background canvas}{}
+  \addtocounter{framenumber}{-1} % counter will increase on every frame
+  }
+}
+
+\DeclareRobustCommand{\includeframeset}[1]{
+  \pdfximage{#1\modesuffix.pdf}
+  \pgfmathparse{\the\pdflastximagepages}
+  \foreach \x in {1,...,\pgfmathresult} {
+  \setbeamertemplate{background canvas}{
+    \includegraphics[page=\x,width=\paperwidth,height=\paperheight,keepaspectratio]{#1\modesuffix}}
+  \begin{frame}\end{frame} \setbeamertemplate{background canvas}{}
+%  \addtocounter{framenumber}{-1} % counter will increase on every frame
+  }
+}
+
+\DeclareRobustCommand{\includeframeoverlay}[1]{
+  \pdfximage{#1\modesuffix.pdf}
+  \pgfmathparse{\the\pdflastximagepages}
+  \foreach \x in {1,...,\pgfmathresult} {
+  \setbeamertemplate{background canvas}{
+    \includegraphics[page=\x,width=\paperwidth,height=\paperheight,keepaspectratio]{#1\modesuffix}}
+  \begin{frame}\end{frame} \setbeamertemplate{background canvas}{}
+  \addtocounter{framenumber}{-1} % keeps counter constant
+  }
+  \addtocounter{framenumber}{+1} % sets framecounter for next slide outside this group
+}
+
+% TODO copy in beamertheme-juelich template
+\definecolor{fzjblack}{RGB}{0,0,0}
