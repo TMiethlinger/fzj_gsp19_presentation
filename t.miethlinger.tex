@@ -82,7 +82,7 @@ ParalleX is a new parallel execution model that offers an alternative to the con
 \begin{itemize}
   \item Split-phase transaction model
   \item Message-driven
-  \item Distributed shafzjred memory
+  \item Distributed shared memory
   \item Multi-threaded
   \item Futures synchronization
   \item Local Control Objects (LCOs)
@@ -104,6 +104,30 @@ ParalleX focusses on latency hiding instead of latency avoidance.
 \end{frame}
 
 \begin{frame}
+\frametitle{On learning HPX}
+\framesubtitle{An opinion of a non-CS/HPC student}
+Learning curve on of HPX is quite steep - in the first days quite some dedication, effort and endurance is needed\footnote{\color{fzjblue} \href{https://github.com/STEllAR-GROUP/tutorials/blob/master/hlrs2017/session1/README.md}{Why is the HPX code repo so big and complicated?}}.
+\begin{itemize}
+  \item Probably the easiest way in the beginning: watch
+    \color{fzjblue}\href{https://www.youtube.com/playlist?list=PL1tk5lGm7zvSXfS-sqOOmIJ0lFNjKze18}{this nice playlist}
+    \color{black} in 1.25x speed on the youtube channel of
+    \color{fzjblue}\href{https://www.youtube.com/user/cscsch}{cscsch}
+    \color{black}(Swiss National Supercomputing Centre)
+  \item Be aware that the
+    \color{fzjblue}\href{https://stellar-group.github.io/hpx/docs/sphinx/latest/html/api.html}{API reference}
+    \color{black}is not complete
+  \item Be aware that there exist at least 5 different ``Hello, World!'' examples\footnote{Paths are with respect to \color{fzjblue}\url{https://github.com/STEllAR-GROUP/}\color{black}}:
+  \begin{itemize}
+    \item hpx/examples/hello\_world\_component/*: 3 files; 28, 30 \& 55 lines
+    \item hpx/examples/quickstart/hello\_world\_1.cpp; 22 lines
+    \item hpx/examples/quickstart/hello\_world\_2.cpp; 24 lines
+    \item hpx/examples/quickstart/hello\_world\_distributed.cpp; 156 lines
+    \item tutorials/examples/01\_hello\_world/hello\_world.cpp; 71 lines
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
 \frametitle{Comparison of HPX and OpenMP}
 \begin{center}
 \begin{tabular}{ |c|c| } 
@@ -113,7 +137,7 @@ ParalleX focusses on latency hiding instead of latency avoidance.
  C++ library & Compiler extension to C and Fortran \\
  Core language: \texttt{hpx::C++} & \texttt{\#pragma omp} directives \\
  Task-based parallelism & Parallel regions (fork-join model) \\
- AGAS (active global address space) & shafzjred memory \\
+ AGAS (active global address space) & shared memory \\
  \hline
 \end{tabular}
 \end{center}
@@ -269,33 +293,25 @@ slavenode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimu
 \end{frame}
 
 \begin{frame}
-\frametitle{On learning HPX}
-\framesubtitle{An opinion of a non-CS/HPC student}
-Learning curve on of HPX is quite steep - in the first days quite some dedication, effort and endurance is needed\footnote{\color{fzjblue} \href{https://github.com/STEllAR-GROUP/tutorials/blob/master/hlrs2017/session1/README.md}{Why is the HPX code repo so big and complicated?}}.
+\frametitle{HPX: Tasks and Threads}
 \begin{itemize}
-  \item Probably the easiest way in the beginning: watch
-    \color{fzjblue}\href{https://www.youtube.com/playlist?list=PL1tk5lGm7zvSXfS-sqOOmIJ0lFNjKze18}{this nice playlist}
-    \color{black} in 1.25x speed on the youtube channel of
-    \color{fzjblue}\href{https://www.youtube.com/user/cscsch}{cscsch}
-    \color{black}(Swiss National Supercomputing Centre)
-  \item Be aware that the
-    \color{fzjblue}\href{https://stellar-group.github.io/hpx/docs/sphinx/latest/html/api.html}{API reference}
-    \color{black}is not complete
-  \item Be aware that there exist at least 5 different ``Hello, World!'' examples\footnote{Paths are with respect to \color{fzjblue}\url{https://github.com/STEllAR-GROUP/}\color{black}}:
-  \begin{itemize}
-    \item hpx/examples/hello\_world\_component/*: 3 files; 28, 30 \& 55 lines
-    \item hpx/examples/quickstart/hello\_world\_1.cpp; 22 lines
-    \item hpx/examples/quickstart/hello\_world\_2.cpp; 24 lines
-    \item hpx/examples/quickstart/hello\_world\_distributed.cpp; 156 lines
-    \item tutorials/examples/01\_hello\_world/hello\_world.cpp; 71 lines
-  \end{itemize}
+ \item HPX: Task-based parallelism
+ \item Split up big problem into smaller tasks
+ \item Tasks are worked off as HPX (lightweight) Threads by the OS Threads
+ \item Task size is crucial: not too small and not too big
+ \item Number of tasks can even be as high as \(O(10^8)\)
 \end{itemize}
+\vspace{0.3cm}
+\begin{center}
+\begin{tikzpicture}[
+initnode/.style={circle, draw=fzjgreen!60, fill=fzjgreen!5, very thick, minimum size=5mm},
+masternode/.style={rectangle, draw=fzjred!60, fill=fzjred!5, very thick, minimum size=5mm},
+slavenode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum size=5mm},
+]
+\node at (4,2) [draw, thick, minimum width=2, minimum height=2] {};
+\end{tikzpicture}
+\end{center}
 \end{frame}
-
-% \begin{frame}
-% \frametitle{HPX: An example program}
-% \lstinputlisting[language=C]{area.cpp}
-% \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{HPX: Example Program}
@@ -323,10 +339,7 @@ int main(int argc, char * argv[]) // Start program by: ./area --r=...
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}
-\frametitle{Hello world frame}
-Hello world!
-\end{frame}
+
 
 \part{Overview of numerical linear algebra and its applications}
 \makepart
