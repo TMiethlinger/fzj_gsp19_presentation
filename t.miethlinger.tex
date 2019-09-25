@@ -82,7 +82,7 @@ ParalleX is a new parallel execution model that offers an alternative to the con
 \begin{itemize}
   \item Split-phase transaction model
   \item Message-driven
-  \item Distributed shared memory
+  \item Distributed shafzjred memory
   \item Multi-threaded
   \item Futures synchronization
   \item Local Control Objects (LCOs)
@@ -113,16 +113,16 @@ ParalleX focusses on latency hiding instead of latency avoidance.
  C++ library & Compiler extension to C and Fortran \\
  Core language: \texttt{hpx::C++} & \texttt{\#pragma omp} directives \\
  Task-based parallelism & Parallel regions (fork-join model) \\
- AGAS (active global address space) & shared memory \\
+ AGAS (active global address space) & shafzjred memory \\
  \hline
 \end{tabular}
 \end{center}
 \vspace{0.3cm}
 \begin{center}
 \begin{tikzpicture}[
-initnode/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=5mm},
-masternode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
-slavenode/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=5mm},
+initnode/.style={circle, draw=fzjgreen!60, fill=fzjgreen!5, very thick, minimum size=5mm},
+masternode/.style={rectangle, draw=fzjred!60, fill=fzjred!5, very thick, minimum size=5mm},
+slavenode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum size=5mm},
 ]
 \node[initnode]      at (-5, -1) {S};
 \node[slavenode]     at (-4,  1) {2};
@@ -189,9 +189,9 @@ slavenode/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size
 \vspace{0.3cm}
 \begin{center}
 \begin{tikzpicture}[
-initnode/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=5mm},
-masternode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
-slavenode/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=5mm},
+initnode/.style={circle, draw=fzjgreen!60, fill=fzjgreen!5, very thick, minimum size=5mm},
+masternode/.style={rectangle, draw=fzjred!60, fill=fzjred!5, very thick, minimum size=5mm},
+slavenode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum size=5mm},
 ]
 \node[initnode]      at (-5, -1) {S};
 \node[slavenode]     at (-4,  1) {2};
@@ -281,14 +281,51 @@ Learning curve on of HPX is quite steep - in the first days quite some dedicatio
   \item Be aware that the
     \color{fzjblue}\href{https://stellar-group.github.io/hpx/docs/sphinx/latest/html/api.html}{API reference}
     \color{black}is not complete
-  \item Be aware that there exist 4 different ``Hello, World!'' examples\footnote{Paths are with respect to \color{fzjblue}\url{https://github.com/STEllAR-GROUP/hpx/examples/}\color{black}}:
+  \item Be aware that there exist at least 5 different ``Hello, World!'' examples\footnote{Paths are with respect to \color{fzjblue}\url{https://github.com/STEllAR-GROUP/}\color{black}}:
   \begin{itemize}
-    \item hello\_world\_component/*: 3 files; 28, 30 \& 55 lines
-    \item quickstart/hello\_world\_1.cpp; 22 lines
-    \item quickstart/hello\_world\_2.cpp; 24 lines
-    \item quickstart/hello\_world\_distributed.cpp; 156 lines
+    \item hpx/examples/hello\_world\_component/*: 3 files; 28, 30 \& 55 lines
+    \item hpx/examples/quickstart/hello\_world\_1.cpp; 22 lines
+    \item hpx/examples/quickstart/hello\_world\_2.cpp; 24 lines
+    \item hpx/examples/quickstart/hello\_world\_distributed.cpp; 156 lines
+    \item tutorials/examples/01\_hello\_world/hello\_world.cpp; 71 lines
   \end{itemize}
 \end{itemize}
+\end{frame}
+
+% \begin{frame}
+% \frametitle{HPX: An example program}
+% \lstinputlisting[language=C]{area.cpp}
+% \end{frame}
+
+% \begin{frame}[fragile]
+% \frametitle{HPX: An example program}
+% \begin{lstlisting}[language=C]
+% double calc_area(hpx::shared_future<double> future_r, hpx::shared_future<double> future_pi)
+% {
+%     double r = future_r.get();
+%     double pi = future_pi.get();
+%     return r * r * pi;
+% }
+% 
+% int hpx_main(variables_map& vm)
+% {
+%     hpx::shared_future<double> future_r = hpx::make_ready_future(vm["r"].as<double>());
+%     hpx::shared_future<double> future_pi = hpx::async([](){ return 4.0 * atan(1.0); });
+%     hpx::future<double> future_area = hpx::dataflow(&calc_area, future_r, future_pi);
+%     return hpx::finalize(); // Area <- future_area.get()
+% }
+% 
+% int main(int argc, char * argv[])
+% {
+%     options_description od;
+%     od.add_options()("r", value<double>()->default_value(1.0), "Radius: r");
+%     return hpx::init(od, argc, argv);
+% \end{lstlisting}
+% \end{frame}
+
+\begin{frame}
+\frametitle{Hello world frame}
+Hello world!
 \end{frame}
 
 \part{Overview of numerical linear algebra and its applications}
