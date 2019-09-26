@@ -360,7 +360,7 @@ int main(int argc, char * argv[]) // Start program by: ./area --r=...
 
 \begin{frame}
 \frametitle{The HPX API}
-\framesubtitle{Classes}
+\framesubtitle{Selection: Classes}
 \begin{center}
 \begin{tabular}{ |l|l| } 
  \hline
@@ -369,11 +369,35 @@ int main(int argc, char * argv[]) // Start program by: ./area --r=...
  \texttt{hpx::thread} & Low level thread of control \\
  \texttt{hpx::mutex} & Low level synchronization facility \\
  \texttt{hpx::lcos::local::condition\_variable} & Signal a condition \\
- \texttt{hpx::future} & Asynchronous result transport (receiving end) \\
+ \texttt{hpx::future, hpx::shared\_future} & Asynchronous result transport (receiving end) \\
  \texttt{hpx::promise, hpx::lcos::local::promise} & Asynchronous result transport (producing end) \\
  \texttt{hpx::lcos::packaged\_task} & Asynchronous result transport (producing end) \\
  \texttt{hpx::function} & Type erased function object \\
  \texttt{hpx::tuple} & Tuple \\
+ \texttt{...} &  \\
+ \hline
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{The HPX API}
+\framesubtitle{Selection: Functions}
+\begin{center}
+\begin{tabular}{ |l|l| }
+ \hline
+ Functions & Description \\
+ \hline
+ \texttt{hpx::async} & Spawning tasks (returns a future) \\
+ \texttt{hpx::make\_ready\_future} & Spawning tasks (returns a ready future) \\
+ \texttt{hpx::bind} & Binding Parameters to callables \\
+ \texttt{hpx::apply} & Signal a condition \\
+ \texttt{future::\{is\_ready, valid, has\_exception\}} & Query state of future \\
+ \texttt{future::get} & Return computed result of future \\
+ \texttt{future::then} & Continuations of futures \\
+ \texttt{hpx::when\_all, hpx::when\_any} & Waiting on one or more futures (non blocking) \\
+ \texttt{hpx::wait\_all, hpx::wait\_any} & Waiting on one or more futures (blocking) \\
+ \texttt{hpx::dataflow} & Shortcut to hpx::when\_all(...).then(...) \\
  \texttt{...} &  \\
  \hline
 \end{tabular}
