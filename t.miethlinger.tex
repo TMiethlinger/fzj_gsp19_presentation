@@ -136,7 +136,7 @@ Learning curve on of HPX is quite steep - in the first days quite some dedicatio
  \item Split up big problem into smaller tasks
  \item Tasks are worked off as HPX (lightweight) Threads by the OS Threads
  \item Task size is crucial: not too small and not too big
- \item Number of tasks can even be as high as \(\mathcal{OABCDM}(10^8)\)
+ \item Number of tasks can even be as high as \(\mathcal{O}(10^8)\)
 \end{itemize}
 \vspace{0.3cm}
 \begin{center}
@@ -431,6 +431,9 @@ which may be using one of the following matrix operations/decompositions:
 \end{itemize}
 \end{frame}
 
+\part{GEMM}
+\makepart
+
 \begin{frame}
 \frametitle{Applications of Numerical Linear Algebra}
 \frametitle{GEMM}
@@ -454,13 +457,97 @@ GEMM - GEneral Matrix Multiply
 \end{itemize}
 \end{frame}
 
-\part{GEMM}
-\makepart
+\begin{frame}
+\frametitle{Applications of Numerical Linear Algebra}
+\frametitle{GEMM of Blocked Matrices}
+Better approach computationally:
+Discretize matrices into blocks, perform GEMM block-wise:
+Let the field \(F\) again be \(\mathbb{R}\) or \(\mathbb{C}\),
+\(A =\big( A_{ij} \big) \in F^{M \times N \times m \times n}\),
+\(B =\big( B_{jk} \big) \in F^{N \times P \times n \times p}\).
+Then
+\begin{equation}
+ C=\big( C_{ik} \big)=AB \in F^{M \times P \times m \times p},
+\end{equation}
+\begin{equation}
+ C_{ik} = \big( c_{ik,i'k'} \big) = \sum_{j=1}^n{A_{ij}B_{jk}},
+\end{equation}
+\begin{equation}
+ c_{ik,i'k'} = \sum_{j=1}^N{\sum_{j'=1}^n{a_{ij,i'j'}b_{jk,j'k'}},}
+\end{equation}
+\end{frame}
 
+\begin{frame}
+\frametitle{GEMM of Blocked Matrices}
+\frametitle{A Small Example}
+Let \(M = N = P = m = n = p = 2\):
+\vspace{0.3cm}
+\begin{center}
+\begin{tikzpicture}[
+matrixnode/.style={rectangle, draw=fzjgreen!60, fill=fzjgreen!5, very thick, minimum width=2cm, minimum height=2cm},
+blocknode/.style={rectangle, draw=fzjred!60, fill=fzjred!5, very thick, minimum width=1cm, minimum height=1cm},
+elemnode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum width=1cm, minimum height=1cm},
+]
+  \node[matrixnode] at (-2,0) {\(A\)};
+  \node at (-0.5,0) {\(\cdot\)};
+  \node[matrixnode] at (1,0) {\(B\)};
+  \node at (3,0) {\(=\)};
+  \node[matrixnode] at (5,0) {\(C\)};
+         
+  \foreach \i in {0,...,1}
+    \foreach \j in {0,...,1} 
+       \node[blocknode] at (\i -2-0.5,-\j-2) {\(A_{\text{\i}\text{\j}}\)};
+  \node at (-0.5,-2.5) {\(\cdot\)};     
+  \foreach \j in {0,...,1}
+    \foreach \k in {0,...,1} 
+       \node[blocknode] at (\j +1-0.5,-\k-2) {\(B_{\text{\j}\text{\k}}\)};
+  \node at (3,-2.5) {\(=\)};     
+  \foreach \i in {0,...,1}
+    \foreach \k in {0,...,1} 
+       \node[blocknode] at (\i +5-0.5,-\k-2) {\(C_{\text{\i}\text{\k}}\)};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{GEMM of Blocked Matrices}
+\frametitle{A Small Example}
+Let \(M = N = P = m = n = p = 2\):
+\vspace{0.3cm}
+\begin{center}
+\begin{tikzpicture}[
+matrixnode/.style={rectangle, draw=fzjgreen!60, fill=fzjgreen!5, very thick, minimum width=2cm, minimum height=2cm},
+blocknode/.style={rectangle, draw=fzjred!60, fill=fzjred!5, very thick, minimum width=1cm, minimum height=1cm},
+elemnode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum width=1cm, minimum height=1cm},
+]
+  \node[matrixnode] at (-2,0) {\(A\)};
+  \node at (-0.5,0) {\(\cdot\)};
+  \node[matrixnode] at (1,0) {\(B\)};
+  \node at (3,0) {\(=\)};
+  \node[matrixnode] at (5,0) {\(C\)};
+         
+  \foreach \i in {0,...,1}
+    \foreach \j in {0,...,1} 
+       \node[blocknode] at (\i -2-0.5,-\j-2) {\(A_{\text{\i}\text{\j}}\)};
+  \node at (-0.5,-2.5) {\(\cdot\)};     
+  \foreach \j in {0,...,1}
+    \foreach \k in {0,...,1} 
+       \node[blocknode] at (\j +1-0.5,-\k-2) {\(B_{\text{\j}\text{\k}}\)};
+  \node at (3,-2.5) {\(=\)};     
+  \foreach \i in {0,...,1}
+    \foreach \k in {0,...,1} 
+       \node[blocknode] at (\i +5-0.5,-\k-2) {\(C_{\text{\i}\text{\k}}\)};
+       
+  \foreach \i in {0,...,1}
+    \foreach \k in {0,...,1} 
+       \draw[-] (\i +5-0.5,-\k-2) -- (\i -2-0.5,-\k-2);
+\end{tikzpicture}
+\end{center}
+\end{frame}
 
 \part{QR}
 \makepart
-
+%\label
 % your talk should never end with an empty page.
 % to make sure we don't see a black page, we just take the title page again
 % in an ideal world, you will never "see" this frame
