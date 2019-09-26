@@ -1,6 +1,8 @@
 \input{header}
 
 \setmathfont{Latin Modern Math}
+\setmathfont{TeX Gyre Termes Math}[range=bb]
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
 
 \begin{document}
 
@@ -33,13 +35,13 @@
 \begin{itemize}
   \item Study: Master Physics
   \item Johannes Kepler University of Linz
-  \item Institute for Theoretical Physics \\ Department Many Particle Systems
-  \item Research:
-    \begin{itemize}
-    \item Quantum fluids
-    \item Complex fluids
-    \item Non-equilibrium statistical mechanics
-    \end{itemize}
+  \item Institute for Theoretical Physics, Department: Many Particle Systems. \\
+        Research:
+        \begin{itemize}
+         \item Quantum fluids
+         \item Complex fluids
+         \item Non-equilibrium statistical mechanics
+        \end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -125,6 +127,46 @@ Learning curve on of HPX is quite steep - in the first days quite some dedicatio
     \item tutorials/examples/01\_hello\_world/hello\_world.cpp; 71 lines
   \end{itemize}
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{HPX: Tasks and Threads}
+\begin{itemize}
+ \item HPX: Task-based parallelism
+ \item Split up big problem into smaller tasks
+ \item Tasks are worked off as HPX (lightweight) Threads by the OS Threads
+ \item Task size is crucial: not too small and not too big
+ \item Number of tasks can even be as high as \(\mathcal{OABCDM}(10^8)\)
+\end{itemize}
+\vspace{0.3cm}
+\begin{center}
+\begin{tikzpicture}[
+x=1cm,
+y=1cm,
+tasknode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum height=1cm},
+]
+\node at (-3cm,2cm) {Tasks too large};
+\node[tasknode] at (-5cm  +0cm,0cm) [draw, thick, minimum width=2cm] {\(T_1\)};
+\node[tasknode] at (-5cm  +2cm,0cm) [draw, thick, minimum width=2cm] {\(T_3\)};
+\node[tasknode] at (-5cm  +4cm,0cm) [draw, thick, minimum width=2cm] {\(T_5\)};
+\node[tasknode] at (-5cm+0.1cm,1cm) [draw, thick, minimum width=2.2cm] {\(T_2\)};
+\node[tasknode] at (-5cm+2.2cm,1cm) [draw, thick, minimum width=2.2cm] {\(T_4\)};
+
+\node at (3,2) {Right task size};
+\node[tasknode] at (+1,0) [draw, thick, minimum width=1cm] {\(T_1\)};
+\node[tasknode] at (+2,0) [draw, thick, minimum width=1cm] {\(T_3\)};
+\node[tasknode] at (+3.2,1) [draw, thick, minimum width=1cm] {\(T_5\)};
+\node[tasknode] at (+1.1,1) [draw, thick, minimum width=1.2cm] {\(T_2\)};
+\node[tasknode] at (+2.2,1) [draw, thick, minimum width=1.2cm] {\(T_4\)};
+
+\node[tasknode] at (3.05,0) [draw, thick, minimum width=1.1cm] {\(T_6\)};
+\node[tasknode] at (4.1,0) [draw, thick, minimum width=1.1cm] {\(T_7\)};
+\node[tasknode] at (5.1,0) [draw, thick, minimum width=1cm] {\(T_8\)};
+\node[tasknode] at (4.3,1) [draw, thick, minimum width=1.2cm] {\(T_9\)};
+% \node[tasknode] at (+2.1,1) [draw, thick, minimum width=1.05cm] {\(T_{10}\)};
+% \node[tasknode] at (+2.1,1) [draw, thick, minimum width=1.05cm] {\(T_{11}\)};
+\end{tikzpicture}
+\end{center}
 \end{frame}
 
 \begin{frame}
@@ -293,72 +335,6 @@ slavenode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimu
 \end{frame}
 
 \begin{frame}
-\frametitle{HPX: Tasks and Threads}
-\begin{itemize}
- \item HPX: Task-based parallelism
- \item Split up big problem into smaller tasks
- \item Tasks are worked off as HPX (lightweight) Threads by the OS Threads
- \item Task size is crucial: not too small and not too big
- \item Number of tasks can even be as high as \(O(10^8)\)
-\end{itemize}
-\vspace{0.3cm}
-\begin{center}
-\begin{tikzpicture}[
-x=1cm,
-y=1cm,
-tasknode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum height=1cm},
-]
-\node at (-3cm,2cm) {Tasks too large};
-\node[tasknode] at (-5cm  +0cm,0cm) [draw, thick, minimum width=2cm] {\(T_1\)};
-\node[tasknode] at (-5cm  +2cm,0cm) [draw, thick, minimum width=2cm] {\(T_3\)};
-\node[tasknode] at (-5cm  +4cm,0cm) [draw, thick, minimum width=2cm] {\(T_5\)};
-\node[tasknode] at (-5cm+0.1cm,1cm) [draw, thick, minimum width=2.2cm] {\(T_2\)};
-\node[tasknode] at (-5cm+2.2cm,1cm) [draw, thick, minimum width=2.2cm] {\(T_4\)};
-
-\node at (3,2) {Right task size};
-\node[tasknode] at (+1,0) [draw, thick, minimum width=1cm] {\(T_1\)};
-\node[tasknode] at (+2,0) [draw, thick, minimum width=1cm] {\(T_3\)};
-\node[tasknode] at (+3.2,1) [draw, thick, minimum width=1cm] {\(T_5\)};
-\node[tasknode] at (+1.1,1) [draw, thick, minimum width=1.2cm] {\(T_2\)};
-\node[tasknode] at (+2.2,1) [draw, thick, minimum width=1.2cm] {\(T_4\)};
-
-\node[tasknode] at (3.05,0) [draw, thick, minimum width=1.1cm] {\(T_6\)};
-\node[tasknode] at (4.1,0) [draw, thick, minimum width=1.1cm] {\(T_7\)};
-\node[tasknode] at (5.1,0) [draw, thick, minimum width=1cm] {\(T_8\)};
-\node[tasknode] at (4.3,1) [draw, thick, minimum width=1.2cm] {\(T_9\)};
-% \node[tasknode] at (+2.1,1) [draw, thick, minimum width=1.05cm] {\(T_{10}\)};
-% \node[tasknode] at (+2.1,1) [draw, thick, minimum width=1.05cm] {\(T_{11}\)};
-\end{tikzpicture}
-\end{center}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{HPX: Example Program}
-\begin{lstlisting}[language=C++]
-double calc_area(hpx::future<double> future_r, hpx::future<double> future_pi)
-{
-    double r = future_r.get(); // r is returned immediately (make_ready_future)
-    double pi = future_pi.get(); // pi is returned once the async computation finishes
-    return r * r * pi;
-}
-
-int hpx_main(variables_map& vm) // In hpx_main the HPX environment is loaded
-{
-    hpx::future<double> future_r = hpx::make_ready_future(vm["r"].as<double>());
-    hpx::future<double> future_pi = hpx::async([](){ return 4.0 * atan(1.0); });
-    hpx::future<double> future_area = hpx::dataflow(&calc_area, future_r, future_pi);
-    return hpx::finalize(); // Area can be obtained by: future_area.get()
-}
-
-int main(int argc, char * argv[]) // Start program by: ./area --r=...
-{
-    options_description.add_options()("r", value<double>()->default_value(1.0), "Radius: r");
-    return hpx::init(options_description, argc, argv); // hpx::init calls hpx_main
-}
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}
 \frametitle{The HPX API}
 \framesubtitle{Selection: Classes}
 \begin{center}
@@ -395,8 +371,8 @@ int main(int argc, char * argv[]) // Start program by: ./area --r=...
  \texttt{future::\{is\_ready, valid, has\_exception\}} & Query state of future \\
  \texttt{future::get} & Return computed result of future \\
  \texttt{future::then} & Continuations of futures \\
- \texttt{hpx::when\_all, hpx::when\_any} & Waiting on one or more futures (non blocking) \\
- \texttt{hpx::wait\_all, hpx::wait\_any} & Waiting on one or more futures (blocking) \\
+ \texttt{hpx::when\_all, hpx::when\_any, hpx::when\_n} & Waiting on one or more futures (non blocking) \\
+ \texttt{hpx::wait\_all, hpx::wait\_any, hpx::wait\_n} & Waiting on one or more futures (blocking) \\
  \texttt{hpx::dataflow} & Shortcut to hpx::when\_all(...).then(...) \\
  \texttt{...} &  \\
  \hline
@@ -404,8 +380,79 @@ int main(int argc, char * argv[]) // Start program by: ./area --r=...
 \end{center}
 \end{frame}
 
-\part{Overview of numerical linear algebra and its applications}
+
+\begin{frame}[fragile]
+\frametitle{HPX: Example Program}
+\begin{lstlisting}[language=C++]
+double calc_area(hpx::future<double> future_r, hpx::future<double> future_pi)
+{
+    double r = future_r.get(); // r is returned immediately (make_ready_future)
+    double pi = future_pi.get(); // pi is returned once the async computation finishes
+    return r * r * pi;
+}
+
+int hpx_main(variables_map& vm) // In hpx_main the HPX environment is loaded
+{
+    hpx::future<double> future_r = hpx::make_ready_future(vm["r"].as<double>());
+    hpx::future<double> future_pi = hpx::async([](){ return 4.0 * atan(1.0); });
+    hpx::future<double> future_area = hpx::dataflow(&calc_area, future_r, future_pi);
+    return hpx::finalize(); // Area can be obtained by: future_area.get()
+}
+
+int main(int argc, char * argv[]) // Start program by: ./area --r=...
+{
+    options_description.add_options()("r", value<double>()->default_value(1.0), "Radius: r");
+    return hpx::init(options_description, argc, argv); // hpx::init calls hpx_main
+}
+\end{lstlisting}
+\end{frame}
+
+\part{Introduction to Numerical Linear Algebra and Applications}
 \makepart
+
+\begin{frame}
+\frametitle{Introduction: Numerical Linear Algebra}
+Numerical linear algebra is a subfield of numerical analysis and linear algebra,
+and it plays an integral role in computational problem solving.
+There exist many several algorithms for common problems, a few well-known are:
+\begin{itemize}
+ \item Solving systems of linear equations
+ \item Eigenvalue problem
+ \item Matrix inversion problem
+ \item Least-squared problem
+\end{itemize}
+which may be using one of the following matrix operations/decompositions:
+\begin{itemize}
+ \item Matrix multiplications
+ \item LU decomposition
+ \item QR decomposition
+ \item Spectral decomposition
+ \item Singular value decomposition
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Applications of Numerical Linear Algebra}
+\frametitle{GEMM}
+GEMM - GEneral Matrix Multiply
+\begin{itemize}
+ \item Basic binary operation in Linear Algebra, which has numerous applications in mathematics, science and engineering.
+ \item More fundamental applications of matrix multiplications include
+  \begin{enumerate}
+   \item Systems of Linear Algebraic Equations (SLAE) can be expressed as a single matrix equation, e.g. \(Ax = y\). 
+   \item Linear map between two vector spaces \(U\) and \(V\) over the same field \(F\).
+  \end{enumerate}
+ \item Let the field \(F\) be \(\mathbb{R}\) or \(\mathbb{C}\), \(A =\big( a_{ij} \big) \in F^{m \times n}, B =\big( b_{jk} \big) \in F^{n \times p}\). Then,
+ \begin{equation}
+  C=\big( c_{ik} \big)=AB \in F^{m \times p},
+ \end{equation}
+ \begin{equation}
+  c_{ik} = \sum_{j=1}^n{a_{ij}b_{jk}}
+ \end{equation}
+ \item \(\implies\) most simple implementation consists of 3 nested for-loops: \\
+  \texttt{for 0 <= i < m, 0 <= j < n, 0 <= k < p, do: C[i][k] += A[i][j] * B[j][k]}
+\end{itemize}
+\end{frame}
 
 \part{GEMM}
 \makepart
