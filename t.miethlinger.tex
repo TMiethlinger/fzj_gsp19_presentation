@@ -1,8 +1,8 @@
 \input{header}
 
-\setmathfont{Latin Modern Math}
-\setmathfont{TeX Gyre Termes Math}[range=bb]
-\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+% \setmathfont{Latin Modern Math}
+% \setmathfont{TeX Gyre Termes Math}[range=bb]
+% \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
 
 \begin{document}
 
@@ -419,7 +419,7 @@ There exist many several algorithms for common problems, a few well-known are:
  \item Solving systems of linear equations
  \item Eigenvalue problem
  \item Matrix inversion problem
- \item Least-squared problem
+ \item Least-squares problem
 \end{itemize}
 which may be using one of the following matrix operations/decompositions:
 \begin{itemize}
@@ -435,8 +435,8 @@ which may be using one of the following matrix operations/decompositions:
 \makepart
 
 \begin{frame}
-\frametitle{Applications of Numerical Linear Algebra}
 \frametitle{GEMM}
+\framesubtitle{Applications of Numerical Linear Algebra}
 GEMM - GEneral Matrix Multiply
 \begin{itemize}
  \item Basic binary operation in Linear Algebra, which has numerous applications in mathematics, science and engineering.
@@ -445,6 +445,7 @@ GEMM - GEneral Matrix Multiply
    \item Systems of Linear Algebraic Equations (SLAE) can be expressed as a single matrix equation, e.g. \(Ax = y\). 
    \item Linear map between two vector spaces \(U\) and \(V\) over the same field \(F\).
   \end{enumerate}
+ \item Motivation: A large amount (>70\%) of runtime in ChASE (\emph{(ED Napoli, 2019)}) routine is used for GEMM.
  \item Let the field \(F\) be \(\mathbb{R}\) or \(\mathbb{C}\), \(A =\big( a_{ij} \big) \in F^{m \times n}, B =\big( b_{jk} \big) \in F^{n \times p}\). Then,
  \begin{equation}
   C=\big( c_{ik} \big)=AB \in F^{m \times p},
@@ -452,20 +453,19 @@ GEMM - GEneral Matrix Multiply
  \begin{equation}
   c_{ik} = \sum_{j=1}^n{a_{ij}b_{jk}}
  \end{equation}
- \item \(\implies\) most simple implementation consists of 3 nested for-loops: \\
-  \texttt{for 0 <= i < m, 0 <= j < n, 0 <= k < p, do: C[i][k] += A[i][j] * B[j][k]}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Applications of Numerical Linear Algebra}
 \frametitle{GEMM of Blocked Matrices}
-Better approach computationally:
-Discretize matrices into blocks, perform GEMM block-wise:
-Let the field \(F\) again be \(\mathbb{R}\) or \(\mathbb{C}\),
+\framesubtitle{Applications of Numerical Linear Algebra}
+\(\implies\) most simple implementation consists of 3 nested for-loops: \\
+\vspace{0.005cm}\texttt{for 0 <= i < m, 0 <= j < n, 0 <= k < p, do: C[i][k] += A[i][j] * B[j][k]}\\
+\vspace{0.25cm}Better approach: Discretize matrices into blocks, perform GEMM \textbf{block-wise}\\
+\vspace{0.005cm}Let the field \(F\) again be \(\mathbb{R}\) or \(\mathbb{C}\),
 \(A =\big( A_{ij} \big) \in F^{M \times N \times m \times n}\),
-\(B =\big( B_{jk} \big) \in F^{N \times P \times n \times p}\).
-Then
+\(B =\big( B_{jk} \big) \in F^{N \times P \times n \times p}\).\\
+\vspace{0.005cm}Then:
 \begin{equation}
  C=\big( C_{ik} \big)=AB \in F^{M \times P \times m \times p},
 \end{equation}
@@ -486,7 +486,6 @@ Let \(M = N = P = m = n = p = 2\):
 \begin{tikzpicture}[
 matrixnode/.style={rectangle, draw=fzjgreen!60, fill=fzjgreen!5, very thick, minimum width=2cm, minimum height=2cm},
 blocknode/.style={rectangle, draw=fzjred!60, fill=fzjred!5, very thick, minimum width=1cm, minimum height=1cm},
-elemnode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum width=1cm, minimum height=1cm},
 ]
   \node[matrixnode] at (-2,0) {\(A\)};
   \node at (-0.5,0) {\(\cdot\)};
@@ -496,15 +495,15 @@ elemnode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum
          
   \foreach \i in {0,...,1}
     \foreach \j in {0,...,1} 
-       \node[blocknode] at (\i -2-0.5,-\j-2) {\(A_{\text{\i}\text{\j}}\)};
+       \node[blocknode] at (\i -2-0.5,-\j-2) {\(A_{\text{\i\j}}\)};
   \node at (-0.5,-2.5) {\(\cdot\)};     
   \foreach \j in {0,...,1}
     \foreach \k in {0,...,1} 
-       \node[blocknode] at (\j +1-0.5,-\k-2) {\(B_{\text{\j}\text{\k}}\)};
+       \node[blocknode] at (\j +1-0.5,-\k-2) {\(B_{\text{\j\k}}\)};
   \node at (3,-2.5) {\(=\)};     
   \foreach \i in {0,...,1}
     \foreach \k in {0,...,1} 
-       \node[blocknode] at (\i +5-0.5,-\k-2) {\(C_{\text{\i}\text{\k}}\)};
+       \node[blocknode] at (\i +5-0.5,-\k-2) {\(C_{\text{\i\k}}\)};
 \end{tikzpicture}
 \end{center}
 \end{frame}
@@ -516,41 +515,72 @@ Let \(M = N = P = m = n = p = 2\):
 \vspace{0.3cm}
 \begin{center}
 \begin{tikzpicture}[
-matrixnode/.style={rectangle, draw=fzjgreen!60, fill=fzjgreen!5, very thick, minimum width=2cm, minimum height=2cm},
-blocknode/.style={rectangle, draw=fzjred!60, fill=fzjred!5, very thick, minimum width=1cm, minimum height=1cm},
+blocknode/.style={rectangle, draw=fzjred!60, fill=fzjred!5, very thick, minimum width=2cm, minimum height=2cm},
 elemnode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum width=1cm, minimum height=1cm},
 ]
-  \node[matrixnode] at (-2,0) {\(A\)};
+  \node[blocknode] at (-2,0) {\(A_{ij}\)};
   \node at (-0.5,0) {\(\cdot\)};
-  \node[matrixnode] at (1,0) {\(B\)};
+  \node[blocknode] at (1,0) {\(B_{jk}\)};
   \node at (3,0) {\(=\)};
-  \node[matrixnode] at (5,0) {\(C\)};
+  \node[blocknode] at (5,0) {\(A_{ij}B_{jk}\)};
          
   \foreach \i in {0,...,1}
     \foreach \j in {0,...,1} 
-       \node[blocknode] at (\i -2-0.5,-\j-2) {\(A_{\text{\i}\text{\j}}\)};
+       \node[elemnode] at (\i -2-0.5,-\j-2) {\(a_{ij,\text{\i\j}}\)};
   \node at (-0.5,-2.5) {\(\cdot\)};     
   \foreach \j in {0,...,1}
     \foreach \k in {0,...,1} 
-       \node[blocknode] at (\j +1-0.5,-\k-2) {\(B_{\text{\j}\text{\k}}\)};
+       \node[elemnode] at (\j +1-0.5,-\k-2) {\(b_{jk,\text{\j\k}}\)};
   \node at (3,-2.5) {\(=\)};     
   \foreach \i in {0,...,1}
     \foreach \k in {0,...,1} 
-       \node[blocknode] at (\i +5-0.5,-\k-2) {\(C_{\text{\i}\text{\k}}\)};
-       
-  \foreach \i in {0,...,1}
-    \foreach \k in {0,...,1} 
-       \draw[-] (\i +5-0.5,-\k-2) -- (\i -2-0.5,-\k-2);
+       \node[elemnode] at (\i +5-0.5,-\k-2) {\(...\)};
 \end{tikzpicture}
 \end{center}
 \end{frame}
 
 \part{QR}
 \makepart
-%\label
-% your talk should never end with an empty page.
-% to make sure we don't see a black page, we just take the title page again
-% in an ideal world, you will never "see" this frame
+
+\begin{frame}
+\frametitle{QR decomposition}
+\framesubtitle{Applications of Numerical Linear Algebra}
+QR decomposition
+\begin{itemize}
+ \item Matrix decomposition of square or rectangular matrices (we only consider square matrices).
+ \item Let the field \(F\) be \(\mathbb{R}\) or \(\mathbb{C}\), \(A =\big( a_{ij} \big) \in F^{m \times m}\). Then,
+ \begin{equation}
+  A = QR,
+ \end{equation}
+ where \(Q\) is a orthogonal(\(F=\mathbb{R}\)) / unitary(\(F=\mathbb{C}\)) matrix, and \(R\) is an upper triangular matrix.
+ \item Computing the QR decomposition:
+ \begin{itemize}
+  \item Gram-Schmidt orthogonalisation process
+  \item \textbf{Householder reflection}
+  \item Givens rotations
+ \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Applications of QR decomposition}
+\framesubtitle{Examples}
+\begin{itemize}
+ \item Computing Eigenvalues (QR algorithm)
+ \item Computing orthogonal base 
+ \item Solving least-squares problem
+ \item Solution to linear inverse problems
+\end{itemize}
+A selection of papers in my research ares which use QR decomposition:
+\begin{itemize}
+ \item An evaluation of noise reduction algorithms for particle-based fluid simulations in multi-scale applications (M.J. Zimon et al., 2016)
+ \item Dynamic mode decomposition of numerical and experimental data (P.J. Schmid, 2010)
+ \item Krylov Methods for the Incompressible Navier-Stokes Equations (W.S. Edwards, 1994)
+ \item Computing Lyapunov exponents of continuous dynamical systems: method of Lyapunov vectors (J Lu, 2005)
+\end{itemize}
+
+\end{frame}
+
 \includetitle{Slides/title}
 
 \end{document}
