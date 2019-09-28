@@ -511,7 +511,7 @@ blocknode/.style={rectangle, draw=fzjred!60, fill=fzjred!5, very thick, minimum 
 \begin{frame}
 \frametitle{GEMM of Blocked Matrices}
 \frametitle{A Small Example}
-Let \(M = N = P = m = n = p = 2\):
+Let \(m = n = p = M = N = P = 2\):
 \vspace{0.3cm}
 \begin{center}
 \begin{tikzpicture}[
@@ -583,122 +583,192 @@ A selection of papers in my research ares which use QR decomposition:
 \begin{frame}
 \frametitle{QR decomposition}
 \framesubtitle{Algorithm}
+\begin{center}
+\begin{tikzpicture}[
+nodea/.style={rectangle, draw=fzjblue, very thick, minimum width=0.3cm, minimum height=0.3cm},
+nodeb/.style={rectangle, draw=fzjred, fill=fzjblue, very thick, minimum width=0.3cm, minimum height=0.3cm},
+nodec/.style={rectangle, draw=fzjred, fill=white, very thick, minimum width=0.3cm, minimum height=0.3cm},
+]
+  \foreach \jj in {0,...,2}
+  \foreach \ii in {0,...,2}
+  \foreach \j in {0,...,2} 
+  \foreach \i in {0,...,2}
+       \node[nodea] at (0.5*\i + 1.875*\ii,-0.5*\j-1.875*\jj) {};
+       
+  \node[nodeb] at (0,0) {};
+  \node[nodeb] at (0.5*1 + 1.875*1,0) {};
+  \node[nodeb] at (0.5*2 + 1.875*2,0) {};
+  
+  \node[nodeb] at (0.5*0 + 1.875*0,-0.5*1-1.875*1) {};
+  \node[nodeb] at (0.5*1 + 1.875*1,-0.5*1-1.875*1) {};
+  \node[nodeb] at (0.5*1 + 1.875*1,-0.5*0-1.875*1) {};
+  \node[nodec] at (0.5*0 + 1.875*1,-0.5*1-1.875*1) {};
+  \node[nodeb] at (0.5*2 + 1.875*2,-0.5*1-1.875*1) {};
+  \node[nodeb] at (0.5*2 + 1.875*2,-0.5*0-1.875*1) {};
+  \node[nodec] at (0.5*0 + 1.875*2,-0.5*1-1.875*1) {};
+  
+  \node[nodeb] at (0.5*0 + 1.875*0,-0.5*2-1.875*2) {};
+  \node[nodeb] at (0.5*1 + 1.875*1,-0.5*2-1.875*2) {};
+  \node[nodeb] at (0.5*1 + 1.875*1,-0.5*0-1.875*2) {};
+  \node[nodec] at (0.5*0 + 1.875*1,-0.5*2-1.875*2) {};
+  \node[nodeb] at (0.5*2 + 1.875*2,-0.5*2-1.875*2) {};
+  \node[nodeb] at (0.5*2 + 1.875*2,-0.5*0-1.875*2) {};
+  \node[nodec] at (0.5*0 + 1.875*2,-0.5*2-1.875*2) {};
+\end{tikzpicture}
+\end{center}
 \end{frame}
 
 \part{Benchmark: Results}
 \makepart
 
-\begin{frame}
-\frametitle{GEMM Shared Memory}
-\begin{center}
-\begin{tikzpicture}
-    \begin{axis}[xlabel={Threads}, ylabel={Runtime[ms]}]
-        \addplot[color=black,mark=x]
-            coordinates
-            {
-                (2,-2.8559703) (3,-3.5301677) (4,-4.3050655) (5,-5.1413136) (6,-6.0322865) (7,-6.9675052) (8,-7.9377747)
-            };
-            \addlegendentry{Serial Naive}
-        \addplot[color=fzjblue,mark=x]
-            coordinates
-            {
-                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
-            };
-            \addlegendentry{Serial Tiled}
-        \addplot[color=fzjorange,mark=x]
-            coordinates
-            {
-                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
-            };
-            \addlegendentry{OMP Row}
-        \addplot[color=fzjviolet,mark=x]
-            coordinates
-            {
-                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
-            };
-            \addlegendentry{OMP Cell}
-        \addplot[color=fzjgreen,mark=x]
-            coordinates
-            {
-                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
-            };
-            \addlegendentry{HPX v1}
-        \addplot[color=fzjred,mark=x]
-            coordinates
-            {
-                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
-            };
-            \addlegendentry{HPX v2}
-        \addplot[color=fzjlightblue,mark=x]
-            coordinates
-            {
-                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
-            };
-            \addlegendentry{HPX v312}
-    \end{axis}
-\end{tikzpicture}
-\end{center}
-\end{frame}
-
-\begin{frame}
-\frametitle{GEMM Shared Memory}
-\begin{center}
-\begin{tikzpicture}
-\begin{axis}[name=plot1,height=6.5cm,width=6.5cm,xlabel={Threads [1]},ylabel={Runtime [s]}]
-        \addplot[color=black,mark=x]
-            coordinates
-            {
-                (1,42.500)
-            };
-            \addlegendentry{$0.25$ Serial Naive}
-        \addplot[color=fzjblue,mark=x]
-            coordinates
-            {
-                (1,31.806)
-            };
-            \addlegendentry{Serial Tiled}
-        \addplot[color=fzjorange,mark=x]
-            coordinates
-            {
-                (2,16.407) (4,9.053) (5,7.355) (8,4.665) (10,3.761) (20,1.979)
-            };
-            \addlegendentry{OMP Row Tiled}
-        \addplot[color=fzjviolet,mark=x]
-            coordinates
-            {
-                (4,9.049) (16,3.313) (25,2.170)
-            };
-            \addlegendentry{OMP Cell Tiled}
-\end{axis}
-\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.5cm,width=6.5cm,xlabel={Threads},ylabel={Runtime [s]}]
-        \addplot[color=fzjorange,mark=x]
-            coordinates
-            {
-                (2,16.407) (4,9.053) (5,7.355) (8,4.665) (10,3.761) (20,1.979)
-            };
-            \addlegendentry{OMP Row Tiled}
-        \addplot[color=fzjgreen,mark=x]
-            coordinates
-            {
-                (2,16.427) (4,10.473) (5,7.386) (8,5.419) (10,3.831) (20,2.048)
-            };
-            \addlegendentry{HPX foreach}
-        \addplot[color=fzjred,mark=x]
-            coordinates
-            {
-                (2,1.6035) (4,8.848) (5,7.142) (8,4.501) (10,3.615) (20,1.882)
-            };
-            \addlegendentry{HPX future \(C_{ik}\)}
-        \addplot[color=fzjlightblue,mark=x]
-            coordinates
-            {
-                (2,16.387) (4,9.015) (5,7.254) (8,4.599) (10,3.679) (20,1.941)
-            };
-            \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
-\end{axis}
-\end{tikzpicture}
-\end{center}
-\end{frame}
+% \begin{frame}
+% \frametitle{GEMM Shared Memory}
+% \begin{center}
+% \begin{tikzpicture}
+%     \begin{axis}[xlabel={Threads}, ylabel={Runtime[ms]}]
+%         \addplot[color=black,mark=x]
+%             coordinates
+%             {
+%                 (2,-2.8559703) (3,-3.5301677) (4,-4.3050655) (5,-5.1413136) (6,-6.0322865) (7,-6.9675052) (8,-7.9377747)
+%             };
+%             \addlegendentry{Serial Naive}
+%         \addplot[color=fzjblue,mark=x]
+%             coordinates
+%             {
+%                 (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+%             };
+%             \addlegendentry{Serial Tiled}
+%         \addplot[color=fzjorange,mark=x]
+%             coordinates
+%             {
+%                 (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+%             };
+%             \addlegendentry{OMP Row}
+%         \addplot[color=fzjviolet,mark=x]
+%             coordinates
+%             {
+%                 (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+%             };
+%             \addlegendentry{OMP Cell}
+%         \addplot[color=fzjgreen,mark=x]
+%             coordinates
+%             {
+%                 (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+%             };
+%             \addlegendentry{HPX v1}
+%         \addplot[color=fzjred,mark=x]
+%             coordinates
+%             {
+%                 (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+%             };
+%             \addlegendentry{HPX v2}
+%         \addplot[color=fzjlightblue,mark=x]
+%             coordinates
+%             {
+%                 (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+%             };
+%             \addlegendentry{HPX v312}
+%     \end{axis}
+% \end{tikzpicture}
+% \end{center}
+% \end{frame}
+% 
+% \begin{frame}
+% \frametitle{GEMM Shared Memory}
+% Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
+% \begin{center}
+% \begin{tikzpicture}
+% \begin{axis}[name=plot1,height=6.0cm,width=6.0cm,xlabel={Threads [1]},ylabel={Runtime [s]},legend style={font=\scriptsize}]
+%         \addplot[color=black,mark=x]
+%             coordinates
+%             {
+%                 (1,42.500)
+%             };
+%             \addlegendentry{$0.25$ Serial Naive}
+%         \addplot[color=fzjblue,mark=x]
+%             coordinates
+%             {
+%                 (1,31.806)
+%             };
+%             \addlegendentry{Serial Tiled}
+%         \addplot[color=fzjorange,mark=x]
+%             coordinates
+%             {
+%                 (2,16.407) (4,9.053) (5,7.355) (8,4.665) (10,3.761) (20,1.979)
+%             };
+%             \addlegendentry{OMP Row Tiled}
+%         \addplot[color=fzjviolet,mark=x]
+%             coordinates
+%             {
+%                 (4,9.049) (16,3.313) (25,2.170)
+%             };
+%             \addlegendentry{OMP Cell Tiled}
+% \end{axis}
+% \begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Threads [1]},ylabel={Runtime [s]},legend style={font=\scriptsize}]
+%         \addplot[color=fzjorange,mark=x]
+%             coordinates
+%             {
+%                 (2,16.407) (4,9.053) (5,7.355) (8,4.665) (10,3.761) (20,1.979)
+%             };
+%             \addlegendentry{OMP Row Tiled}
+%         \addplot[color=fzjgreen,mark=x]
+%             coordinates
+%             {
+%                 (2,16.427) (4,10.473) (5,7.386) (8,5.419) (10,3.831) (20,2.048)
+%             };
+%             \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
+%         \addplot[color=fzjred,mark=x]
+%             coordinates
+%             {
+%                 (2,16.035) (4,8.848) (5,7.142) (8,4.501) (10,3.615) (20,1.882)
+%             };
+%             \addlegendentry{HPX future \(C_{ik}\)}
+%         \addplot[color=fzjlightblue,mark=x]
+%             coordinates
+%             {
+%                 (2,16.387) (4,9.015) (5,7.254) (8,4.599) (10,3.679) (20,1.941)
+%             };
+%             \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
+% \end{axis}
+% \end{tikzpicture}
+% \end{center}
+% \end{frame}
+% 
+% \begin{frame}
+% \frametitle{GEMM Shared Memory}
+% Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
+% \begin{center}
+% \begin{tikzpicture}
+% \begin{axis}[name=plot1,height=6.5cm,width=6.5cm,xlabel={Threads [1]},ylabel={Runtimes Ratio [1]},legend style={font=\scriptsize}]
+%         \addplot[color=fzjorange,mark=x]
+%             coordinates
+%             {
+%                 (2,16.407/16.407) (4,9.053/9.053) (5,7.355/7.355) (8,4.665/4.665) (10,3.761/3.761) (20,1.979/1.979)
+%             };
+%             \addlegendentry{OMP Row Tiled}
+%         \addplot[color=fzjgreen,mark=x]
+%             coordinates
+%             {
+%                 (2,16.427/16.407) (4,10.473/9.053) (5,7.386/7.355) (8,5.419/4.665) (10,3.831/3.761) (20,2.048/1.979)
+%             };
+%             \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
+%         \addplot[color=fzjred,mark=x]
+%             coordinates
+%             {
+%                 (2,16.035/16.407) (4,8.848/9.053) (5,7.142/7.355) (8,4.501/4.665) (10,3.615/3.761) (20,1.882/1.979)
+%             };
+%             \addlegendentry{HPX future \(C_{ik}\)}
+%         \addplot[color=fzjlightblue,mark=x]
+%             coordinates
+%             {
+%                 (2,16.387/16.407) (4,9.015/9.053) (5,7.254/7.355) (8,4.599/4.665) (10,3.679/3.761) (20,1.941/1.979)
+%             };
+%             \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
+% \end{axis}
+% \end{tikzpicture}
+% \end{center}
+% \(\implies\) HPX can be faster than OpenMP, even for embarrassingly parallel problems. 
+% \end{frame}
 
 \includetitle{Slides/title}
 
