@@ -578,7 +578,126 @@ A selection of papers in my research ares which use QR decomposition:
  \item Krylov Methods for the Incompressible Navier-Stokes Equations (W.S. Edwards, 1994)
  \item Computing Lyapunov exponents of continuous dynamical systems: method of Lyapunov vectors (J Lu, 2005)
 \end{itemize}
+\end{frame}
 
+\begin{frame}
+\frametitle{QR decomposition}
+\framesubtitle{Algorithm}
+\end{frame}
+
+\part{Benchmark: Results}
+\makepart
+
+\begin{frame}
+\frametitle{GEMM Shared Memory}
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[xlabel={Threads}, ylabel={Runtime[ms]}]
+        \addplot[color=black,mark=x]
+            coordinates
+            {
+                (2,-2.8559703) (3,-3.5301677) (4,-4.3050655) (5,-5.1413136) (6,-6.0322865) (7,-6.9675052) (8,-7.9377747)
+            };
+            \addlegendentry{Serial Naive}
+        \addplot[color=fzjblue,mark=x]
+            coordinates
+            {
+                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+            };
+            \addlegendentry{Serial Tiled}
+        \addplot[color=fzjorange,mark=x]
+            coordinates
+            {
+                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+            };
+            \addlegendentry{OMP Row}
+        \addplot[color=fzjviolet,mark=x]
+            coordinates
+            {
+                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+            };
+            \addlegendentry{OMP Cell}
+        \addplot[color=fzjgreen,mark=x]
+            coordinates
+            {
+                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+            };
+            \addlegendentry{HPX v1}
+        \addplot[color=fzjred,mark=x]
+            coordinates
+            {
+                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+            };
+            \addlegendentry{HPX v2}
+        \addplot[color=fzjlightblue,mark=x]
+            coordinates
+            {
+                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+            };
+            \addlegendentry{HPX v312}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{GEMM Shared Memory}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[name=plot1,height=6.5cm,width=6.5cm,xlabel={Threads [1]},ylabel={Runtime [s]}]
+        \addplot[color=black,mark=x]
+            coordinates
+            {
+                (1,42.500)
+            };
+            \addlegendentry{$0.25$ Serial Naive}
+        \addplot[color=fzjblue,mark=x]
+            coordinates
+            {
+                (1,31.806)
+            };
+            \addlegendentry{Serial Tiled}
+        \addplot[color=fzjorange,mark=x]
+            coordinates
+            {
+                (2,16.407) (4,9.053) (5,7.355) (8,4.665) (10,3.761) (20,1.979)
+            };
+            \addlegendentry{OMP Row Tiled}
+        \addplot[color=fzjviolet,mark=x]
+            coordinates
+            {
+                (4,9.049) (16,3.313) (25,2.170)
+            };
+            \addlegendentry{OMP Cell Tiled}
+\end{axis}
+\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.5cm,width=6.5cm,xlabel={Threads},ylabel={Runtime [s]}]
+        \addplot[color=fzjorange,mark=x]
+            coordinates
+            {
+                (2,16.407) (4,9.053) (5,7.355) (8,4.665) (10,3.761) (20,1.979)
+            };
+            \addlegendentry{OMP Row Tiled}
+        \addplot[color=fzjgreen,mark=x]
+            coordinates
+            {
+                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+            };
+            \addlegendentry{HPX v1}
+        \addplot[color=fzjred,mark=x]
+            coordinates
+            {
+                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+            };
+            \addlegendentry{HPX v2}
+        \addplot[color=fzjlightblue,mark=x]
+            coordinates
+            {
+                (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
+            };
+            \addlegendentry{HPX v312}
+\end{axis}
+\end{tikzpicture}
+\end{center}
 \end{frame}
 
 \includetitle{Slides/title}
