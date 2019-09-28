@@ -588,12 +588,33 @@ A selection of papers in my research ares which use QR decomposition:
 nodea/.style={rectangle, draw=fzjblue, very thick, minimum width=0.3cm, minimum height=0.3cm},
 nodeb/.style={rectangle, draw=fzjred, fill=fzjblue, very thick, minimum width=0.3cm, minimum height=0.3cm},
 nodec/.style={rectangle, draw=fzjred, fill=white, very thick, minimum width=0.3cm, minimum height=0.3cm},
+drawa/.style={-, draw=fzjblue, very thick},
+drawb/.style={-, draw=fzjred, very thick},
 ]
+  \draw[->, dashed, very thick] (0.5*2 - 1.875*1+0.15,-0.5*1-1.875*0) -- (0.5*0 + 1.875*0-0.15,-0.5*1-1.875*0);
+  \foreach \jj in {1,...,2}
+    \draw[->, very thick] (0.5*2 - 1.875*1+0.15,-0.5*1-1.875*\jj) -- (0.5*0 + 1.875*0-0.15,-0.5*1-1.875*\jj);
+  \foreach \jj in {0,...,2}
+    \draw[->, very thick] (0.5*2 + 1.875*0+0.15,-0.5*1-1.875*\jj) -- (0.5*0 + 1.875*1-0.15,-0.5*1-1.875*\jj);
+  \foreach \jj in {0,...,2}
+    \draw[->, very thick] (0.5*2 + 1.875*1+0.15,-0.5*1-1.875*\jj) -- (0.5*0 + 1.875*2-0.15,-0.5*1-1.875*\jj);
+  \foreach \jj in {0,...,1}
+    \draw[->, very thick] (0.5*2 + 1.875*2+0.15,-0.5*1-1.875*\jj) -- (0.5*0 + 1.875*3-0.15,-0.5*1-1.875*\jj);
+  \draw[->, dashed, very thick] (0.5*2 + 1.875*2+0.15,-0.5*1-1.875*2) -- (0.5*0 + 1.875*3-0.15,-0.5*1-1.875*2);
+  
+  \draw[very thick] (0.5*0 + 1.875*3-0.15,-1.4375) -- (0.5*0 + 1.875*3-0.15,-0.5*1);
+  \draw[very thick] (0.5*2 - 1.875*1+0.15,-1.4375) -- (0.5*0 + 1.875*3-0.15,-1.4375);
+  \draw[very thick] (0.5*2 - 1.875*1+0.15,-1.4375) -- (0.5*2 - 1.875*1+0.15,-0.5*1-1.875*1);
+  
+  \draw[very thick] (0.5*0 + 1.875*3-0.15,-0.5*1-1.875*1) -- (0.5*0 + 1.875*3-0.15,-3.3175);
+  \draw[very thick] (0.5*2 - 1.875*1+0.15,-3.3175) -- (0.5*0 + 1.875*3-0.15,-3.3175);
+  \draw[very thick] (0.5*2 - 1.875*1+0.15,-3.3175) -- (0.5*2 - 1.875*1+0.15,-0.5*1-1.875*2);
+  
   \foreach \jj in {0,...,2}
   \foreach \ii in {0,...,2}
   \foreach \j in {0,...,2} 
   \foreach \i in {0,...,2}
-       \node[nodea] at (0.5*\i + 1.875*\ii,-0.5*\j-1.875*\jj) {};
+     \node[nodea] at (0.5*\i + 1.875*\ii,-0.5*\j-1.875*\jj) {};
        
   \node[nodeb] at (0,0) {};
   \node[nodeb] at (0.5*1 + 1.875*1,0) {};
@@ -614,6 +635,30 @@ nodec/.style={rectangle, draw=fzjred, fill=white, very thick, minimum width=0.3c
   \node[nodeb] at (0.5*2 + 1.875*2,-0.5*2-1.875*2) {};
   \node[nodeb] at (0.5*2 + 1.875*2,-0.5*0-1.875*2) {};
   \node[nodec] at (0.5*0 + 1.875*2,-0.5*2-1.875*2) {};
+  
+  \draw[drawb] (0.5*0 + 1.875*1-0.15,-0.5*0-1.875*0+0.15) -- (0.5*0 + 1.875*1+0.15,-0.5*0-1.875*0-0.15);
+  \draw[drawb] (0.5*0 + 1.875*1-0.15,-0.5*0-1.875*0-0.15) -- (0.5*0 + 1.875*1+0.171,-0.5*0-1.875*0-0.15);
+  \draw[drawb] (0.5*0 + 1.875*1-0.15,-0.5*0-1.875*0+0.171) -- (0.5*0 + 1.875*1-0.15,-0.5*0-1.875*0-0.171);
+  
+  \draw[drawb] (0.5*0 + 1.875*2-0.15,-0.5*0-1.875*0+0.15) -- (0.5*0 + 1.875*2+0.15,-0.5*0-1.875*0-0.15);
+  \draw[drawb] (0.5*0 + 1.875*2-0.15,-0.5*0-1.875*0-0.15) -- (0.5*0 + 1.875*2+0.171,-0.5*0-1.875*0-0.15);
+  \draw[drawb] (0.5*0 + 1.875*2-0.15,-0.5*0-1.875*0+0.171) -- (0.5*0 + 1.875*2-0.15,-0.5*0-1.875*0-0.171);
+  
+  \node (v1) at (0.5*0 + 1.875*0-0.16,-0.5*0-1.875*1+0.15) {};
+  \node (v2) at (0.5*0 + 1.875*0+0.15,-0.5*0-1.875*1-0.1275) {};
+  \node (v3) at (0.5*0 + 1.875*0+0.15,-0.5*0-1.875*1+0.15) {};
+  \draw[drawb] (0.5*0 + 1.875*0-0.171,-0.5*0-1.875*1+0.15) -- (0.5*0 + 1.875*0+0.171,-0.5*0-1.875*1+0.15);
+  \draw[draw=fzjred, fill=fzjblue, very thick, minimum width=0.3cm, minimum height=0.3cm] (v1.center)--(v2.center)--(v3.center)--(v1.center);
+  \draw[drawa] (0.5*0 + 1.875*1-0.15,-0.5*0-1.875*1+0.15) -- (0.5*0 + 1.875*1+0.15,-0.5*0-1.875*1-0.15);
+  \draw[drawa] (0.5*0 + 1.875*2-0.15,-0.5*0-1.875*1+0.15) -- (0.5*0 + 1.875*2+0.15,-0.5*0-1.875*1-0.15);
+
+  \node (v1) at (0.5*0 + 1.875*0-0.16,-0.5*0-1.875*2+0.15) {};
+  \node (v2) at (0.5*0 + 1.875*0+0.15,-0.5*0-1.875*2-0.1275) {};
+  \node (v3) at (0.5*0 + 1.875*0+0.15,-0.5*0-1.875*2+0.15) {};
+  \draw[drawb] (0.5*0 + 1.875*0-0.171,-0.5*0-1.875*2+0.15) -- (0.5*0 + 1.875*0+0.171,-0.5*0-1.875*2+0.15);
+  \draw[draw=fzjred, fill=fzjblue, very thick, minimum width=0.3cm, minimum height=0.3cm] (v1.center)--(v2.center)--(v3.center)--(v1.center);
+  \draw[drawa] (0.5*0 + 1.875*1-0.15,-0.5*0-1.875*2+0.15) -- (0.5*0 + 1.875*1+0.15,-0.5*0-1.875*2-0.15);
+  \draw[drawa] (0.5*0 + 1.875*2-0.15,-0.5*0-1.875*2+0.15) -- (0.5*0 + 1.875*2+0.15,-0.5*0-1.875*2-0.15);
 \end{tikzpicture}
 \end{center}
 \end{frame}
@@ -672,103 +717,174 @@ nodec/.style={rectangle, draw=fzjred, fill=white, very thick, minimum width=0.3c
 % \end{tikzpicture}
 % \end{center}
 % \end{frame}
-% 
-% \begin{frame}
-% \frametitle{GEMM Shared Memory}
-% Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
-% \begin{center}
-% \begin{tikzpicture}
-% \begin{axis}[name=plot1,height=6.0cm,width=6.0cm,xlabel={Threads [1]},ylabel={Runtime [s]},legend style={font=\scriptsize}]
-%         \addplot[color=black,mark=x]
-%             coordinates
-%             {
-%                 (1,42.500)
-%             };
-%             \addlegendentry{$0.25$ Serial Naive}
-%         \addplot[color=fzjblue,mark=x]
-%             coordinates
-%             {
-%                 (1,31.806)
-%             };
-%             \addlegendentry{Serial Tiled}
-%         \addplot[color=fzjorange,mark=x]
-%             coordinates
-%             {
-%                 (2,16.407) (4,9.053) (5,7.355) (8,4.665) (10,3.761) (20,1.979)
-%             };
-%             \addlegendentry{OMP Row Tiled}
-%         \addplot[color=fzjviolet,mark=x]
-%             coordinates
-%             {
-%                 (4,9.049) (16,3.313) (25,2.170)
-%             };
-%             \addlegendentry{OMP Cell Tiled}
-% \end{axis}
-% \begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Threads [1]},ylabel={Runtime [s]},legend style={font=\scriptsize}]
-%         \addplot[color=fzjorange,mark=x]
-%             coordinates
-%             {
-%                 (2,16.407) (4,9.053) (5,7.355) (8,4.665) (10,3.761) (20,1.979)
-%             };
-%             \addlegendentry{OMP Row Tiled}
-%         \addplot[color=fzjgreen,mark=x]
-%             coordinates
-%             {
-%                 (2,16.427) (4,10.473) (5,7.386) (8,5.419) (10,3.831) (20,2.048)
-%             };
-%             \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
-%         \addplot[color=fzjred,mark=x]
-%             coordinates
-%             {
-%                 (2,16.035) (4,8.848) (5,7.142) (8,4.501) (10,3.615) (20,1.882)
-%             };
-%             \addlegendentry{HPX future \(C_{ik}\)}
-%         \addplot[color=fzjlightblue,mark=x]
-%             coordinates
-%             {
-%                 (2,16.387) (4,9.015) (5,7.254) (8,4.599) (10,3.679) (20,1.941)
-%             };
-%             \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
-% \end{axis}
-% \end{tikzpicture}
-% \end{center}
-% \end{frame}
-% 
-% \begin{frame}
-% \frametitle{GEMM Shared Memory}
-% Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
-% \begin{center}
-% \begin{tikzpicture}
-% \begin{axis}[name=plot1,height=6.5cm,width=6.5cm,xlabel={Threads [1]},ylabel={Runtimes Ratio [1]},legend style={font=\scriptsize}]
-%         \addplot[color=fzjorange,mark=x]
-%             coordinates
-%             {
-%                 (2,16.407/16.407) (4,9.053/9.053) (5,7.355/7.355) (8,4.665/4.665) (10,3.761/3.761) (20,1.979/1.979)
-%             };
-%             \addlegendentry{OMP Row Tiled}
-%         \addplot[color=fzjgreen,mark=x]
-%             coordinates
-%             {
-%                 (2,16.427/16.407) (4,10.473/9.053) (5,7.386/7.355) (8,5.419/4.665) (10,3.831/3.761) (20,2.048/1.979)
-%             };
-%             \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
-%         \addplot[color=fzjred,mark=x]
-%             coordinates
-%             {
-%                 (2,16.035/16.407) (4,8.848/9.053) (5,7.142/7.355) (8,4.501/4.665) (10,3.615/3.761) (20,1.882/1.979)
-%             };
-%             \addlegendentry{HPX future \(C_{ik}\)}
-%         \addplot[color=fzjlightblue,mark=x]
-%             coordinates
-%             {
-%                 (2,16.387/16.407) (4,9.015/9.053) (5,7.254/7.355) (8,4.599/4.665) (10,3.679/3.761) (20,1.941/1.979)
-%             };
-%             \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
-% \end{axis}
-% \end{tikzpicture}
-% \end{center}
-% \(\implies\) HPX can be faster than OpenMP, even for embarrassingly parallel problems. 
-% \end{frame}
+
+\begin{frame}
+\frametitle{GEMM Shared Memory}
+Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[name=plot1,height=6.0cm,width=6.0cm,xlabel={Threads \(T\)},ylabel={Runtime [s]},legend style={font=\scriptsize}]
+        \addplot[color=black,mark=x]
+            coordinates
+            {
+                (1,42.500)
+            };
+            \addlegendentry{$0.25$ Serial Naive}
+        \addplot[color=fzjblue,mark=x]
+            coordinates
+            {
+                (1,31.806)
+            };
+            \addlegendentry{Serial Tiled}
+        \addplot[color=fzjorange,mark=x]
+            coordinates
+            {
+                (2,16.407) (4,9.053) (5,7.355) (8,4.665) (10,3.761) (20,1.979)
+            };
+            \addlegendentry{OMP Row Tiled}
+        \addplot[color=fzjviolet,mark=x]
+            coordinates
+            {
+                (4,9.049) (16,3.313) (25,2.170)
+            };
+            \addlegendentry{OMP Cell Tiled}
+\end{axis}
+\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Threads \(T\)},ylabel={Runtime [s]},legend style={font=\scriptsize}]
+        \addplot[color=fzjorange,mark=x]
+            coordinates
+            {
+                (2,16.407) (4,9.053) (5,7.355) (8,4.665) (10,3.761) (20,1.979)
+            };
+            \addlegendentry{OMP Row Tiled}
+        \addplot[color=fzjgreen,mark=x]
+            coordinates
+            {
+                (2,16.427) (4,10.473) (5,7.386) (8,5.419) (10,3.831) (20,2.048)
+            };
+            \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
+        \addplot[color=fzjred,mark=x]
+            coordinates
+            {
+                (2,16.035) (4,8.848) (5,7.142) (8,4.501) (10,3.615) (20,1.882)
+            };
+            \addlegendentry{HPX future \(C_{ik}\)}
+        \addplot[color=fzjlightblue,mark=x]
+            coordinates
+            {
+                (2,16.387) (4,9.015) (5,7.254) (8,4.599) (10,3.679) (20,1.941)
+            };
+            \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{GEMM Shared Memory}
+Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[name=plot1,height=6.5cm,width=13cm,xlabel={Threads \(T\)},ylabel={Runtimes Ratio [1]},legend style={font=\scriptsize}]
+        \addplot[color=fzjorange,mark=x]
+            coordinates
+            {
+                (2,16.407/16.407) (4,9.053/9.053) (5,7.355/7.355) (8,4.665/4.665) (10,3.761/3.761) (20,1.979/1.979)
+            };
+            \addlegendentry{OMP Row Tiled}
+        \addplot[color=fzjgreen,mark=x]
+            coordinates
+            {
+                (2,16.427/16.407) (4,10.473/9.053) (5,7.386/7.355) (8,5.419/4.665) (10,3.831/3.761) (20,2.048/1.979)
+            };
+            \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
+        \addplot[color=fzjred,mark=x]
+            coordinates
+            {
+                (2,16.035/16.407) (4,8.848/9.053) (5,7.142/7.355) (8,4.501/4.665) (10,3.615/3.761) (20,1.882/1.979)
+            };
+            \addlegendentry{HPX future \(C_{ik}\)}
+        \addplot[color=fzjlightblue,mark=x]
+            coordinates
+            {
+                (2,16.387/16.407) (4,9.015/9.053) (5,7.254/7.355) (8,4.599/4.665) (10,3.679/3.761) (20,1.941/1.979)
+            };
+            \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\(\implies\) HPX can be faster than OpenMP, even for embarrassingly parallel problems. 
+\end{frame}
+
+\begin{frame}
+\frametitle{GEMM Shared Memory}
+Vary number of threads \(T\), and let \(m = n = p = 400\sqrt{T}, M = N = P = \sqrt{T}\):
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[name=plot1,height=6.0cm,width=13.0cm,ymode=log,xlabel={Threads \(T\)},xmin=0,xmax=50,ylabel={Runtime [ms]},legend style={font=\tiny}]
+        \addplot[color=fzjblue,mark=*]
+            coordinates
+            {
+                (1,39)
+            };
+            \addlegendentry{Serial Tiled}
+        \addplot[color=fzjorange,mark=+]
+            coordinates
+            {
+                (1,40) (4,9) (16,29) (25,41) (36,54)
+            };
+            \addlegendentry{OMP Row Tiled}
+        \addplot[color=fzjviolet,mark=+]
+            coordinates
+            {
+                (1,41) (4,136) (16,274) (25,381) (36,530)
+            };
+            \addlegendentry{OMP Cell Tiled}
+        \addplot[color=fzjgreen,mark=x]
+            coordinates
+            {
+                (1,46) (4,167) (16,650) (25,1051) (36,3546)
+            };
+            \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
+        \addplot[color=fzjred,mark=x]
+            coordinates
+            {
+                (1,38) (4,88) (16,337) (25,606) (36,1175)
+            };
+            \addlegendentry{HPX future \(C_{ik}\)}
+        \addplot[color=fzjlightblue,mark=x]
+            coordinates
+            {
+                (1,40) (4,126) (16,211) (25,267) (36,739)
+            };
+            \addlegendentry{HPX future \(A_{ij}B_{jk}\)}    
+        \addplot[color=fzjblue!50!fzjorange,mark=o]
+            coordinates
+            {
+                (1,41) (4,52)
+            };
+            \addlegendentry{MPI v1}
+        \addplot[color=fzjblue!50!fzjgreen,mark=o]
+            coordinates
+            {
+                (1,39) (4,91)
+            };
+            \addlegendentry{MPI v2}
+        \addplot[color=fzjlightblue!50!fzjviolet,mark=asterisk]
+            coordinates
+            {
+                (1,73) (4,405)
+            };
+            \addlegendentry{HPX dist v1}
+        \addplot[color=fzjred!50!fzjorange,mark=asterisk]
+            coordinates
+            {
+                (1,43) (4,315)
+            };
+            \addlegendentry{HPX dist v2}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{frame}
 
 \includetitle{Slides/title}
 
