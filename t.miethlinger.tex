@@ -388,11 +388,11 @@ double calc_area(hpx::future<double> future_r, hpx::future<double> future_pi)
 {
     double r = future_r.get(); // r is returned immediately (make_ready_future)
     double pi = future_pi.get(); // pi is returned once the async computation finishes
-    return r * r * pi;
+    return r * r * pi; // return area = r^2 * pi
 }
 
 int hpx_main(variables_map& vm) // In hpx_main the HPX environment is loaded
-{
+{   // variables_map: retrieve commandline arguments
     hpx::future<double> future_r = hpx::make_ready_future(vm["r"].as<double>());
     hpx::future<double> future_pi = hpx::async([](){ return 4.0 * atan(1.0); });
     hpx::future<double> future_area = hpx::dataflow(&calc_area, future_r, future_pi);
@@ -400,7 +400,7 @@ int hpx_main(variables_map& vm) // In hpx_main the HPX environment is loaded
 }
 
 int main(int argc, char * argv[]) // Start program by: ./area --r=...
-{
+{   // options_description: handle commandline arguments
     options_description.add_options()("r", value<double>()->default_value(1.0), "Radius: r");
     return hpx::init(options_description, argc, argv); // hpx::init calls hpx_main
 }
@@ -576,13 +576,14 @@ A selection of papers in my research ares which use QR decomposition:
  \item An evaluation of noise reduction algorithms for particle-based fluid simulations in multi-scale applications (M.J. Zimon et al., 2016)
  \item Dynamic mode decomposition of numerical and experimental data (P.J. Schmid, 2010)
  \item Krylov Methods for the Incompressible Navier-Stokes Equations (W.S. Edwards, 1994)
- \item Computing Lyapunov exponents of continuous dynamical systems: method of Lyapunov vectors (J Lu, 2005)
+ \item Computing Lyapunov exponents of continuous dynamical systems: method of Lyapunov vectors (J. Lu, 2005)
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{QR decomposition}
-\framesubtitle{Algorithm}
+\framesubtitle{Algorithm: Householder Reflection}
+Example: \(3 \times 3 \times 3 \times 3\) block matrix.
 \begin{center}
 \begin{tikzpicture}[
 nodea/.style={rectangle, draw=fzjblue, very thick, minimum width=0.3cm, minimum height=0.3cm},
@@ -591,24 +592,24 @@ nodec/.style={rectangle, draw=fzjred, fill=white, very thick, minimum width=0.3c
 drawa/.style={-, draw=fzjblue, very thick},
 drawb/.style={-, draw=fzjred, very thick},
 ]
-  \draw[->, dashed, very thick] (0.5*2 - 1.875*1+0.15,-0.5*1-1.875*0) -- (0.5*0 + 1.875*0-0.15,-0.5*1-1.875*0);
+  \draw[->, dashed,line width=0.15mm] (0.5*2 - 1.875*1+0.15,-0.5*1-1.875*0) -- (0.5*0 + 1.875*0-0.15,-0.5*1-1.875*0);
   \foreach \jj in {1,...,2}
-    \draw[->, very thick] (0.5*2 - 1.875*1+0.15,-0.5*1-1.875*\jj) -- (0.5*0 + 1.875*0-0.15,-0.5*1-1.875*\jj);
+    \draw[->,line width=0.15mm] (0.5*2 - 1.875*1+0.15,-0.5*1-1.875*\jj) -- (0.5*0 + 1.875*0-0.15,-0.5*1-1.875*\jj);
   \foreach \jj in {0,...,2}
-    \draw[->, very thick] (0.5*2 + 1.875*0+0.15,-0.5*1-1.875*\jj) -- (0.5*0 + 1.875*1-0.15,-0.5*1-1.875*\jj);
+    \draw[->,line width=0.15mm] (0.5*2 + 1.875*0+0.15,-0.5*1-1.875*\jj) -- (0.5*0 + 1.875*1-0.15,-0.5*1-1.875*\jj);
   \foreach \jj in {0,...,2}
-    \draw[->, very thick] (0.5*2 + 1.875*1+0.15,-0.5*1-1.875*\jj) -- (0.5*0 + 1.875*2-0.15,-0.5*1-1.875*\jj);
+    \draw[->,line width=0.15mm] (0.5*2 + 1.875*1+0.15,-0.5*1-1.875*\jj) -- (0.5*0 + 1.875*2-0.15,-0.5*1-1.875*\jj);
   \foreach \jj in {0,...,1}
-    \draw[->, very thick] (0.5*2 + 1.875*2+0.15,-0.5*1-1.875*\jj) -- (0.5*0 + 1.875*3-0.15,-0.5*1-1.875*\jj);
-  \draw[->, dashed, very thick] (0.5*2 + 1.875*2+0.15,-0.5*1-1.875*2) -- (0.5*0 + 1.875*3-0.15,-0.5*1-1.875*2);
+    \draw[->,line width=0.15mm] (0.5*2 + 1.875*2+0.15,-0.5*1-1.875*\jj) -- (0.5*0 + 1.875*3-0.15,-0.5*1-1.875*\jj);
+  \draw[->, dashed,line width=0.15mm] (0.5*2 + 1.875*2+0.15,-0.5*1-1.875*2) -- (0.5*0 + 1.875*3-0.15,-0.5*1-1.875*2);
   
-  \draw[very thick] (0.5*0 + 1.875*3-0.15,-1.4375) -- (0.5*0 + 1.875*3-0.15,-0.5*1);
-  \draw[very thick] (0.5*2 - 1.875*1+0.15,-1.4375) -- (0.5*0 + 1.875*3-0.15,-1.4375);
-  \draw[very thick] (0.5*2 - 1.875*1+0.15,-1.4375) -- (0.5*2 - 1.875*1+0.15,-0.5*1-1.875*1);
+  \draw[line width=0.15mm] (0.5*0 + 1.875*3-0.15,-1.4375) -- (0.5*0 + 1.875*3-0.15,-0.5*1);
+  \draw[line width=0.15mm] (0.5*2 - 1.875*1+0.15,-1.4375) -- (0.5*0 + 1.875*3-0.15,-1.4375);
+  \draw[line width=0.15mm] (0.5*2 - 1.875*1+0.15,-1.4375) -- (0.5*2 - 1.875*1+0.15,-0.5*1-1.875*1);
   
-  \draw[very thick] (0.5*0 + 1.875*3-0.15,-0.5*1-1.875*1) -- (0.5*0 + 1.875*3-0.15,-3.3175);
-  \draw[very thick] (0.5*2 - 1.875*1+0.15,-3.3175) -- (0.5*0 + 1.875*3-0.15,-3.3175);
-  \draw[very thick] (0.5*2 - 1.875*1+0.15,-3.3175) -- (0.5*2 - 1.875*1+0.15,-0.5*1-1.875*2);
+  \draw[line width=0.15mm] (0.5*0 + 1.875*3-0.15,-0.5*1-1.875*1) -- (0.5*0 + 1.875*3-0.15,-3.3175);
+  \draw[line width=0.15mm] (0.5*2 - 1.875*1+0.15,-3.3175) -- (0.5*0 + 1.875*3-0.15,-3.3175);
+  \draw[line width=0.15mm] (0.5*2 - 1.875*1+0.15,-3.3175) -- (0.5*2 - 1.875*1+0.15,-0.5*1-1.875*2);
   
   \foreach \jj in {0,...,2}
   \foreach \ii in {0,...,2}
@@ -663,6 +664,84 @@ drawb/.style={-, draw=fzjred, very thick},
 \end{center}
 \end{frame}
 
+\begin{frame}
+\frametitle{QR decomposition}
+\framesubtitle{Algorithm: Householder Reflection}
+Example: \(3 \times 3 \times 3 \times 3\) block matrix.
+\begin{center}
+\begin{tikzpicture}[
+nodea/.style={circle, draw=black, fill=fzjgreen, very thick, minimum width=0.5cm, minimum height=0.5cm},
+nodeb/.style={circle, draw=black, fill=fzjred, very thick, minimum width=0.5cm, minimum height=0.5cm},
+nodec/.style={circle, draw=black, fill=fzjlightblue, very thick, minimum width=0.5cm, minimum height=0.5cm},
+noded/.style={circle, draw=black, fill=fzjviolet, very thick, minimum width=0.5cm, minimum height=0.5cm},
+drawa/.style={->,line width=0.15mm},
+drawb/.style={-,line width=0.15mm}
+]
+\def\y{0.92}
+\def\off{1.25}
+\node[nodea, minimum width=1.1cm, minimum height=1.1cm] at (-7.0, 0) {\small{geqrt}};
+\node[nodeb, minimum width=1.1cm, minimum height=1.1cm] at (-7.0,-1.5) {\small{tpqrt}};
+\node[nodec, minimum width=1.1cm, minimum height=1.1cm] at (-7.0,-3.0) {\small{gemqrt}};
+\node[noded, minimum width=1.1cm, minimum height=1.1cm] at (-7.0,-4.5) {\small{tpmqrt}};
+
+\node[nodea] at (-5.0,-1*\y + \off) {};
+
+\node[nodec] at (-3.75,-2*\y + \off) {};
+\node[nodec] at (-3.75,-3*\y + \off) {};
+
+\node[nodeb] at (-2.50,-1*\y + \off) {};
+
+\node[noded] at (-1.25,-2*\y + \off) {};
+\node[noded] at (-1.25,-3*\y + \off) {};
+
+\node[nodeb] at ( 0.00,-1*\y + \off) {};
+
+\node[noded] at ( 1.25,-2*\y + \off) {};
+\node[noded] at ( 1.25,-3*\y + \off) {};
+\node[nodea] at ( 1.25,-4*\y + \off) {};
+
+\node[nodec] at ( 2.50,-5*\y + \off) {};
+
+\node[nodeb] at ( 3.75,-4*\y + \off) {};
+
+\node[noded] at ( 5.00,-5*\y + \off) {};
+
+\node[nodea] at ( 5.00,-6*\y + \off) {};
+
+\draw[drawa, dashed] (-6.0,-1*\y + \off) -- (-5.0,-1*\y + \off);
+\draw[->,line width=0.15mm] (-5.0,-1*\y + \off) .. controls (-5.0,-2*\y + \off) .. (-3.75,-2*\y + \off);
+\draw[->,line width=0.15mm] (-5.0,-1*\y + \off) .. controls (-5.0,-3*\y + \off) .. (-3.75,-3*\y + \off);
+\draw[->,line width=0.15mm] (-5.0,-1*\y + \off) -- (-2.50,-1*\y + \off);
+
+\draw[drawa] (-3.75,-2*\y + \off) -- (-1.25,-2*\y + \off);
+\draw[drawa] (-3.75,-3*\y + \off) -- (-1.25,-3*\y + \off);
+
+\draw[drawa] (-2.5,-1*\y + \off) .. controls (-2.5,-2*\y + \off) .. (-1.25,-2*\y + \off);
+\draw[drawa] (-2.5,-1*\y + \off) .. controls (-2.5,-3*\y + \off) .. (-1.25,-3*\y + \off);
+\draw[drawa] (-2.5,-1*\y + \off) -- ( 0.0,-1*\y + \off);
+
+\draw[drawa] (-1.25,-2*\y + \off) -- ( 1.25,-2*\y + \off);
+\draw[drawa] (-1.25,-3*\y + \off) -- ( 1.25,-3*\y + \off);
+\draw[drawa] (-1.25,-2*\y + \off) .. controls ( 0.00,-2.0*\y + \off) and ( 0.00,-4.0*\y + \off) .. ( 1.25,-4*\y + \off);
+\draw[drawb] (-1.25,-3*\y + \off) .. controls (-1.25,-3.5*\y + \off) and ( 0.00,-3.5*\y + \off) .. ( 1.25,-3.5*\y + \off);
+\draw[drawa] ( 1.25,-3.5*\y + \off) .. controls ( 2.50,-3.5*\y + \off) and ( 3.75,-3.5*\y + \off) .. ( 3.75,-4*\y + \off);
+
+\draw[drawa] ( 0.0,-1*\y + \off) .. controls ( 0.0,-2*\y + \off) .. ( 1.25,-2*\y + \off);
+\draw[drawa] ( 0.0,-1*\y + \off) .. controls ( 0.0,-3*\y + \off) .. ( 1.25,-3*\y + \off);
+
+\draw[drawa] ( 1.25,-2*\y + \off) .. controls (2.50,-2*\y + \off) .. ( 2.50,-5*\y + \off);
+\draw[drawa] ( 1.25,-3*\y + \off) .. controls (5.00,-3*\y + \off) .. ( 5.00,-5*\y + \off);
+
+\draw[drawa] ( 1.25,-4*\y + \off) -- ( 3.75,-4*\y + \off);
+\draw[drawa] ( 1.25,-4*\y + \off) .. controls (1.25,-5*\y + \off) .. ( 2.50,-5*\y + \off);
+\draw[drawa] ( 2.50,-5*\y + \off) -- ( 5.00,-5*\y + \off);
+\draw[drawa] ( 3.75,-4*\y + \off) .. controls (5.00,-4*\y + \off) .. ( 5.00,-5*\y + \off);
+\draw[drawa] ( 5.00,-5*\y + \off) -- ( 5.00,-6*\y + \off);
+\draw[drawa, dashed] ( 5.00,-6*\y + \off) -- ( 5.00,-6.7*\y + \off);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+% and ( 0.00,-3.5*\y + \off) and ( 1.25,-3.5*\y + \off) and ( 2.50,-3.5*\y + \off)
 \part{Benchmark: Results}
 \makepart
 
@@ -723,34 +802,34 @@ drawb/.style={-, draw=fzjred, very thick},
 Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
 \begin{center}
 \begin{tikzpicture}
-\begin{axis}[name=plot1,height=6.0cm,width=6.0cm,xlabel={Threads \(T\)},ylabel={Runtime [s]},legend style={font=\scriptsize}]
-        \addplot[color=black,mark=x]
+\begin{axis}[name=plot1,height=6.0cm,width=6.0cm,xlabel={Threads \(T\)},ylabel={Runtime [s]},legend style={font=\tiny}]
+        \addplot[color=black,mark=square]
             coordinates
             {
                 (1,42.500)
             };
             \addlegendentry{$0.25$ Serial Naive}
-        \addplot[color=fzjblue,mark=x]
+        \addplot[color=fzjblue,mark=square]
             coordinates
             {
                 (1,31.806)
             };
             \addlegendentry{Serial Tiled}
-        \addplot[color=fzjorange,mark=x]
+        \addplot[color=fzjorange,mark=+]
             coordinates
             {
                 (2,16.407) (4,9.053) (5,7.355) (8,4.665) (10,3.761) (20,1.979)
             };
             \addlegendentry{OMP Row Tiled}
-        \addplot[color=fzjviolet,mark=x]
+        \addplot[color=fzjviolet,mark=+]
             coordinates
             {
                 (4,9.049) (16,3.313) (25,2.170)
             };
             \addlegendentry{OMP Cell Tiled}
 \end{axis}
-\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Threads \(T\)},ylabel={Runtime [s]},legend style={font=\scriptsize}]
-        \addplot[color=fzjorange,mark=x]
+\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Threads \(T\)},ylabel={Runtime [s]},legend style={font=\tiny}]
+        \addplot[color=fzjorange,mark=+]
             coordinates
             {
                 (2,16.407) (4,9.053) (5,7.355) (8,4.665) (10,3.761) (20,1.979)
@@ -784,14 +863,14 @@ Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
 Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
 \begin{center}
 \begin{tikzpicture}
-\begin{axis}[name=plot1,height=6.5cm,width=13cm,xlabel={Threads \(T\)},ylabel={Runtimes Ratio [1]},legend style={font=\scriptsize}]
-        \addplot[color=fzjorange,mark=x]
+\begin{axis}[name=plot1,height=6.5cm,width=13cm,xlabel={Threads \(T\)},ylabel={Runtimes Ratio [1]},legend style={font=\tiny}]
+        \addplot[color=fzjorange,mark=+]
             coordinates
             {
                 (2,16.407/16.407) (4,9.053/9.053) (5,7.355/7.355) (8,4.665/4.665) (10,3.761/3.761) (20,1.979/1.979)
             };
             \addlegendentry{OMP Row Tiled}
-        \addplot[color=fzjgreen,mark=x]
+        \addplot[color=fzjgreen,mark=+]
             coordinates
             {
                 (2,16.427/16.407) (4,10.473/9.053) (5,7.386/7.355) (8,5.419/4.665) (10,3.831/3.761) (20,2.048/1.979)
@@ -812,16 +891,92 @@ Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
 \end{axis}
 \end{tikzpicture}
 \end{center}
-\(\implies\) HPX can be faster than OpenMP, even for embarrassingly parallel problems. 
+\(\implies\) HPX can be faster than OpenMP, even for embarrassingly parallel problems, in particular \texttt{hpx::futures}.
 \end{frame}
 
 \begin{frame}
 \frametitle{GEMM Shared Memory}
+Let \(m = n = p = 4000, T = 4\), vary number of blocks \(B := M = N = P\):
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[name=plot1,height=6.0cm,width=6.0cm,xlabel={Number of Blocks \(B\)},ylabel={Runtimes [s]},legend style={font=\tiny}]
+        \addplot[color=fzjorange,mark=+]
+            coordinates
+            {
+                (4,15.078) (8,11.339) (16,9.852) (20,9.241) (32,9.047) (40,8.922) (80,9.643) (100,9.722)
+            };
+            \addlegendentry{OMP Row Tiled}
+        \addplot[color=fzjviolet,mark=+]
+            coordinates
+            {
+                (4,15.093) (8,11.341) (16,9.826) (20,9.067) (32,9.062) (40,9.057) (80,9.724) (100,9.725)
+            };
+            \addlegendentry{OMP Cell Tiled}
+        \addplot[color=fzjgreen,mark=x]
+            coordinates
+            {
+                (4,15.024) (8,11.581) (16,9.946) (20,10.656) (32,9.285) (40,10.469) (80,9.748) (100,10.779)
+            };
+            \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
+        \addplot[color=fzjred,mark=x]
+            coordinates
+            {
+                (4,15.243) (8,10.879) (16,9.550) (20,8.975) (32,9.565) (40,8.858) (80,9.428) (100,9.520)
+            };
+            \addlegendentry{HPX future \(C_{ik}\)}
+        \addplot[color=fzjlightblue,mark=x]
+            coordinates
+            {
+                (4,15.305) (8,10.931) (16,9.503) (20,9.035) (32,9.614) (40,8.976) (80,10.006) (100,10.475)
+            };
+            \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
+\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}
+\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Number of Blocks \(B\)},ylabel={Runtimes Ratio [1]},legend style={font=\tiny}]
+        \addplot[color=fzjorange,mark=+]
+            coordinates
+            {
+                (4,15.078/15.078) (8,11.339/11.339) (16,9.852/9.852) (20,9.241/9.241) (32,9.047/9.047) (40,8.922/8.922) (80,9.643/9.643) (100,9.722/9.722)
+            };
+            \addlegendentry{OMP Row Tiled}
+        \addplot[color=fzjviolet,mark=+]
+            coordinates
+            {
+                (4,15.093/15.078) (8,11.341/11.339) (16,9.826/9.852) (20,9.067/9.241) (32,9.062/9.047) (40,9.057/8.922) (80,9.724/9.643) (100,9.725/9.722)
+            };
+            \addlegendentry{OMP Cell Tiled}
+        \addplot[color=fzjgreen,mark=x]
+            coordinates
+            {
+                (4,15.024/15.078) (8,11.581/11.339) (16,9.946/9.852) (20,10.656/9.241) (32,9.285/9.047) (40,10.469/8.922) (80,9.748/9.643) (100,10.779/9.722)
+            };
+            \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
+        \addplot[color=fzjred,mark=x]
+            coordinates
+            {
+                (4,15.243/15.078) (8,10.879/11.339) (16,9.550/9.852) (20,8.975/9.241) (32,9.565/9.047) (40,8.858/8.922) (80,9.428/9.643) (100,9.520/9.722)
+            };
+            \addlegendentry{HPX future \(C_{ik}\)}
+        \addplot[color=fzjlightblue,mark=x]
+            coordinates
+            {
+                (4,15.305/15.078) (8,10.931/11.339) (16,9.503/9.852) (20,9.035/9.241) (32,9.614/9.047) (40,8.976/8.922) (80,10.006/9.643) (100,10.475/9.722)
+            };
+            \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\(\implies\) Again, HPX is around the same speed as OpenMP.
+\end{frame}
+
+\begin{frame}
+\frametitle{GEMM}
 Vary number of threads \(T\), and let \(m = n = p = 400\sqrt{T}, M = N = P = \sqrt{T}\):
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[name=plot1,height=6.0cm,width=13.0cm,ymode=log,xlabel={Threads \(T\)},xmin=0,xmax=50,ylabel={Runtime [ms]},legend style={font=\tiny}]
-        \addplot[color=fzjblue,mark=*]
+        \addplot[color=fzjblue,mark=square]
             coordinates
             {
                 (1,39)
@@ -884,6 +1039,10 @@ Vary number of threads \(T\), and let \(m = n = p = 400\sqrt{T}, M = N = P = \sq
 \end{axis}
 \end{tikzpicture}
 \end{center}
+\begin{itemize}
+ \item Task-size crucial for HPX. Here the block size was too big.
+ \item HPX distributed quite slower than MPI. The implementations are equivalent/analogous.
+\end{itemize}
 \end{frame}
 
 \includetitle{Slides/title}
