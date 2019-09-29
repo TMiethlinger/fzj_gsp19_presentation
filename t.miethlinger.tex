@@ -32,10 +32,12 @@
 \begin{frame}
 \frametitle{About me}
 \framesubtitle{(Thomas Miethlinger)}
-\begin{itemize}
+\begin{columns}[T]
+ \begin{column}{.35\textwidth}
+ \begin{itemize}
   \item Study: Master Physics
   \item Johannes Kepler University of Linz
-  \item Institute for Theoretical Physics, Department: Many Particle Systems. \\
+  \item Institute for Theoretical Physics \\ Department: Many Particle Systems \\
         Research:
         \begin{itemize}
          \item Quantum fluids
@@ -43,12 +45,19 @@
          \item Non-equilibrium statistical mechanics
         \end{itemize}
 \end{itemize}
+ \end{column}
+ \hfill
+ \begin{column}{.65\textwidth}
+ \includegraphics[width=0.287\textwidth]{photo_me.png}\includegraphics[width=0.65\textwidth]{fzj_jku.png}
+ \end{column}
+\end{columns}
 \end{frame}
 
 \begin{frame}
-\frametitle{About the GSP}
-
-\begin{itemize}
+\frametitle{About the Supervisors}
+\begin{columns}[T]
+ \begin{column}{.5\textwidth}
+  \begin{itemize}
   \item Supervisor: Dr. Edoardo Di Napoli
   \item Co-Supervisor: Dr. Xinzhe Wu
   \item SimLab Quantum Materials
@@ -59,7 +68,16 @@
     \item Development of new mathematical and computational models within a methodological framework
     \end{itemize}
     in the scope of computational materials science and quantum materials.
-\end{itemize}
+  \end{itemize}
+ \end{column}
+ \begin{column}{.5\textwidth}
+ \begin{center}
+  \includegraphics[width=0.4\textwidth]{di_napoli_e.jpg}\includegraphics[width=0.4\textwidth]{wu_xin.jpg}
+ \end{center}
+ \end{column}
+\end{columns}
+
+
 \end{frame}
 
 \part{Introduction to HPX}
@@ -179,7 +197,7 @@ tasknode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum
  C++ library & Compiler extension to C and Fortran \\
  Core language: \texttt{hpx::C++} & \texttt{\#pragma omp} directives \\
  Task-based parallelism & Parallel regions (fork-join model) \\
- AGAS (active global address space) & shared memory \\
+ AGAS (active global address space) & Shared memory \\
  \hline
 \end{tabular}
 \end{center}
@@ -392,7 +410,7 @@ double calc_area(hpx::future<double> future_r, hpx::future<double> future_pi)
 }
 
 int hpx_main(variables_map& vm) // In hpx_main the HPX environment is loaded
-{   // variables_map: retrieve commandline arguments
+{   // boost::program_options::variables_map: retrieve commandline arguments
     hpx::future<double> future_r = hpx::make_ready_future(vm["r"].as<double>());
     hpx::future<double> future_pi = hpx::async([](){ return 4.0 * atan(1.0); });
     hpx::future<double> future_area = hpx::dataflow(&calc_area, future_r, future_pi);
@@ -400,7 +418,7 @@ int hpx_main(variables_map& vm) // In hpx_main the HPX environment is loaded
 }
 
 int main(int argc, char * argv[]) // Start program by: ./area --r=...
-{   // options_description: handle commandline arguments
+{   // boost::program_options::options_description: handle commandline arguments
     options_description.add_options()("r", value<double>()->default_value(1.0), "Radius: r");
     return hpx::init(options_description, argc, argv); // hpx::init calls hpx_main
 }
@@ -441,11 +459,11 @@ GEMM - GEneral Matrix Multiply
 \begin{itemize}
  \item Basic binary operation in Linear Algebra, which has numerous applications in mathematics, science and engineering.
  \item More fundamental applications of matrix multiplications include
-  \begin{enumerate}
+  \begin{itemize}
    \item Systems of Linear Algebraic Equations (SLAE) can be expressed as a single matrix equation, e.g. \(Ax = y\). 
    \item Linear map between two vector spaces \(U\) and \(V\) over the same field \(F\).
-  \end{enumerate}
- \item Motivation: A large amount (>70\%) of runtime in ChASE (\emph{(ED Napoli, 2019)}) routine is used for GEMM.
+  \end{itemize}
+ \item Motivation: A large amount (>70\%) of runtime in ChASE (\emph{(E.D. Napoli, 2019)}) routine is used for GEMM.
  \item Let the field \(F\) be \(\mathbb{R}\) or \(\mathbb{C}\), \(A =\big( a_{ij} \big) \in F^{m \times n}, B =\big( b_{jk} \big) \in F^{n \times p}\). Then,
  \begin{equation}
   C=\big( c_{ik} \big)=AB \in F^{m \times p},
@@ -473,7 +491,7 @@ GEMM - GEneral Matrix Multiply
  C_{ik} = \big( c_{ik,i'k'} \big) = \sum_{j=1}^n{A_{ij}B_{jk}},
 \end{equation}
 \begin{equation}
- c_{ik,i'k'} = \sum_{j=1}^N{\sum_{j'=1}^n{a_{ij,i'j'}b_{jk,j'k'}},}
+ c_{ik,i'k'} = \sum_{j=1}^N{\sum_{j'=1}^n{a_{ij,i'j'}b_{jk,j'k'}}}
 \end{equation}
 \end{frame}
 
@@ -553,6 +571,7 @@ QR decomposition
   A = QR,
  \end{equation}
  where \(Q\) is a orthogonal(\(F=\mathbb{R}\)) / unitary(\(F=\mathbb{C}\)) matrix, and \(R\) is an upper triangular matrix.
+ \item Motivation: A large amount (>20\%) of runtime in ChASE (\emph{(ED Napoli, 2019)}) routine is used for QR.
  \item Computing the QR decomposition:
  \begin{itemize}
   \item Gram-Schmidt orthogonalisation process
@@ -571,12 +590,12 @@ QR decomposition
  \item Solving least-squares problem
  \item Solution to linear inverse problems
 \end{itemize}
-A selection of papers in my research ares which use QR decomposition:
+A selection of papers within the scope of my research interest which use QR decomposition:
 \begin{itemize}
- \item An evaluation of noise reduction algorithms for particle-based fluid simulations in multi-scale applications (M.J. Zimon et al., 2016)
- \item Dynamic mode decomposition of numerical and experimental data (P.J. Schmid, 2010)
- \item Krylov Methods for the Incompressible Navier-Stokes Equations (W.S. Edwards, 1994)
- \item Computing Lyapunov exponents of continuous dynamical systems: method of Lyapunov vectors (J. Lu, 2005)
+ \item An evaluation of noise reduction algorithms for particle-based fluid simulations in multi-scale applications (\emph{M.J. Zimon et al., 2016})
+ \item Dynamic mode decomposition of numerical and experimental data (\emph{P.J. Schmid, 2010})
+ \item Krylov Methods for the Incompressible Navier-Stokes Equations (\emph{W.S. Edwards, 1994})
+ \item Computing Lyapunov exponents of continuous dynamical systems: method of Lyapunov vectors (\emph{J. Lu, 2005})
 \end{itemize}
 \end{frame}
 
@@ -679,10 +698,10 @@ drawb/.style={-,line width=0.15mm}
 ]
 \def\y{0.92}
 \def\off{1.25}
-\node[nodea, minimum width=1.1cm, minimum height=1.1cm] at (-7.0, 0) {\small{geqrt}};
-\node[nodeb, minimum width=1.1cm, minimum height=1.1cm] at (-7.0,-1.5) {\small{tpqrt}};
-\node[nodec, minimum width=1.1cm, minimum height=1.1cm] at (-7.0,-3.0) {\small{gemqrt}};
-\node[noded, minimum width=1.1cm, minimum height=1.1cm] at (-7.0,-4.5) {\small{tpmqrt}};
+\node[nodea, minimum width=1.3cm, minimum height=1.3cm] at (-7.0, 0) {\small{geqrt}};
+\node[nodeb, minimum width=1.3cm, minimum height=1.3cm] at (-7.0,-1.5) {\small{tpqrt}};
+\node[nodec, minimum width=1.3cm, minimum height=1.3cm] at (-7.0,-3.0) {\small{gemqrt}};
+\node[noded, minimum width=1.3cm, minimum height=1.3cm] at (-7.0,-4.5) {\small{tpmqrt}};
 
 \node[nodea] at (-5.0,-1*\y + \off) {};
 
@@ -741,61 +760,9 @@ drawb/.style={-,line width=0.15mm}
 \end{tikzpicture}
 \end{center}
 \end{frame}
-% and ( 0.00,-3.5*\y + \off) and ( 1.25,-3.5*\y + \off) and ( 2.50,-3.5*\y + \off)
-\part{Benchmark: Results}
-\makepart
 
-% \begin{frame}
-% \frametitle{GEMM Shared Memory}
-% \begin{center}
-% \begin{tikzpicture}
-%     \begin{axis}[xlabel={Threads}, ylabel={Runtime[ms]}]
-%         \addplot[color=black,mark=x]
-%             coordinates
-%             {
-%                 (2,-2.8559703) (3,-3.5301677) (4,-4.3050655) (5,-5.1413136) (6,-6.0322865) (7,-6.9675052) (8,-7.9377747)
-%             };
-%             \addlegendentry{Serial Naive}
-%         \addplot[color=fzjblue,mark=x]
-%             coordinates
-%             {
-%                 (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
-%             };
-%             \addlegendentry{Serial Tiled}
-%         \addplot[color=fzjorange,mark=x]
-%             coordinates
-%             {
-%                 (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
-%             };
-%             \addlegendentry{OMP Row}
-%         \addplot[color=fzjviolet,mark=x]
-%             coordinates
-%             {
-%                 (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
-%             };
-%             \addlegendentry{OMP Cell}
-%         \addplot[color=fzjgreen,mark=x]
-%             coordinates
-%             {
-%                 (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
-%             };
-%             \addlegendentry{HPX v1}
-%         \addplot[color=fzjred,mark=x]
-%             coordinates
-%             {
-%                 (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
-%             };
-%             \addlegendentry{HPX v2}
-%         \addplot[color=fzjlightblue,mark=x]
-%             coordinates
-%             {
-%                 (2,-3.8559703) (3,-4.5301677) (4,-5.3050655) (5,-6.1413136) (6,-7.0322865) (7,-8.9675052) (8,-8.9377747)
-%             };
-%             \addlegendentry{HPX v312}
-%     \end{axis}
-% \end{tikzpicture}
-% \end{center}
-% \end{frame}
+\part{Benchmark: Results for GEMM}
+\makepart
 
 \begin{frame}
 \frametitle{GEMM Shared Memory}
@@ -863,7 +830,7 @@ Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
 Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
 \begin{center}
 \begin{tikzpicture}
-\begin{axis}[name=plot1,height=6.5cm,width=13cm,xlabel={Threads \(T\)},ylabel={Runtimes Ratio [1]},legend style={font=\tiny}]
+\begin{axis}[name=plot1,height=6.0cm,width=12cm,xlabel={Threads \(T\)},ylabel={Runtimes Ratio [1]},legend style={font=\tiny}]
         \addplot[color=fzjorange,mark=+]
             coordinates
             {
@@ -895,82 +862,6 @@ Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
 \end{frame}
 
 \begin{frame}
-\frametitle{GEMM Shared Memory}
-Let \(m = n = p = 4000, T = 4\), vary number of blocks \(B := M = N = P\):
-\begin{center}
-\begin{tikzpicture}
-\begin{axis}[name=plot1,height=6.0cm,width=6.0cm,xlabel={Number of Blocks \(B\)},ylabel={Runtimes [s]},legend style={font=\tiny}]
-        \addplot[color=fzjorange,mark=+]
-            coordinates
-            {
-                (4,15.078) (8,11.339) (16,9.852) (20,9.241) (32,9.047) (40,8.922) (80,9.643) (100,9.722)
-            };
-            \addlegendentry{OMP Row Tiled}
-        \addplot[color=fzjviolet,mark=+]
-            coordinates
-            {
-                (4,15.093) (8,11.341) (16,9.826) (20,9.067) (32,9.062) (40,9.057) (80,9.724) (100,9.725)
-            };
-            \addlegendentry{OMP Cell Tiled}
-        \addplot[color=fzjgreen,mark=x]
-            coordinates
-            {
-                (4,15.024) (8,11.581) (16,9.946) (20,10.656) (32,9.285) (40,10.469) (80,9.748) (100,10.779)
-            };
-            \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
-        \addplot[color=fzjred,mark=x]
-            coordinates
-            {
-                (4,15.243) (8,10.879) (16,9.550) (20,8.975) (32,9.565) (40,8.858) (80,9.428) (100,9.520)
-            };
-            \addlegendentry{HPX future \(C_{ik}\)}
-        \addplot[color=fzjlightblue,mark=x]
-            coordinates
-            {
-                (4,15.305) (8,10.931) (16,9.503) (20,9.035) (32,9.614) (40,8.976) (80,10.006) (100,10.475)
-            };
-            \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
-\end{axis}
-\end{tikzpicture}
-\begin{tikzpicture}
-\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Number of Blocks \(B\)},ylabel={Runtimes Ratio [1]},legend style={font=\tiny}]
-        \addplot[color=fzjorange,mark=+]
-            coordinates
-            {
-                (4,15.078/15.078) (8,11.339/11.339) (16,9.852/9.852) (20,9.241/9.241) (32,9.047/9.047) (40,8.922/8.922) (80,9.643/9.643) (100,9.722/9.722)
-            };
-            \addlegendentry{OMP Row Tiled}
-        \addplot[color=fzjviolet,mark=+]
-            coordinates
-            {
-                (4,15.093/15.078) (8,11.341/11.339) (16,9.826/9.852) (20,9.067/9.241) (32,9.062/9.047) (40,9.057/8.922) (80,9.724/9.643) (100,9.725/9.722)
-            };
-            \addlegendentry{OMP Cell Tiled}
-        \addplot[color=fzjgreen,mark=x]
-            coordinates
-            {
-                (4,15.024/15.078) (8,11.581/11.339) (16,9.946/9.852) (20,10.656/9.241) (32,9.285/9.047) (40,10.469/8.922) (80,9.748/9.643) (100,10.779/9.722)
-            };
-            \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
-        \addplot[color=fzjred,mark=x]
-            coordinates
-            {
-                (4,15.243/15.078) (8,10.879/11.339) (16,9.550/9.852) (20,8.975/9.241) (32,9.565/9.047) (40,8.858/8.922) (80,9.428/9.643) (100,9.520/9.722)
-            };
-            \addlegendentry{HPX future \(C_{ik}\)}
-        \addplot[color=fzjlightblue,mark=x]
-            coordinates
-            {
-                (4,15.305/15.078) (8,10.931/11.339) (16,9.503/9.852) (20,9.035/9.241) (32,9.614/9.047) (40,8.976/8.922) (80,10.006/9.643) (100,10.475/9.722)
-            };
-            \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
-\end{axis}
-\end{tikzpicture}
-\end{center}
-\(\implies\) Again, HPX is around the same speed as OpenMP.
-\end{frame}
-
-\begin{frame}
 \frametitle{GEMM}
 Vary number of threads \(T\), and let \(m = n = p = 400\sqrt{T}, M = N = P = \sqrt{T}\):
 \begin{center}
@@ -999,7 +890,7 @@ Vary number of threads \(T\), and let \(m = n = p = 400\sqrt{T}, M = N = P = \sq
             {
                 (1,46) (4,167) (16,650) (25,1051) (36,3546)
             };
-            \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
+            \addlegendentry{HPX foreach Row}
         \addplot[color=fzjred,mark=x]
             coordinates
             {
@@ -1041,7 +932,262 @@ Vary number of threads \(T\), and let \(m = n = p = 400\sqrt{T}, M = N = P = \sq
 \end{center}
 \begin{itemize}
  \item Task-size crucial for HPX. Here the block size was too big.
- \item HPX distributed quite slower than MPI. The implementations are equivalent/analogous.
+ \item HPX distributed is quite slower than MPI. The implementations are equivalent/analogous.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{GEMM Shared Memory}
+Let \(m = n = p = 4000, T = 4\), vary number of blocks \(B := M = N = P\):
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[name=plot1,height=6.0cm,width=6.0cm,xlabel={Number of Blocks \(B\)},ylabel={Runtimes [s]},legend style={font=\tiny}]
+        \addplot[color=fzjorange,mark=+]
+            coordinates
+            {
+                (4,15.078) (8,11.339) (16,9.852) (20,9.241) (32,9.047) (40,8.922) (80,9.643) (100,9.722)
+            };
+            \addlegendentry{OMP Row Tiled}
+        \addplot[color=fzjviolet,mark=+]
+            coordinates
+            {
+                (4,15.093) (8,11.341) (16,9.826) (20,9.067) (32,9.062) (40,9.057) (80,9.724) (100,9.725)
+            };
+            \addlegendentry{OMP Cell Tiled}
+        \addplot[color=fzjgreen,mark=x]
+            coordinates
+            {
+                (4,15.024) (8,11.581) (16,9.946) (20,10.656) (32,9.285) (40,10.469) (80,9.748) (100,10.779)
+            };
+            \addlegendentry{HPX foreach Row}
+        \addplot[color=fzjred,mark=x]
+            coordinates
+            {
+                (4,15.243) (8,10.879) (16,9.550) (20,8.975) (32,9.565) (40,8.858) (80,9.428) (100,9.520)
+            };
+            \addlegendentry{HPX future \(C_{ik}\)}
+        \addplot[color=fzjlightblue,mark=x]
+            coordinates
+            {
+                (4,15.305) (8,10.931) (16,9.503) (20,9.035) (32,9.614) (40,8.976) (80,10.006) (100,10.475)
+            };
+            \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
+\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}
+\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Number of Blocks \(B\)},ylabel={Runtimes Ratio [1]},legend style={font=\tiny}]
+        \addplot[color=fzjorange,mark=+]
+            coordinates
+            {
+                (4,15.078/15.078) (8,11.339/11.339) (16,9.852/9.852) (20,9.241/9.241) (32,9.047/9.047) (40,8.922/8.922) (80,9.643/9.643) (100,9.722/9.722)
+            };
+            \addlegendentry{OMP Row Tiled}
+        \addplot[color=fzjviolet,mark=+]
+            coordinates
+            {
+                (4,15.093/15.078) (8,11.341/11.339) (16,9.826/9.852) (20,9.067/9.241) (32,9.062/9.047) (40,9.057/8.922) (80,9.724/9.643) (100,9.725/9.722)
+            };
+            \addlegendentry{OMP Cell Tiled}
+        \addplot[color=fzjgreen,mark=x]
+            coordinates
+            {
+                (4,15.024/15.078) (8,11.581/11.339) (16,9.946/9.852) (20,10.656/9.241) (32,9.285/9.047) (40,10.469/8.922) (80,9.748/9.643) (100,10.779/9.722)
+            };
+            \addlegendentry{HPX foreach Row}
+        \addplot[color=fzjred,mark=x]
+            coordinates
+            {
+                (4,15.243/15.078) (8,10.879/11.339) (16,9.550/9.852) (20,8.975/9.241) (32,9.565/9.047) (40,8.858/8.922) (80,9.428/9.643) (100,9.520/9.722)
+            };
+            \addlegendentry{HPX future \(C_{ik}\)}
+        \addplot[color=fzjlightblue,mark=x]
+            coordinates
+            {
+                (4,15.305/15.078) (8,10.931/11.339) (16,9.503/9.852) (20,9.035/9.241) (32,9.614/9.047) (40,8.976/8.922) (80,10.006/9.643) (100,10.475/9.722)
+            };
+            \addlegendentry{HPX future \(A_{ij}B_{jk}\)}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\(\implies\) Again, HPX is around the same speed as OpenMP.
+\end{frame}
+
+\part{Benchmark: Results for QR}
+\makepart
+
+\begin{frame}
+\frametitle{QR Shared Memory}
+Let \(m = 4000, M = 40\), vary number of threads:
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[name=plot1,height=6.0cm,width=6.0cm,xlabel={Threads \(T\)},ylabel={Runtime [s]},legend style={font=\tiny}]
+        \addplot[color=black,mark=square]
+            coordinates
+            {
+                (1,40.32)
+            };
+            \addlegendentry{Serial Tiled}
+        \addplot[color=fzjblue,mark=x]
+            coordinates
+            {
+                (2,22.913) (4,12.690) (5,10.220) (8,6.572) (10,5.337) (16,3.535) (20,2.957) (25,2.565) (32,2.606)
+            };
+            \addlegendentry{HPX Shared V2}
+        \addplot[color=fzjorange,mark=x]
+            coordinates
+            {
+                (2,22.9338) (4,12.595) (5,10.242) (8,6.573) (10,5.364) (16,3.544) (20,2.957) (25,2.538) (32,2.681)
+            };
+            \addlegendentry{HPX Shared V3}
+\end{axis}
+\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Threads \(T\)},ylabel={Runtime Ratio [1]},legend pos=north west,legend style={font=\tiny}]
+        \addplot[color=fzjblue,mark=x]
+            coordinates
+            {
+                (2,1) (4,1) (5,1) (8,1) (10,1) (16,1) (20,1) (25,1) (32,1)
+            };
+            \addlegendentry{HPX Shared V2}
+        \addplot[color=fzjorange,mark=x]
+            coordinates
+            {
+                (2,22.9338/22.913) (4,12.595/12.690) (5,10.242/10.220) (8,6.573/6.572) (10,5.364/5.337) (16,3.544/3.535) (20,2.957/2.957) (25,2.538/2.565) (32,2.681/2.606)
+            };
+            \addlegendentry{HPX Shared V3}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{QR Shared Memory}
+Vary number of threads \(T\), and let \(m = n = p = 400\sqrt{T}, M = N = P = \sqrt{T}\):
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[name=plot1,height=6.0cm,width=6.0cm,ymode=log,xlabel={Threads \(T\)},xmin=0,ylabel={Runtime [ms]},ymax=10,legend pos=north west,legend style={font=\tiny}]
+        \addplot[color=black,mark=square]
+            coordinates
+            {
+                (1,0.057841)
+            };
+            \addlegendentry{Serial Tiled}
+        \addplot[color=fzjblue,mark=x]
+            coordinates
+            {
+                (1,0.06749695) (4,0.403) (16,1.290) (25,1.943) (36,2.886)
+            };
+            \addlegendentry{HPX Shared V2}
+        \addplot[color=fzjorange,mark=x]
+            coordinates
+            {
+                (1,0.06758869) (4,0.374) (16,1.282) (25,1.890) (36,2.704)
+            };
+            \addlegendentry{HPX Shared V3}
+\end{axis}
+\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Threads \(T\)},ylabel={Runtime Ratio [1]},ymax=1.03,legend style={font=\tiny}]
+        \addplot[color=fzjblue,mark=x]
+            coordinates
+            {
+                (1,1) (4,1) (16,1) (25,1) (36,1)
+            };
+            \addlegendentry{HPX Shared V2}
+        \addplot[color=fzjorange,mark=x]
+            coordinates
+            {
+                (1,0.06758869/0.06749695) (4,0.374/0.403) (16,1.282/1.290) (25,1.890/1.943) (36,2.704/2.886)
+            };
+            \addlegendentry{HPX Shared V3}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+% \begin{itemize}
+%  \item Task-size crucial for HPX. Here the block size was too big.
+%  \item HPX distributed quite slower than MPI. The implementations are equivalent/analogous.
+% \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{GEMM Shared Memory}
+Let \(m = n = p = 4000, T = 4\), vary number of blocks \(B := M = N = P\):
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[name=plot1,height=6.0cm,width=6.0cm,xlabel={Number of Blocks \(B\)},ylabel={Runtimes [s]},legend style={font=\tiny}]
+        \addplot[color=fzjblue,mark=x]
+            coordinates
+            {
+                (4,18.897) (8,14.043) (16,12.753) (20,12.398) (32,12.450) (40,12.584) (80,18.430) (100,21.120)
+            };
+            \addlegendentry{HPX Shared V2}
+        \addplot[color=fzjorange,mark=x]
+            coordinates
+            {
+                (4,18.890) (8,14.195) (16,12.804) (20,12.453) (32,12.434) (40,12.599) (80,19.044) (100,22.126)
+            };
+            \addlegendentry{HPX Shared V3}
+\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}
+\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Number of Blocks \(B\)},ylabel={Runtimes Ratio [1]},legend style={font=\tiny}]
+        \addplot[color=fzjblue,mark=x]
+            coordinates
+            {
+                (4,1) (8,1) (16,1) (20,1) (32,1) (40,1) (80,1) (100,1)
+            };
+            \addlegendentry{HPX Shared V2}
+        \addplot[color=fzjorange,mark=x]
+            coordinates
+            {
+                (4,18.890/18.897) (8,14.195/14.043) (16,12.804/12.753) (20,12.453/12.398) (32,12.434/12.450) (40,12.599/12.584) (80,19.044/18.430) (100,22.126/21.120)
+            };
+            \addlegendentry{HPX Shared V3}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+% \(\implies\) Again, HPX is around the same speed as OpenMP.
+\end{frame}
+
+\part{Conclusion and Resume}
+\makepart
+
+\begin{frame}
+\frametitle{Conclusion}
+\framesubtitle{On HPX}
+\begin{itemize}
+ \item HPX has the potential to speed-up and simplify parallelization for certain types of problems
+ \item On par with OpenMP
+ \item Comparison with MPI unfortunately not possible at this moment
+ \item Learning HPX takes some time, in particular HPX for distributed programs
+ \item Debugging, profiling, runtime errors, documentation, ...  could be improved
+ \item Execution policies: might give additional speed-up
+ \item Altogether: Very strong library and concept with some negative points
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Resume}
+\framesubtitle{Personal thoughts}
+\begin{itemize}
+ \item Interesting project, work and topic. I learned a lot.
+ \item Collaboration with Dr. Wu worked very well. Thanks!
+ \item On HPX
+       \begin{itemize}
+        \item[*] Some fun
+        \item[*] Takes a medium amount of time
+        \item[+] Full C++ library
+        \item[--] Bugs can be nasty
+       \end{itemize}
+ \item On MPI
+       \begin{itemize}
+        \item[+] Lots of fun
+        \item[--] Takes a lot of time
+        \item[--] No native C++
+        \item[*] Usually works, and if not, it is manageable to figure out why
+       \end{itemize}
+ \item On OpenMP
+       \begin{itemize}
+        \item[--] No fun
+        \item[+] Doesn't take a lot of time
+        \item[+] Simply works :)
+       \end{itemize}
 \end{itemize}
 \end{frame}
 
