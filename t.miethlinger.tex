@@ -975,7 +975,7 @@ Vary number of threads \(\mathcal{T}\), and let \(m = n = p = 400\sqrt{T}, M = N
 Vary number of Nodes \(\mathcal{N}\), and let \(m = n = p = 400\sqrt{\mathcal{N}}, M = N = P = \sqrt{\mathcal{N}}\):
 \begin{center}
 \begin{tikzpicture}
-\begin{axis}[name=plot1,height=6.0cm,width=13.0cm,ymode=log,xlabel={Nodes \(\mathcal{N}\)},xmin=0,xmax=10,ylabel={Runtime [ms]},legend style={font=\tiny}]
+\begin{axis}[name=plot1,height=6.0cm,width=13.0cm,ymode=log,xlabel={Nodes \(\mathcal{N}\)},xmin=0.5,xmax=4.5,ymin=30,ymax=300,ylabel={Runtime [ms]},legend style={font=\tiny},legend pos=north west]
         \addplot[color=fzjblue!50!fzjorange,mark=o]
             coordinates
             {
@@ -1003,7 +1003,7 @@ Vary number of Nodes \(\mathcal{N}\), and let \(m = n = p = 400\sqrt{\mathcal{N}
 \end{axis}
 \end{tikzpicture}
 \end{center}
-HPX distributed is slower than MPI
+HPX distributed is slower than MPI, their implementations are presumably analogous.
 \end{frame}
 
 \begin{frame}
