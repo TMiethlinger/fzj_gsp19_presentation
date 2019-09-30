@@ -197,7 +197,6 @@ tasknode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum
  C++ library & Compiler extension to C and Fortran \\
  Core language: \texttt{hpx::C++} & \texttt{\#pragma omp} directives \\
  Task-based parallelism & Parallel regions (fork-join model) \\
- AGAS (active global address space) & Shared memory \\
  \hline
 \end{tabular}
 \end{center}
@@ -256,6 +255,102 @@ slavenode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimu
 \end{center}
 \end{frame}
 
+% \begin{frame}
+% \frametitle{Comparison of HPX and MPI}
+% \begin{center}
+% \begin{tabular}{ |c|c| } 
+%  \hline
+%  HPX & MPI \\
+%  \hline
+%  C++ library & Interface specification for C and Fortran \\
+%  Core language: \texttt{hpx::C++} & Core language: MPI\_C, MPI\_F08 \\
+%  Task-based parallelism & Single program, multiple data (SPMD) \\
+%  Message driven & Message passing \\
+%  \hline
+% \end{tabular}
+% \end{center}
+% \vspace{0.3cm}
+% \begin{center}
+% \begin{tikzpicture}[
+% initnode/.style={circle, draw=fzjgreen!60, fill=fzjgreen!5, very thick, minimum size=5mm},
+% masternode/.style={rectangle, draw=fzjred!60, fill=fzjred!5, very thick, minimum size=5mm},
+% slavenode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum size=5mm},
+% ]
+% \node[initnode]      at (-5, -1) {S};
+% \node[slavenode]     at (-4,  1) {2};
+% \node[slavenode]     at (-4,  0) {1};
+% \node[slavenode]     at (-4, -1) {0};
+% \node[slavenode]     at (-3,  1) {2};
+% \node[slavenode]     at (-3,  0) {1};
+% \node[slavenode]     at (-3, -1) {0};
+% \node[slavenode]     at (-2,  1) {2};
+% \node[slavenode]     at (-2,  0) {1};
+% \node[slavenode]     at (-2, -1) {0};
+% \node[initnode]      at (-1, -1) {E};
+% \draw[->] (-5+0.31,  -1) -- (-4-0.27, -1);
+% \draw[->] (-4.5,  1) -- (-4-0.27,  1);
+% \draw[->] (-4.5,  0) -- (-4-0.27,  0);
+% \draw[->] (-4.5, -1) -- (-4-0.27, -1);
+% \draw[-]  (-4.5, -1) -- (-4.5, 1);
+% \draw[->] (-4+0.27,  1) -- (-3-0.27,  1);
+% \draw[->] (-4+0.27,  0) -- (-3-0.27,  0);
+% \draw[->] (-4+0.27, -1) -- (-3-0.27, -1);
+% \draw[->] (-3+0.27,  1) -- (-2-0.27,  1);
+% \draw[->] (-3+0.27,  0) -- (-2-0.27,  0);
+% \draw[->] (-3+0.27, -1) -- (-2-0.27, -1);
+% \draw[->] (-2+0.27,  1) -- (-1.5,  1);
+% \draw[->] (-2+0.27,  0) -- (-1.5,  0);
+% \draw[-]  (-1.5, -1) -- (-1.5, 1);
+% \draw[->] (-2+0.27,  -1) -- (-1-0.31, -1);
+% 
+% \node[initnode]      at (1, -1) {S};
+% \node[slavenode]     at (2,  1) {2};
+% \node[slavenode]     at (2,  0) {1};
+% \node[slavenode]     at (2, -1) {0};
+% \node[slavenode]     at (3,  1) {2};
+% \node[slavenode]     at (3,  0) {1};
+% \node[slavenode]     at (3, -1) {0};
+% \node[slavenode]     at (4,  1) {2};
+% \node[slavenode]     at (4,  0) {1};
+% \node[slavenode]     at (4, -1) {0};
+% \node[initnode]      at (5, -1) {E};
+% \draw[->] (1+0.31,  -1) -- (2-0.27, -1);
+% \draw[->] (1.5,  1) -- (2-0.27,  1);
+% \draw[->] (1.5,  0) -- (2-0.27,  0);
+% \draw[->] (1.5, -1) -- (2-0.27, -1);
+% \draw[-]  (1.5, -1) -- (1.5, 1);
+% \draw[->] (2+0.27,  1) -- (3-0.27,  1);
+% \draw[->] (2+0.27,  0) -- (3-0.27,  0);
+% \draw[->] (2+0.27, -1) -- (3-0.27, -1);
+% \draw[dashed] (2+0.27,  1) -- (3-0.27,  1);
+% \draw[dashed] (2+0.27,  1) -- (3-0.27,  0);
+% \draw[dashed] (2+0.27,  1) -- (3-0.27, -1);
+% \draw[dashed] (2+0.27,  0) -- (3-0.27,  1);
+% \draw[dashed] (2+0.27,  0) -- (3-0.27,  0);
+% \draw[dashed] (2+0.27,  0) -- (3-0.27, -1);
+% \draw[dashed] (2+0.27, -1) -- (3-0.27,  1);
+% \draw[dashed] (2+0.27, -1) -- (3-0.27,  0);
+% \draw[dashed] (2+0.27, -1) -- (3-0.27, -1);
+% \draw[->] (3+0.27,  1) -- (4-0.27,  1);
+% \draw[->] (3+0.27,  0) -- (4-0.27,  0);
+% \draw[->] (3+0.27, -1) -- (4-0.27, -1);
+% \draw[dashed] (3+0.27,  1) -- (4-0.27,  1);
+% \draw[dashed] (3+0.27,  1) -- (4-0.27,  0);
+% \draw[dashed] (3+0.27,  1) -- (4-0.27, -1);
+% \draw[dashed] (3+0.27,  0) -- (4-0.27,  1);
+% \draw[dashed] (3+0.27,  0) -- (4-0.27,  0);
+% \draw[dashed] (3+0.27,  0) -- (4-0.27, -1);
+% \draw[dashed] (3+0.27, -1) -- (4-0.27,  1);
+% \draw[dashed] (3+0.27, -1) -- (4-0.27,  0);
+% \draw[dashed] (3+0.27, -1) -- (4-0.27, -1);
+% \draw[->] (4+0.27,  1) -- (4.5,  1);
+% \draw[->] (4+0.27,  0) -- (4.5,  0);
+% \draw[-]  (4.5, -1) -- (4.5, 1);
+% \draw[->] (4+0.27,  -1) -- (5-0.31, -1);
+% \end{tikzpicture}
+% \end{center}
+% \end{frame}
+
 \begin{frame}
 \frametitle{Comparison of HPX and MPI}
 \begin{center}
@@ -266,7 +361,7 @@ slavenode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimu
  C++ library & Interface specification for C and Fortran \\
  Core language: \texttt{hpx::C++} & Core language: MPI\_C, MPI\_F08 \\
  Task-based parallelism & Single program, multiple data (SPMD) \\
- AGAS (active global address space) & Explicit message passing \\
+ Message driven & Message passing \\
  \hline
 \end{tabular}
 \end{center}
@@ -278,76 +373,50 @@ masternode/.style={rectangle, draw=fzjred!60, fill=fzjred!5, very thick, minimum
 slavenode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum size=5mm},
 ]
 \node[initnode]      at (-5, -1) {S};
-\node[slavenode]     at (-4,  1) {2};
-\node[slavenode]     at (-4,  0) {1};
+\node[slavenode]     at (-4,  1) {1};
 \node[slavenode]     at (-4, -1) {0};
-\node[slavenode]     at (-3,  1) {2};
-\node[slavenode]     at (-3,  0) {1};
-\node[slavenode]     at (-3, -1) {0};
-\node[slavenode]     at (-2,  1) {2};
-\node[slavenode]     at (-2,  0) {1};
+\node[slavenode]     at (-2,  1) {1};
 \node[slavenode]     at (-2, -1) {0};
 \node[initnode]      at (-1, -1) {E};
 \draw[->] (-5+0.31,  -1) -- (-4-0.27, -1);
 \draw[->] (-4.5,  1) -- (-4-0.27,  1);
-\draw[->] (-4.5,  0) -- (-4-0.27,  0);
 \draw[->] (-4.5, -1) -- (-4-0.27, -1);
 \draw[-]  (-4.5, -1) -- (-4.5, 1);
-\draw[->] (-4+0.27,  1) -- (-3-0.27,  1);
-\draw[->] (-4+0.27,  0) -- (-3-0.27,  0);
-\draw[->] (-4+0.27, -1) -- (-3-0.27, -1);
-\draw[->] (-3+0.27,  1) -- (-2-0.27,  1);
-\draw[->] (-3+0.27,  0) -- (-2-0.27,  0);
-\draw[->] (-3+0.27, -1) -- (-2-0.27, -1);
+
+\draw[->] (-4+0.27,  1) -- (-2-0.27,  1);
+\draw[->] (-4+0.27, -1+0.27) .. controls (-3.5, 0.5) .. (-2-0.27, 1-0.27);
+\draw[->] (-2-0.27,  1-0.27) .. controls (-2.5,-0.5) .. (-4+0.27,-1+0.27);
+\draw[->] (-4+0.27, -1) -- (-2-0.27, -1);
+\draw[->] (-4+0.27, +1-0.27) .. controls (-3.5,-0.5) .. (-2-0.27,-1+0.27);
+\draw[->] (-2-0.27, -1+0.27) .. controls (-2.5,+0.5) .. (-4+0.27,+1-0.27);
+
 \draw[->] (-2+0.27,  1) -- (-1.5,  1);
-\draw[->] (-2+0.27,  0) -- (-1.5,  0);
 \draw[-]  (-1.5, -1) -- (-1.5, 1);
 \draw[->] (-2+0.27,  -1) -- (-1-0.31, -1);
+\node at (-3, 0) {future};
 
 \node[initnode]      at (1, -1) {S};
-\node[slavenode]     at (2,  1) {2};
-\node[slavenode]     at (2,  0) {1};
+\node[slavenode]     at (2,  1) {1};
 \node[slavenode]     at (2, -1) {0};
-\node[slavenode]     at (3,  1) {2};
-\node[slavenode]     at (3,  0) {1};
-\node[slavenode]     at (3, -1) {0};
-\node[slavenode]     at (4,  1) {2};
-\node[slavenode]     at (4,  0) {1};
+\node[slavenode]     at (4,  1) {1};
 \node[slavenode]     at (4, -1) {0};
 \node[initnode]      at (5, -1) {E};
 \draw[->] (1+0.31,  -1) -- (2-0.27, -1);
 \draw[->] (1.5,  1) -- (2-0.27,  1);
-\draw[->] (1.5,  0) -- (2-0.27,  0);
 \draw[->] (1.5, -1) -- (2-0.27, -1);
+
 \draw[-]  (1.5, -1) -- (1.5, 1);
-\draw[->] (2+0.27,  1) -- (3-0.27,  1);
-\draw[->] (2+0.27,  0) -- (3-0.27,  0);
-\draw[->] (2+0.27, -1) -- (3-0.27, -1);
-\draw[dashed] (2+0.27,  1) -- (3-0.27,  1);
-\draw[dashed] (2+0.27,  1) -- (3-0.27,  0);
-\draw[dashed] (2+0.27,  1) -- (3-0.27, -1);
-\draw[dashed] (2+0.27,  0) -- (3-0.27,  1);
-\draw[dashed] (2+0.27,  0) -- (3-0.27,  0);
-\draw[dashed] (2+0.27,  0) -- (3-0.27, -1);
-\draw[dashed] (2+0.27, -1) -- (3-0.27,  1);
-\draw[dashed] (2+0.27, -1) -- (3-0.27,  0);
-\draw[dashed] (2+0.27, -1) -- (3-0.27, -1);
-\draw[->] (3+0.27,  1) -- (4-0.27,  1);
-\draw[->] (3+0.27,  0) -- (4-0.27,  0);
-\draw[->] (3+0.27, -1) -- (4-0.27, -1);
-\draw[dashed] (3+0.27,  1) -- (4-0.27,  1);
-\draw[dashed] (3+0.27,  1) -- (4-0.27,  0);
-\draw[dashed] (3+0.27,  1) -- (4-0.27, -1);
-\draw[dashed] (3+0.27,  0) -- (4-0.27,  1);
-\draw[dashed] (3+0.27,  0) -- (4-0.27,  0);
-\draw[dashed] (3+0.27,  0) -- (4-0.27, -1);
-\draw[dashed] (3+0.27, -1) -- (4-0.27,  1);
-\draw[dashed] (3+0.27, -1) -- (4-0.27,  0);
-\draw[dashed] (3+0.27, -1) -- (4-0.27, -1);
+\draw[->] (2+0.27,  1) -- (4-0.27,  1);
+\draw[->] (2+0.27, -1+0.27) -- (4-0.27,  1-0.27);
+\draw[->] (2+0.27, -1) -- (4-0.27, -1);
+\draw[->] (2+0.27,  1-0.27) -- (4-0.27, -1+0.27);
+
 \draw[->] (4+0.27,  1) -- (4.5,  1);
-\draw[->] (4+0.27,  0) -- (4.5,  0);
 \draw[-]  (4.5, -1) -- (4.5, 1);
 \draw[->] (4+0.27,  -1) -- (5-0.31, -1);
+
+\node at (2, 0) {Send};
+\node at (4, 0) {Recv};
 \end{tikzpicture}
 \end{center}
 \end{frame}
@@ -571,7 +640,7 @@ QR decomposition
   A = QR,
  \end{equation}
  where \(Q\) is a orthogonal(\(F=\mathbb{R}\)) / unitary(\(F=\mathbb{C}\)) matrix, and \(R\) is an upper triangular matrix.
- \item Motivation: A large amount (>20\%) of runtime in ChASE (\emph{(ED Napoli, 2019)}) routine is used for QR.
+ \item Motivation: A large amount (>20\%) of runtime in ChASE (\emph{(E.D. Napoli, 2019)}) routine is used for QR.
  \item Computing the QR decomposition:
  \begin{itemize}
   \item Gram-Schmidt process
@@ -600,9 +669,8 @@ A selection of papers within the scope of my research interest which use QR deco
 \end{frame}
 
 \begin{frame}
-\frametitle{QR decomposition}
-\framesubtitle{Algorithm: Householder Reflection}
-Example: \(3 \times 3 \times 3 \times 3\) block matrix.
+\frametitle{Block QR decomposition}
+\framesubtitle{Example: \(3 \times 3\) block matrix}
 \begin{center}
 \begin{tikzpicture}[
 nodea/.style={rectangle, draw=fzjblue, very thick, minimum width=0.3cm, minimum height=0.3cm},
@@ -684,9 +752,8 @@ drawb/.style={-, draw=fzjred, very thick},
 \end{frame}
 
 \begin{frame}
-\frametitle{QR decomposition}
-\framesubtitle{Algorithm: Householder Reflection}
-Example: \(3 \times 3 \times 3 \times 3\) block matrix.
+\frametitle{Block QR decomposition}
+\framesubtitle{Example: \(3 \times 3\) block matrix}
 \begin{center}
 \begin{tikzpicture}[
 nodea/.style={circle, draw=black, fill=fzjgreen, very thick, minimum width=0.5cm, minimum height=0.5cm},
@@ -807,7 +874,7 @@ Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
             {
                 (2,16.427) (4,10.473) (5,7.386) (8,5.419) (10,3.831) (20,2.048)
             };
-            \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
+            \addlegendentry{HPX foreach Row}
         \addplot[color=fzjred,mark=x]
             coordinates
             {
@@ -842,7 +909,7 @@ Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads:
             {
                 (2,16.427/16.407) (4,10.473/9.053) (5,7.386/7.355) (8,5.419/4.665) (10,3.831/3.761) (20,2.048/1.979)
             };
-            \addlegendentry{HPX \(\text{foreach}_{0 \leq i' < M}\)}
+            \addlegendentry{HPX foreach Row}
         \addplot[color=fzjred,mark=x]
             coordinates
             {
@@ -1012,7 +1079,7 @@ Let \(m = n = p = 4000, T = 4\), vary number of blocks \(B := M = N = P\):
 \(\implies\) Again, HPX is around the same speed as OpenMP.
 \end{frame}
 
-\part{Benchmark: Results for QR}
+\part{Benchmark: Results for Tiled QR}
 \makepart
 
 \begin{frame}
@@ -1026,33 +1093,13 @@ Let \(m = 4000, M = 40\), vary number of threads:
             {
                 (1,40.32)
             };
-            \addlegendentry{Serial Tiled}
+            \addlegendentry{Serial}
         \addplot[color=fzjblue,mark=x]
             coordinates
             {
                 (2,22.913) (4,12.690) (5,10.220) (8,6.572) (10,5.337) (16,3.535) (20,2.957) (25,2.565) (32,2.606)
             };
-            \addlegendentry{HPX Shared V2}
-        \addplot[color=fzjorange,mark=x]
-            coordinates
-            {
-                (2,22.9338) (4,12.595) (5,10.242) (8,6.573) (10,5.364) (16,3.544) (20,2.957) (25,2.538) (32,2.681)
-            };
-            \addlegendentry{HPX Shared V3}
-\end{axis}
-\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Threads \(T\)},ylabel={Runtime Ratio [1]},legend pos=north west,legend style={font=\tiny}]
-        \addplot[color=fzjblue,mark=x]
-            coordinates
-            {
-                (2,1) (4,1) (5,1) (8,1) (10,1) (16,1) (20,1) (25,1) (32,1)
-            };
-            \addlegendentry{HPX Shared V2}
-        \addplot[color=fzjorange,mark=x]
-            coordinates
-            {
-                (2,22.9338/22.913) (4,12.595/12.690) (5,10.242/10.220) (8,6.573/6.572) (10,5.364/5.337) (16,3.544/3.535) (20,2.957/2.957) (25,2.538/2.565) (32,2.681/2.606)
-            };
-            \addlegendentry{HPX Shared V3}
+            \addlegendentry{HPX Shared}
 \end{axis}
 \end{tikzpicture}
 \end{center}
@@ -1069,77 +1116,39 @@ Vary number of threads \(T\), and let \(m = n = p = 400\sqrt{T}, M = N = P = \sq
             {
                 (1,0.057841)
             };
-            \addlegendentry{Serial Tiled}
+            \addlegendentry{Serial}
         \addplot[color=fzjblue,mark=x]
             coordinates
             {
                 (1,0.06749695) (4,0.403) (16,1.290) (25,1.943) (36,2.886)
             };
-            \addlegendentry{HPX Shared V2}
-        \addplot[color=fzjorange,mark=x]
-            coordinates
-            {
-                (1,0.06758869) (4,0.374) (16,1.282) (25,1.890) (36,2.704)
-            };
-            \addlegendentry{HPX Shared V3}
-\end{axis}
-\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Threads \(T\)},ylabel={Runtime Ratio [1]},ymax=1.03,legend style={font=\tiny}]
-        \addplot[color=fzjblue,mark=x]
-            coordinates
-            {
-                (1,1) (4,1) (16,1) (25,1) (36,1)
-            };
-            \addlegendentry{HPX Shared V2}
-        \addplot[color=fzjorange,mark=x]
-            coordinates
-            {
-                (1,0.06758869/0.06749695) (4,0.374/0.403) (16,1.282/1.290) (25,1.890/1.943) (36,2.704/2.886)
-            };
-            \addlegendentry{HPX Shared V3}
+            \addlegendentry{HPX Shared}
 \end{axis}
 \end{tikzpicture}
 \end{center}
-% \begin{itemize}
-%  \item Task-size crucial for HPX. Here the block size was too big.
-%  \item HPX distributed quite slower than MPI. The implementations are equivalent/analogous.
-% \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{GEMM Shared Memory}
+\frametitle{QR Shared Memory}
 Let \(m = n = p = 4000, T = 4\), vary number of blocks \(B := M = N = P\):
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[name=plot1,height=6.0cm,width=6.0cm,xlabel={Number of Blocks \(B\)},ylabel={Runtimes [s]},legend style={font=\tiny}]
+        \addplot[color=black,mark=square]
+            coordinates
+            {
+                (1,40.030)
+            };
+            \addlegendentry{Serial}
         \addplot[color=fzjblue,mark=x]
             coordinates
             {
                 (4,18.897) (8,14.043) (16,12.753) (20,12.398) (32,12.450) (40,12.584) (80,18.430) (100,21.120)
             };
-            \addlegendentry{HPX Shared V2}
-        \addplot[color=fzjorange,mark=x]
-            coordinates
-            {
-                (4,18.890) (8,14.195) (16,12.804) (20,12.453) (32,12.434) (40,12.599) (80,19.044) (100,22.126)
-            };
-            \addlegendentry{HPX Shared V3}
+            \addlegendentry{HPX Shared}
 \end{axis}
 \end{tikzpicture}
 \begin{tikzpicture}
-\begin{axis}[name=plot2,at={($(plot1.east)+(1.7cm,0)$)},anchor=west,height=6.0cm,width=6.0cm,xlabel={Number of Blocks \(B\)},ylabel={Runtimes Ratio [1]},legend style={font=\tiny}]
-        \addplot[color=fzjblue,mark=x]
-            coordinates
-            {
-                (4,1) (8,1) (16,1) (20,1) (32,1) (40,1) (80,1) (100,1)
-            };
-            \addlegendentry{HPX Shared V2}
-        \addplot[color=fzjorange,mark=x]
-            coordinates
-            {
-                (4,18.890/18.897) (8,14.195/14.043) (16,12.804/12.753) (20,12.453/12.398) (32,12.434/12.450) (40,12.599/12.584) (80,19.044/18.430) (100,22.126/21.120)
-            };
-            \addlegendentry{HPX Shared V3}
-\end{axis}
 \end{tikzpicture}
 \end{center}
 % \(\implies\) Again, HPX is around the same speed as OpenMP.
