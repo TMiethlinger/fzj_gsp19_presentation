@@ -562,8 +562,8 @@ GEMM - GEneral Matrix Multiply
 
 \begin{frame}
 \frametitle{GEMM of Blocked Matrices}
-\frametitle{A Small Example}
-Let \(M = N = P = m = n = p = 2\):
+\framesubtitle{A Small Example}
+Let \(m = n = p = M = N = P = 2\):
 \vspace{0.3cm}
 \begin{center}
 \begin{tikzpicture}[
@@ -593,7 +593,7 @@ blocknode/.style={rectangle, draw=fzjred!60, fill=fzjred!5, very thick, minimum 
 
 \begin{frame}
 \frametitle{GEMM of Blocked Matrices}
-\frametitle{A Small Example}
+\framesubtitle{A Small Example}
 Let \(m = n = p = M = N = P = 2\):
 \vspace{0.3cm}
 \begin{center}
@@ -618,6 +618,141 @@ elemnode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum
   \foreach \i in {0,...,1}
     \foreach \k in {0,...,1} 
        \node[elemnode] at (\i +5-0.5,-\k-2) {\(...\)};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{GEMM of Blocked Matrices}
+\framesubtitle{OpenMP and HPX foreach Row}
+Let \(M = N = 16\), number of threads \(\mathcal{T}=4\):
+\vspace{0.3cm}
+\begin{center}
+\begin{tikzpicture}[
+blocknodea/.style={rectangle, draw=fzjblue, fill=fzjblue!5, very thick, minimum width=1cm, minimum height=1cm},
+blocknodeb/.style={rectangle, draw=fzjorange, fill=fzjorange!5, very thick, minimum width=1cm, minimum height=1cm},
+blocknodec/.style={rectangle, draw=fzjviolet, fill=fzjviolet!5, very thick, minimum width=1cm, minimum height=1cm},
+blocknoded/.style={rectangle, draw=fzjgreen, fill=fzjgreen!5, very thick, minimum width=1cm, minimum height=1cm},
+]
+\def\dx{1}
+\def\dy{1}
+\def\xoff{0.1}
+\def\yoff{0.1}
+
+\def\xofff{5.5}
+
+
+  \node at (\dx * 1.5 + \xoff * 1.5,\dy + \yoff) {OMP Row Tiled \& HPX foreach Row};
+  \foreach \i in {0,...,0}
+    \foreach \j in {0,...,3}
+      \node[blocknodea] at (\dx * \j + \xoff * \j,- \dy * \i - \yoff * \i) {\(C_{\text{\i \j}}\)};
+      
+  \foreach \i in {1,...,1}
+    \foreach \j in {0,...,3}
+      \node[blocknodeb] at (\dx * \j + \xoff * \j,- \dy * \i - \yoff * \i) {\(C_{\text{\i \j}}\)};
+      
+  \foreach \i in {2,...,2}
+    \foreach \j in {0,...,3}
+      \node[blocknodec] at (\dx * \j + \xoff * \j,- \dy * \i - \yoff * \i) {\(C_{\text{\i \j}}\)};
+      
+  \foreach \i in {3,...,3}
+    \foreach \j in {0,...,3}
+      \node[blocknoded] at (\dx * \j + \xoff * \j,- \dy * \i - \yoff * \i) {\(C_{\text{\i \j}}\)};
+      
+      
+  \node at (\dx * 1.5 + \xoff * 1.5 + \xofff,\dy + \yoff) {OMP Row Cell};
+  \foreach \i in {0,...,1}
+    \foreach \j in {0,...,1}
+      \node[blocknodea] at (\dx * \j + \xoff * \j + \xofff,- \dy * \i - \yoff * \i) {\(C_{\text{\i \j}}\)};
+      
+  \foreach \i in {0,...,1}
+    \foreach \j in {2,...,3}
+      \node[blocknodeb] at (\dx * \j + \xoff * \j + \xofff,- \dy * \i - \yoff * \i) {\(C_{\text{\i \j}}\)};
+      
+  \foreach \i in {2,...,3}
+    \foreach \j in {0,...,1}
+      \node[blocknodec] at (\dx * \j + \xoff * \j + \xofff,- \dy * \i - \yoff * \i) {\(C_{\text{\i \j}}\)};
+      
+  \foreach \i in {2,...,3}
+    \foreach \j in {2,...,3}
+      \node[blocknoded] at (\dx * \j + \xoff * \j + \xofff,- \dy * \i - \yoff * \i) {\(C_{\text{\i \j}}\)};
+
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{GEMM of Blocked Matrices}
+\framesubtitle{HPX future \(C_{ik}\) and HPX future \(A_{ij}B_{jk}\)}
+\vspace{0.3cm}
+\begin{center}
+\begin{tikzpicture}[
+blocknode/.style={rectangle, draw=black, very thick, minimum width=1.85cm, minimum height=1cm},
+]
+\def\dx{1.85}
+\def\dy{1}
+\def\xoff{0.0}
+\def\yoff{0.1}
+
+\def\xofff{6.0}
+
+
+  \node at (\dx * 1 + \xoff * 1,\dy + \yoff) {HPX future \(f_{ik} \rightarrow C_{ik}\)};
+  \foreach \j in {0,...,0}
+    \node[blocknode] at (\dx * \j + \xoff * \j,0) { ... };
+  \foreach \j in {2,...,2}
+    \node[blocknode] at (\dx * \j + \xoff * \j,0) { ... };
+  \node[blocknode] at (\dx * 1 + \xoff * 1,0) {\(f_{ik} \rightarrow C_{ik}\)};
+  \node at (\dx * 1 + \xoff * 1,-\dy - \yoff) {\(C_{ik}=f_{ik}.\text{\texttt{get()}}\)};
+  
+  \node at (\dx * 1 + \xoff * 1 + \xofff,\dy + \yoff) {HPX future \(f_{ijk} \rightarrow A_{ij}B_{jk}\)};
+  \foreach \j in {0,...,0}
+    \node[blocknode] at (\dx * \j + \xoff * \j + \xofff,0) { ... };
+  \foreach \j in {2,...,2}
+    \node[blocknode] at (\dx * \j + \xoff * \j + \xofff,0) { ... };
+  \node[blocknode] at (\dx * 1 + \xoff * 1 + \xofff,0) {\(f_{ijk} \rightarrow A_{ij}B_{jk}\)};
+  \node at (\dx * 1 + \xoff * 1 + \xofff,-\dy - \yoff) {\(C_{ik}=\sum_{j}{f_{ijk}.\text{\texttt{get()}}}\)};
+
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{GEMM of Blocked Matrices}
+\framesubtitle{Distributed Memory}
+Let \(M = N = 2\), number of nodes \(\mathcal{N}=4\):
+\vspace{0.3cm}
+\begin{center}
+\begin{tikzpicture}[
+blocknode/.style={rectangle, draw=black, very thick, minimum width=2.1cm, minimum height=2.1cm},
+]
+\def\dx{2.1}
+\def\dy{2.1}
+\def\xoff{0.1}
+\def\yoff{0.1}
+
+\def\xofff{5.5}
+
+  \node at (\dx * 0.5 + \xoff * 0.5,1.5) {MPI V1 \& HPX dist V1};
+  \node[blocknode] at (\dx * 0 + \xoff * 0,- \dy * 0 - \yoff * 0) {\begin{tabular}{c} \(\mathcal{N}_{0}\) \\ \(A_{00},B\) \\ \(A_{00}B_{00}\) \\ \(C_{00}\) \end{tabular}};
+  \node[blocknode] at (\dx * 1 + \xoff * 1,- \dy * 0 - \yoff * 0) {\begin{tabular}{c} \(\mathcal{N}_{1}\) \\ \(A_{01},B\) \\ \(A_{01}B_{10}\) \\ \text{ } \end{tabular}};
+  \node[blocknode] at (\dx * 0 + \xoff * 0,- \dy * 1 - \yoff * 1) {\begin{tabular}{c} \(\mathcal{N}_{2}\) \\ \(A_{10},B\) \\ \(A_{10}B_{00}\) \\ \(C_{10}\) \end{tabular}};
+  \node[blocknode] at (\dx * 1 + \xoff * 1,- \dy * 1 - \yoff * 1) {\begin{tabular}{c} \(\mathcal{N}_{3}\) \\ \(A_{11},B\) \\ \(A_{11}B_{10}\) \\ \text{ } \end{tabular}};
+  \draw[->, thick] (\dx * 1 + \xoff * 1,- \dy * 0.1925 - \yoff * 0) -- (\dx * 0.15 + \xoff * 0,- \dy * 0.325 + \yoff * 0.0);
+  \draw[->, thick] (\dx * 1 + \xoff * 1,- \dy * 1.1925 - \yoff * 1) -- (\dx * 0.15 + \xoff * 0,- \dy * 1.325 - \yoff * 1);
+
+  \node at (\dx * 0.5 + \xoff * 0.5 + \xofff,1.5) {MPI V2 \& HPX dist V2};
+  \node[blocknode] at (\dx * 0 + \xoff * 0 + \xofff,- \dy * 0 - \yoff * 0) {\begin{tabular}{c} \(\mathcal{N}_{0}\) \\ \(A_{00},B_{0 k}\) \\ \(A_{00}B_{0 k}\) \\ \(C_{00}\) \end{tabular}};
+  \node[blocknode] at (\dx * 1 + \xoff * 1 + \xofff,- \dy * 0 - \yoff * 0) {\begin{tabular}{c} \(\mathcal{N}_{1}\) \\ \(A_{01},B_{1 k}\) \\ \(A_{01}B_{1 k}\) \\ \(C_{01}\) \end{tabular}};
+  \node[blocknode] at (\dx * 0 + \xoff * 0 + \xofff,- \dy * 1 - \yoff * 1) {\begin{tabular}{c} \(\mathcal{N}_{2}\) \\ \(A_{10},B_{0 k}\) \\ \(A_{10}B_{0 k}\) \\ \(C_{10}\) \end{tabular}};
+  \node[blocknode] at (\dx * 1 + \xoff * 1 + \xofff,- \dy * 1 - \yoff * 1) {\begin{tabular}{c} \(\mathcal{N}_{3}\) \\ \(A_{11},B_{1 k}\) \\ \(A_{11}B_{1 k}\) \\ \(C_{11}\) \end{tabular}};
+  \draw[->, thick] (\dx * 1 + \xoff * 1 + \xofff,- \dy * 0.1925 - \yoff * 0) -- (\dx * 0.15 + \xoff * 0 + \xofff,- \dy * 0.325 + \yoff * 0.0);
+  \draw[->, thick] (\dx * 0 + \xoff * 0 + \xofff,- \dy * 0.1925 - \yoff * 0) -- (+\dx * 0.85 + \xoff * 1 + \xofff,- \dy * 0.325 + \yoff * 0.0);
+  
+  \draw[->, thick] (\dx * 1 + \xoff * 1 + \xofff,- \dy * 1.1925 - \yoff * 1) -- (\dx * 0.15 + \xoff * 0 + \xofff,- \dy * 1.325 - \yoff * 1);
+  \draw[->, thick] (\dx * 0 + \xoff * 0 + \xofff,- \dy * 1.1925 - \yoff * 1) -- (+\dx * 0.85 + \xoff * 1 + \xofff,- \dy * 1.325 - \yoff * 1);
+
 \end{tikzpicture}
 \end{center}
 \end{frame}
@@ -980,25 +1115,25 @@ Vary number of Nodes \(\mathcal{N}\), and let \(m = n = p = 400\sqrt{\mathcal{N}
             {
                 (1,41) (4,52)
             };
-            \addlegendentry{MPI v1}
+            \addlegendentry{MPI V1}
         \addplot[color=fzjblue!50!fzjgreen,mark=o]
             coordinates
             {
                 (1,39) (4,91)
             };
-            \addlegendentry{MPI v2}
+            \addlegendentry{MPI V2}
         \addplot[color=fzjlightblue!50!fzjviolet,mark=asterisk]
             coordinates
             {
                 (1,44) (4,231)
             };
-            \addlegendentry{HPX dist v1}
+            \addlegendentry{HPX dist V1}
         \addplot[color=fzjred!50!fzjorange,mark=asterisk]
             coordinates
             {
                 (1,40) (4,165)
             };
-            \addlegendentry{HPX dist v2}
+            \addlegendentry{HPX dist V2}
 \end{axis}
 \end{tikzpicture}
 \end{center}
