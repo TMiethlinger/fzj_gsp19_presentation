@@ -494,7 +494,7 @@ int main(int argc, char * argv[]) // Start program by: ./area --r=...
 \end{lstlisting}
 \end{frame}
 
-\part{Introduction to Numerical Linear Algebra and Applications}
+\part{Introduction to Numerical Linear Algebra, GEMM and QR}
 \makepart
 
 \begin{frame}
@@ -517,9 +517,6 @@ which may be using one of the following matrix operations/decompositions:
  \item Singular value decomposition
 \end{itemize}
 \end{frame}
-
-\part{GEMM}
-\makepart
 
 \begin{frame}
 \frametitle{GEMM}
@@ -625,9 +622,6 @@ elemnode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum
 \end{tikzpicture}
 \end{center}
 \end{frame}
-
-\part{QR}
-\makepart
 
 \begin{frame}
 \frametitle{QR decomposition}
@@ -933,7 +927,7 @@ Let \(m = n = p = 4000, M = N = P = 40\), vary number of threads \(\mathcal{T}\)
 Vary number of threads \(\mathcal{T}\), and let \(m = n = p = 400\sqrt{T}, M = N = P = \sqrt{\mathcal{T}}\):
 \begin{center}
 \begin{tikzpicture}
-\begin{axis}[name=plot1,height=6.0cm,width=13.0cm,ymode=log,xlabel={Threads \(\mathcal{T}\)},xmin=0,xmax=50,ylabel={Runtime [ms]},legend style={font=\tiny}]
+\begin{axis}[name=plot1,height=6.0cm,width=13.0cm,ymode=log,xlabel={Threads \(\mathcal{T}\)},xmin=0,xmax=45,ylabel={Runtime [ms]},legend style={font=\tiny}]
         \addplot[color=fzjblue,mark=square]
             coordinates
             {
@@ -978,10 +972,10 @@ Vary number of threads \(\mathcal{T}\), and let \(m = n = p = 400\sqrt{T}, M = N
 
 \begin{frame}
 \frametitle{GEMM Distributed Memory}
-Vary number of Nodes \(\mathcal{N}\), and let \(m = n = p = 400\sqrt{\mathcal{T}}, M = N = P = \sqrt{\mathcal{N}}\):
+Vary number of Nodes \(\mathcal{N}\), and let \(m = n = p = 400\sqrt{\mathcal{N}}, M = N = P = \sqrt{\mathcal{N}}\):
 \begin{center}
 \begin{tikzpicture}
-\begin{axis}[name=plot1,height=6.0cm,width=13.0cm,ymode=log,xlabel={Nodes \(\mathcal{N}\)},xmin=0,xmax=50,ylabel={Runtime [ms]},legend style={font=\tiny}]
+\begin{axis}[name=plot1,height=6.0cm,width=13.0cm,ymode=log,xlabel={Nodes \(\mathcal{N}\)},xmin=0,xmax=10,ylabel={Runtime [ms]},legend style={font=\tiny}]
         \addplot[color=fzjblue!50!fzjorange,mark=o]
             coordinates
             {
@@ -997,19 +991,19 @@ Vary number of Nodes \(\mathcal{N}\), and let \(m = n = p = 400\sqrt{\mathcal{T}
         \addplot[color=fzjlightblue!50!fzjviolet,mark=asterisk]
             coordinates
             {
-                (1,73) (4,405)
+                (1,44) (4,231)
             };
             \addlegendentry{HPX dist v1}
         \addplot[color=fzjred!50!fzjorange,mark=asterisk]
             coordinates
             {
-                (1,43) (4,315)
+                (1,40) (4,165)
             };
             \addlegendentry{HPX dist v2}
 \end{axis}
 \end{tikzpicture}
 \end{center}
-HPX distributed is quite slower than MPI. TODO
+HPX distributed is slower than MPI
 \end{frame}
 
 \begin{frame}
