@@ -36,7 +36,7 @@
  \begin{column}{.35\textwidth}
  \begin{itemize}
   \item Study: Master Physics
-  \item Johannes Kepler University of Linz
+  \item Johannes Kepler University Linz
   \item Institute for Theoretical Physics \\ Department: Many Particle Systems \\
         Research:
         \begin{itemize}
@@ -76,40 +76,38 @@
  \end{center}
  \end{column}
 \end{columns}
-
-
 \end{frame}
 
 \part{Introduction to HPX}
 \makepart
 
-\begin{frame}
-\frametitle{Current situation in high performance computing (HPC)}
-Currently, speed-up in computing does not stem from higher CPU frequency, but increased parallelism.
-However, we already face the following challenges in HPC:
-\begin{itemize}
-  \item Ease of programming
-  \item Inability to handle dynamically changing workloads
-  \item Scalability
-  \item Efficient utilization of system resources
-\end{itemize}
-\(\implies\) a need for a new execution model: ParalleX, which is implemented by HPX
-\end{frame}
+%\begin{frame}
+%\frametitle{Current Situation in High Performance Computing (HPC)}
+%Currently, speed-up in computing does not stem from higher CPU frequency, but increased parallelism.
+%However, we already face the following challenges in HPC:
+%\begin{itemize}
+%  \item Ease of programming
+%  \item Inability to handle dynamically changing workloads
+%  \item Scalability
+%  \item Efficient utilization of system resources
+%\end{itemize}
+%\(\implies\) a need for a new execution model: ParalleX, which is implemented by HPX
+%\end{frame}
 
-\begin{frame}
-\frametitle{ParalleX}
-ParalleX is a new parallel execution model that offers an alternative to the conventional computation models(e.g. message passing):
-\begin{itemize}
-  \item Split-phase transaction model
-  \item Message-driven
-  \item Distributed shared memory
-  \item Multi-threaded
-  \item Futures synchronization
-  \item Local Control Objects (LCOs)
-  \item ...
-\end{itemize}
-ParalleX focuses on latency hiding instead of latency avoidance.
-\end{frame}
+%\begin{frame}
+%\frametitle{ParalleX}
+%ParalleX is a new parallel execution model that offers an alternative to the conventional computation models(e.g. message passing):
+%\begin{itemize}
+%  \item Split-phase transaction model
+%  \item Message-driven
+%  \item Distributed shared memory
+%  \item Multi-threaded
+%  \item Futures synchronization
+%  \item Local Control Objects (LCOs)
+%  \item ...
+%\end{itemize}
+%ParalleX focuses on latency hiding instead of latency avoidance.
+%\end{frame}
 
 \begin{frame}
 \frametitle{About HPX}
@@ -123,29 +121,29 @@ ParalleX focuses on latency hiding instead of latency avoidance.
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{On learning HPX}
-\framesubtitle{An opinion of a non-CS/HPC student}
-Learning curve on of HPX is quite steep - in the first days quite some dedication, effort and endurance is needed\footnote{\color{fzjblue} \href{https://github.com/STEllAR-GROUP/tutorials/blob/master/hlrs2017/session1/README.md}{Why is the HPX code repo so big and complicated?}}.
-\begin{itemize}
-  \item Probably the easiest way in the beginning: watch
-    \color{fzjblue}\href{https://www.youtube.com/playlist?list=PL1tk5lGm7zvSXfS-sqOOmIJ0lFNjKze18}{this nice playlist}
-    \color{black} in 1.25x speed on the Youtube channel of
-    \color{fzjblue}\href{https://www.youtube.com/user/cscsch}{cscsch}
-    \color{black}(Swiss National Supercomputing Centre)
-  \item Be aware that the
-    \color{fzjblue}\href{https://stellar-group.github.io/hpx/docs/sphinx/latest/html/api.html}{API reference}
-    \color{black}is not complete
-  \item Be aware that there exist at least 5 different ``Hello, World!'' examples\footnote{Paths are with respect to \color{fzjblue}\url{https://github.com/STEllAR-GROUP/}\color{black}}:
-  \begin{itemize}
-    \item hpx/examples/hello\_world\_component/*: 3 files; 28, 30 \& 55 lines
-    \item hpx/examples/quickstart/hello\_world\_1.cpp; 22 lines
-    \item hpx/examples/quickstart/hello\_world\_2.cpp; 24 lines
-    \item hpx/examples/quickstart/hello\_world\_distributed.cpp; 156 lines
-    \item tutorials/examples/01\_hello\_world/hello\_world.cpp; 71 lines
-  \end{itemize}
-\end{itemize}
-\end{frame}
+%\begin{frame}
+%\frametitle{On learning HPX}
+%\framesubtitle{An opinion of a non-CS/HPC student}
+%Learning curve on of HPX is quite steep - in the first days quite some dedication, effort and endurance is needed\footnote{\color{fzjblue} \href{https://github.com/STEllAR-GROUP/tutorials/blob/master/hlrs2017/session1/README.md}{Why is the HPX code repo so big and complicated?}}.
+%\begin{itemize}
+%  \item Probably the easiest way in the beginning: watch
+%    \color{fzjblue}\href{https://www.youtube.com/playlist?list=PL1tk5lGm7zvSXfS-sqOOmIJ0lFNjKze18}{this nice playlist}
+%    \color{black} in 1.25x speed on the Youtube channel of
+%    \color{fzjblue}\href{https://www.youtube.com/user/cscsch}{cscsch}
+%    \color{black}(Swiss National Supercomputing Centre)
+%  \item Be aware that the
+%    \color{fzjblue}\href{https://stellar-group.github.io/hpx/docs/sphinx/latest/html/api.html}{API reference}
+%    \color{black}is not complete
+%  \item Be aware that there exist at least 5 different ``Hello, World!'' examples\footnote{Paths are with respect to \color{fzjblue}\url{https://github.com/STEllAR-GROUP/}\color{black}}:
+%  \begin{itemize}
+%    \item hpx/examples/hello\_world\_component/*: 3 files; 28, 30 \& 55 lines
+%    \item hpx/examples/quickstart/hello\_world\_1.cpp; 22 lines
+%    \item hpx/examples/quickstart/hello\_world\_2.cpp; 24 lines
+%    \item hpx/examples/quickstart/hello\_world\_distributed.cpp; 156 lines
+%    \item tutorials/examples/01\_hello\_world/hello\_world.cpp; 71 lines
+%  \end{itemize}
+%\end{itemize}
+%\end{frame}
 
 \begin{frame}
 \frametitle{HPX: Tasks and Threads}
@@ -466,33 +464,6 @@ slavenode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimu
 \end{center}
 \end{frame}
 
-
-\begin{frame}[fragile]
-\frametitle{HPX: Example Program}
-\begin{lstlisting}[language=C++]
-double calc_area(hpx::future<double> future_r, hpx::future<double> future_pi)
-{
-    double r = future_r.get(); // r is returned immediately (make_ready_future)
-    double pi = future_pi.get(); // pi is returned once the async computation finishes
-    return r * r * pi; // return area = r^2 * pi
-}
-
-int hpx_main(variables_map& vm) // In hpx_main the HPX environment is loaded
-{   // boost::program_options::variables_map: retrieve commandline arguments
-    hpx::future<double> future_r = hpx::make_ready_future(vm["r"].as<double>());
-    hpx::future<double> future_pi = hpx::async([](){ return 4.0 * atan(1.0); });
-    hpx::future<double> future_area = hpx::dataflow(&calc_area, future_r, future_pi);
-    return hpx::finalize(); // Area can be obtained by: future_area.get()
-}
-
-int main(int argc, char * argv[]) // Start program by: ./area --r=...
-{   // boost::program_options::options_description: handle commandline arguments
-    options_description.add_options()("r", value<double>()->default_value(1.0), "Radius: r");
-    return hpx::init(options_description, argc, argv); // hpx::init calls hpx_main
-}
-\end{lstlisting}
-\end{frame}
-
 \part{Introduction to Numerical Linear Algebra, GEMM and QR}
 \makepart
 
@@ -540,8 +511,8 @@ GEMM - GEneral Matrix Multiply
 \end{frame}
 
 \begin{frame}
-\frametitle{GEMM of Blocked Matrices}
-\framesubtitle{Applications of Numerical Linear Algebra}
+\frametitle{GEMM}
+\framesubtitle{GEMM and GEMM of Blocked Matrices}
 \(\implies\) most simple implementation consists of 3 nested for-loops: \\
 \vspace{0.005cm}\texttt{for 0 <= i < m, 0 <= j < n, 0 <= k < p, do: C[i][k] += A[i][j] * B[j][k]}\\
 \vspace{0.25cm}Better approach: Discretize matrices into blocks, perform GEMM \textbf{block-wise}\\
@@ -626,7 +597,7 @@ elemnode/.style={rectangle, draw=fzjblue!60, fill=fzjblue!5, very thick, minimum
 \begin{frame}
 \frametitle{GEMM of Blocked Matrices}
 \framesubtitle{OpenMP and HPX foreach Row}
-Let \(M = N = 16\), number of threads \(\mathcal{T}=4\):
+Let \(M = N = 4\), number of threads \(\mathcal{T}=4\):
 \vspace{0.3cm}
 \begin{center}
 \begin{tikzpicture}[
@@ -661,7 +632,7 @@ blocknoded/.style={rectangle, draw=fzjgreen, fill=fzjgreen!5, very thick, minimu
       \node[blocknoded] at (\dx * \j + \xoff * \j,- \dy * \i - \yoff * \i) {\(C_{\text{\i \j}}\)};
       
       
-  \node at (\dx * 1.5 + \xoff * 1.5 + \xofff,\dy + \yoff) {OMP Row Cell};
+  \node at (\dx * 1.5 + \xoff * 1.5 + \xofff,\dy + \yoff) {OMP Cell Tiled};
   \foreach \i in {0,...,1}
     \foreach \j in {0,...,1}
       \node[blocknodea] at (\dx * \j + \xoff * \j + \xofff,- \dy * \i - \yoff * \i) {\(C_{\text{\i \j}}\)};
@@ -758,9 +729,8 @@ blocknode/.style={rectangle, draw=black, very thick, minimum width=2.1cm, minimu
 \end{frame}
 
 \begin{frame}
-\frametitle{QR decomposition}
+\frametitle{QR Decomposition}
 \framesubtitle{Applications of Numerical Linear Algebra}
-QR decomposition
 \begin{itemize}
  \item Matrix decomposition of square or rectangular matrices (we only consider square matrices).
  \item Let the field \(F\) be \(\mathbb{R}\) or \(\mathbb{C}\), \(A =\big( a_{ij} \big) \in F^{m \times m}\). Then,
@@ -779,7 +749,7 @@ QR decomposition
 \end{frame}
 
 \begin{frame}
-\frametitle{Applications of QR decomposition}
+\frametitle{Applications of QR Decomposition}
 \framesubtitle{Examples}
 \begin{itemize}
  \item Computing Eigenvalues (QR algorithm)
@@ -797,7 +767,7 @@ A selection of papers within the scope of my research interest which use QR deco
 \end{frame}
 
 \begin{frame}
-\frametitle{Block QR decomposition}
+\frametitle{Block QR Decomposition}
 \framesubtitle{Example: \(3 \times 3\) block matrix}
 \begin{center}
 \begin{tikzpicture}[
@@ -880,7 +850,7 @@ drawb/.style={-, draw=fzjred, very thick},
 \end{frame}
 
 \begin{frame}
-\frametitle{Block QR decomposition}
+\frametitle{Block QR Decomposition}
 \framesubtitle{Example: \(3 \times 3\) block matrix}
 \begin{center}
 \begin{tikzpicture}[
@@ -1308,35 +1278,61 @@ Let \(m = n = p = 4000, \mathcal{T} = 4\), vary number of blocks \(\mathcal{B} :
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-\frametitle{Resume}
-\framesubtitle{Personal thoughts}
-\begin{itemize}
- \item Interesting project, work and topic. I learned a lot.
- \item Collaboration with Dr. Wu worked very well. Thanks!
- \item On HPX
-       \begin{itemize}
-        \item[*] Some fun
-        \item[*] Takes a medium amount of time
-        \item[+] Full C++ library
-        \item[--] Bugs can be nasty
-       \end{itemize}
- \item On MPI
-       \begin{itemize}
-        \item[+] Lots of fun
-        \item[--] Takes a lot of time
-        \item[--] No native C++
-        \item[*] Usually works, and if not, it is manageable to figure out why
-       \end{itemize}
- \item On OpenMP
-       \begin{itemize}
-        \item[--] No fun
-        \item[+] Doesn't take a lot of time
-        \item[+] Simply works :)
-       \end{itemize}
-\end{itemize}
-\end{frame}
+% \begin{frame}
+% \frametitle{Resume}
+% \framesubtitle{Personal thoughts}
+% \begin{itemize}
+%  \item Interesting project, work and topic. I learned a lot.
+%  \item Collaboration with Dr. Wu worked very well. Thanks!
+%  \item On HPX
+%        \begin{itemize}
+%         \item[*] Some fun
+%         \item[*] Takes a medium amount of time
+%         \item[+] Full C++ library
+%         \item[--] Bugs can be nasty
+%        \end{itemize}
+%  \item On MPI
+%        \begin{itemize}
+%         \item[+] Lots of fun
+%         \item[--] Takes a lot of time
+%         \item[--] No native C++
+%         \item[*] Usually works, and if not, it is manageable to figure out why
+%        \end{itemize}
+%  \item On OpenMP
+%        \begin{itemize}
+%         \item[--] No fun
+%         \item[+] Doesn't take a lot of time
+%         \item[+] Simply works :)
+%        \end{itemize}
+% \end{itemize}
+% \end{frame}
 
 \includetitle{Slides/title}
+
+\begin{frame}[fragile]
+\frametitle{HPX: Example Program}
+\begin{lstlisting}[language=C++]
+double calc_area(hpx::future<double> future_r, hpx::future<double> future_pi)
+{
+    double r = future_r.get(); // r is returned immediately (make_ready_future)
+    double pi = future_pi.get(); // pi is returned once the async computation finishes
+    return r * r * pi; // return area = r^2 * pi
+}
+
+int hpx_main(variables_map& vm) // In hpx_main the HPX environment is loaded
+{   // boost::program_options::variables_map: retrieve commandline arguments
+    hpx::future<double> future_r = hpx::make_ready_future(vm["r"].as<double>());
+    hpx::future<double> future_pi = hpx::async([](){ return 4.0 * atan(1.0); });
+    hpx::future<double> future_area = hpx::dataflow(&calc_area, future_r, future_pi);
+    return hpx::finalize(); // Area can be obtained by: future_area.get()
+}
+
+int main(int argc, char * argv[]) // Start program by: ./area --r=...
+{   // boost::program_options::options_description: handle commandline arguments
+    options_description.add_options()("r", value<double>()->default_value(1.0), "Radius: r");
+    return hpx::init(options_description, argc, argv); // hpx::init calls hpx_main
+}
+\end{lstlisting}
+\end{frame}
 
 \end{document}
